@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mariadb://localhost:3306/board_db
+    username: root
+    password: 1234
+
+mybatis:
+  type-aliases-package: com.mogreene.adminmpa.admin.dto
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+# mybatis 로그 설정
+logging:
+  level:
+    jdbc:
+      sqlonly: off
+      sqltiming: debug
+      resultsettable: debug
+      audit: off
+      resultset: off
+      connection: off
