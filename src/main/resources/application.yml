@@ -6,8 +6,8 @@ spring:
     password: 1234
 
 mybatis:
-  type-aliases-package: com.mogreene.adminmpa.admin.dto
-  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.mogreene.adminmpa.admin.dto, com.mogreene.adminmpa.board.dto
+  mapper-locations: classpath:mapper/*/*.xml
   configuration:
     map-underscore-to-camel-case: true
 

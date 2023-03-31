@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mogreene.adminmpa.board.repository.FreeRepository">
+    <!-- 자유게시판 등록 -->
+    <insert id="postFreeArticle" parameterType="BoardDTO">
+        INSERT INTO
+            board_free (board_no,
+                        free_board_content)
+
+        VALUES
+            (#{boardNo},
+             #{boardContent});
+    </insert>
+
+    <!-- 자유게시판 전체조회-->
+    <select id="getFreeArticle" resultType="BoardDTO">
+        SELECT
+            fb.board_no AS boardNo,
+            fb.free_board_content AS boardContent,
+            bb.board_title AS boardTitle,
+            bb.board_writer AS boardWriter,
+            bb.board_view AS boardView,
+            bb.board_reg_date AS boardRegDate,
+            bb.board_mod_date AS boardModDate,
+            bb.category_board AS categoryBoard
+
+        FROM board_free fb
+            LEFT JOIN base_board bb ON bb.board_no = fb.board_no
+
+        WHERE bb.category_board
+            LIKE 'FREE'
+    </select>
+</mapper>

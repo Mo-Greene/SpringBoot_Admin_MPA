@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mogreene.adminmpa.board.repository.BaseRepository">
+
+    <!-- 게시판 등록 -->
+    <insert id="postArticle" parameterType="BoardDTO" useGeneratedKeys="true" keyProperty="boardNo">
+        INSERT INTO
+            base_board (board_title,
+                        board_writer,
+                        category_board)
+        VALUES
+            (#{boardTitle},
+             #{boardWriter},
+             #{categoryBoard});
+    </insert>
+</mapper>
