@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 
 /**
  * 로그인 컨트롤러
@@ -39,22 +43,25 @@ public class LoginController {
      * @return
      */
     @PostMapping("/login")
-    public String login(AdminDTO adminDTO,
-                        HttpServletRequest request,
-                        RedirectAttributes redirectAttributes) {
+    public String login(@Valid AdminDTO adminDTO,
+                        HttpSession session,
+                        HttpServletResponse response) {
 
-        HttpSession session = request.getSession();
-        session.setMaxInactiveInterval(1800);   //세션 30분
+        // TODO: 2023/04/01 예외처리 생각하고 session 공부
+        try {
+            AdminDTO admin = adminService.loginAdmin(adminDTO);
 
-        AdminDTO admin = adminService.loginAdmin(adminDTO);
+            Cookie cookie = new Cookie("admin", admin.getUsername());
+            cookie.setMaxAge(1800); //30분
+            cookie.setPath("/");
+            response.addCookie(cookie);
 
-        if (admin == null) {
-            redirectAttributes.addFlashAttribute("loginFail", "아이디 혹은 비밀번호가 맞지 않습니다.");
-            return "redirect:/login";
+            session.setAttribute("admin", admin.getUsername());
+
+            return "board/boardList";
+        } catch (UserPrincipalNotFoundException e) {
+            throw new RuntimeException(e);
         }
-
-        session.setAttribute("loginAdmin", admin.getUsername());
-        return "board/boardList";
     }
 
     /**

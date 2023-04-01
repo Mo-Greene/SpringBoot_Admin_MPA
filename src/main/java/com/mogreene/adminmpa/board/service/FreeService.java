@@ -41,4 +41,51 @@ public class FreeService {
 
         return freeRepository.getFreeArticle();
     }
+
+    /**
+     * 자유 게시판 특정게시글 조회
+     * @param boardNo
+     * @return
+     */
+    public BoardDTO getFreeViewArticle(Long boardNo) {
+
+        //조회수 증가
+        baseRepository.viewUpdate(boardNo);
+
+        return freeRepository.getFreeViewArticle(boardNo);
+    }
+
+    /**
+     * 자유 게시판 특정게시글 수정조회
+     * @param boardNo
+     * @return
+     */
+    public BoardDTO getFreeModify(Long boardNo) {
+
+        return freeRepository.getFreeViewArticle(boardNo);
+    }
+
+    public void modifyFreeArticle(BoardDTO boardDTO) {
+
+        int baseBoardModifyCheck = baseRepository.updateArticle(boardDTO);
+        int freeBoardModifyCheck = freeRepository.updateFreeArticle(boardDTO);
+
+        if (baseBoardModifyCheck == 0 || freeBoardModifyCheck == 0) {
+            throw new IllegalArgumentException("게시글 수정 실패");
+        }
+    }
+
+    /**
+     * 자유 게시판 특정게시글 삭제
+     * @param boardNo
+     */
+    // TODO: 2023/04/01 free_board에서만 삭제가 되고 base_board에선 삭제가 안되었음, 결과적으론 성공?
+    public void deleteFreeArticle(Long boardNo) throws IllegalArgumentException {
+
+        int deleteCheck = freeRepository.deleteFree(boardNo);
+
+        if (deleteCheck == 0) {
+            throw new IllegalArgumentException("게시글 삭제 실패");
+        }
+    }
 }

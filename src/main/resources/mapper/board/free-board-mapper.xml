@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mogreene.adminmpa.board.repository.FreeRepository">
-    <!-- 자유게시판 등록 -->
-    <insert id="postFreeArticle" parameterType="BoardDTO">
-        INSERT INTO
-            board_free (board_no,
-                        free_board_content)
-
-        VALUES
-            (#{boardNo},
-             #{boardContent});
-    </insert>
 
     <!-- 자유게시판 전체조회-->
     <select id="getFreeArticle" resultType="BoardDTO">
@@ -25,9 +15,53 @@
             bb.category_board AS categoryBoard
 
         FROM board_free fb
-            LEFT JOIN base_board bb ON bb.board_no = fb.board_no
+            LEFT JOIN base_board bb
+                    ON bb.board_no = fb.board_no
 
-        WHERE bb.category_board
-            LIKE 'FREE'
+        WHERE
+            bb.category_board
+            LIKE 'FREE';
     </select>
+
+    <!-- 자유게시판 특정게시글 -->
+    <select id="getFreeViewArticle" resultType="BoardDTO">
+        SELECT
+            *
+
+        FROM board_free fb
+            LEFT JOIN base_board bb
+                ON bb.board_no = fb.board_no
+
+        WHERE fb.board_no = #{boardNo};
+    </select>
+
+    <!-- 자유게시판 등록 -->
+    <insert id="postFreeArticle" parameterType="BoardDTO">
+        INSERT INTO
+            board_free (board_no,
+                        free_board_content)
+
+        VALUES
+            (#{boardNo},
+             #{boardContent});
+    </insert>
+
+    <!-- 자유게시판 게시글 수정 -->
+    <update id="updateFreeArticle" parameterType="BoardDTO">
+        UPDATE
+            board_free
+
+        SET
+            free_board_content = #{boardContent}
+
+        WHERE
+            board_no = #{boardNo}
+    </update>
+
+    <!-- 자유게시판 게시글 삭제 -->
+    <delete id="deleteFree">
+        DELETE FROM board_free
+
+        WHERE board_no = #{boardNo};
+    </delete>
 </mapper>
