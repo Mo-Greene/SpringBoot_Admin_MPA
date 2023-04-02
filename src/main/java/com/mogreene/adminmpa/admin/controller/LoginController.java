@@ -38,8 +38,6 @@ public class LoginController {
     /**
      * 관리자 로그인 세션 생성 30분
      * @param adminDTO
-     * @param request
-     * @param redirectAttributes
      * @return
      */
     @PostMapping("/login")
