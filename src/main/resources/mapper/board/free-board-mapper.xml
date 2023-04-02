@@ -18,21 +18,20 @@
             LEFT JOIN base_board bb
                     ON bb.board_no = fb.board_no
 
-        WHERE
-            bb.category_board
+        WHERE bb.category_board
             LIKE 'FREE';
     </select>
 
     <!-- 자유게시판 특정게시글 -->
     <select id="getFreeViewArticle" resultType="BoardDTO">
-        SELECT
-            *
+        SELECT *
 
         FROM board_free fb
             LEFT JOIN base_board bb
                 ON bb.board_no = fb.board_no
 
-        WHERE fb.board_no = #{boardNo};
+        WHERE
+            fb.board_no = #{boardNo};
     </select>
 
     <!-- 자유게시판 등록 -->
@@ -60,8 +59,10 @@
 
     <!-- 자유게시판 게시글 삭제 -->
     <delete id="deleteFree">
-        DELETE FROM board_free
+        DELETE FROM
+            board_free
 
-        WHERE board_no = #{boardNo};
+        WHERE
+            board_no = #{boardNo};
     </delete>
 </mapper>

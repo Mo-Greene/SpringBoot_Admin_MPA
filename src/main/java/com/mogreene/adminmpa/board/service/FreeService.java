@@ -67,6 +67,7 @@ public class FreeService {
 
     public void modifyFreeArticle(BoardDTO boardDTO) {
 
+        // TODO: 2023/04/02 해결 방안있는지 생각
         int baseBoardModifyCheck = baseRepository.updateArticle(boardDTO);
         int freeBoardModifyCheck = freeRepository.updateFreeArticle(boardDTO);
 

@@ -130,6 +130,7 @@ public class FreeController {
 
         } catch (IllegalArgumentException e) {
 
+            // TODO: 2023/04/02 글로벌 예외처리 봅아내기
             log.error(e.getMessage());
             return "error";
         }
