@@ -1,20 +1,21 @@
 package com.mogreene.adminmpa.common.interceptor;
 
-import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
- * 인터셉트 핸들러
+ * 로그인 인터셉터
  * @author mogreene
  */
-@Component
-public class HandleInterceptor implements HandlerInterceptor {
+@Slf4j
+public class AdminCheckInterceptor implements HandlerInterceptor {
 
     /**
-     * 컨트롤러 작동전 핸들러
+     * 로그인 "admin" 세션 확인
      * @param request current HTTP request
      * @param response current HTTP response
      * @param handler chosen handler to execute, for type and/or instance evaluation
@@ -23,6 +24,13 @@ public class HandleInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        return HandlerInterceptor.super.preHandle(request, response, handler);
+
+        HttpSession session = request.getSession();
+        if (session.getAttribute("admin") == null) {
+
+            log.error("관리자 권한이 아닙니다.");
+            return false;
+        }
+        return true;
     }
 }

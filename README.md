@@ -1,11 +1,7 @@
 ## 1차 목표 자유게시판
 
-todo
-```
-<insert id="insertBoardFree" parameterType="BoardFree">
-  INSERT INTO base_board (title, content, views, created_at, modified_at, author)
-  VALUES (#{title}, #{content}, #{views}, #{createdAt}, #{modifiedAt}, #{author});
-  INSERT INTO board_free (id, specific_column_1, specific_column_2, specific_column_3)
-  VALUES (LAST_INSERT_ID(), #{specificColumn1}, #{specificColumn2}, #{specificColumn3});
-</insert>
-```
+세션을 필터로 관리하는것보단
+
+인터셉트나 서비스모듈 혹은 어노테이션으로 해야될듯
+
+필터는 컨트롤러에 전체적용이 되야되서 메서드 별로 분리하기가 좀 그럼

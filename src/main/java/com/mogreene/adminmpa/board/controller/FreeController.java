@@ -26,13 +26,13 @@ public class FreeController {
      * 자유게시판 화면
      * @return
      */
+    // TODO: 2023/04/03 페이지네이션
     @GetMapping("/free")
     public String getFree(Model model) {
 
-        List<BoardDTO> boardList = freeService.getFreeArticle();
+        List<BoardDTO> freeBoardList = freeService.getFreeArticle();
 
-        model.addAttribute("listDto", boardList);
-
+        model.addAttribute("freeBoardList", freeBoardList);
         return "board/free/freeList";
     }
 
@@ -48,7 +48,6 @@ public class FreeController {
         BoardDTO dto = freeService.getFreeViewArticle(boardNo);
 
         model.addAttribute("dto", dto);
-
         return "board/free/freeView";
     }
 
@@ -91,9 +90,9 @@ public class FreeController {
      * @return
      */
     @GetMapping("/free/modify/{boardNo}")
-    public String getFreeModify(@PathVariable Long boardNo,
-                                HttpSession session,
-                                Model model) {
+    public String getFreeModifyView(@PathVariable Long boardNo,
+                                    HttpSession session,
+                                    Model model) {
 
         String admin = (String) session.getAttribute("admin");
         if (admin == null) {
@@ -101,8 +100,8 @@ public class FreeController {
         }
 
         BoardDTO dto = freeService.getFreeModify(boardNo);
-        model.addAttribute("dto", dto);
 
+        model.addAttribute("dto", dto);
         return "board/free/freeModify";
     }
 
@@ -134,8 +133,8 @@ public class FreeController {
             log.error(e.getMessage());
             return "error";
         }
-        return "board/free/freeList";
 
+        return "board/free/freeList";
     }
 
     /**
@@ -146,6 +145,7 @@ public class FreeController {
     @DeleteMapping("/free/delete/{boardNo}")
     public String deleteFree(@PathVariable Long boardNo) {
 
+        // TODO: 2023/04/03 세션 처리
         try {
             freeService.deleteFreeArticle(boardNo);
 

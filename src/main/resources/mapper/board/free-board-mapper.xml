@@ -19,7 +19,10 @@
                     ON bb.board_no = fb.board_no
 
         WHERE bb.category_board
-            LIKE 'FREE';
+            LIKE 'FREE'
+
+        ORDER BY
+            fb.board_no DESC;
     </select>
 
     <!-- 자유게시판 특정게시글 -->

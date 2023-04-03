@@ -35,9 +35,9 @@ public class FreeService {
 
     /**
      * 자유 게시판 전체조회
-     *
      * @return
      */
+    // TODO: 2023/04/03 페이지네이션 구현해야됨
     public List<BoardDTO> getFreeArticle() {
 
         return freeRepository.getFreeArticle();
@@ -57,7 +57,7 @@ public class FreeService {
     }
 
     /**
-     * 자유 게시판 특정게시글 수정조회
+     * 자유 게시판 특정게시글 수정조회(조회수 증가x)
      * @param boardNo
      * @return
      */
@@ -66,7 +66,11 @@ public class FreeService {
         return freeRepository.getFreeViewArticle(boardNo);
     }
 
-    public void modifyFreeArticle(BoardDTO boardDTO) {
+    /**
+     * 자유게시판 게시글 수정
+     * @param boardDTO
+     */
+    public void modifyFreeArticle(BoardDTO boardDTO) throws IllegalArgumentException {
 
         // TODO: 2023/04/02 해결 방안있는지 생각
         int baseBoardModifyCheck = baseRepository.updateArticle(boardDTO);
@@ -78,7 +82,7 @@ public class FreeService {
     }
 
     /**
-     * 자유 게시판 특정게시글 삭제
+     * 자유 게시판 게시글 삭제
      * @param boardNo
      */
     // TODO: 2023/04/01 free_board에서만 삭제가 되고 base_board에선 삭제가 안되었음, 결과적으론 성공?
