@@ -32,7 +32,7 @@ dependencies {
     //MyBatis query log
     implementation "org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16"
     //Thymeleaf layout
-    implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.5.3'
+    implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '3.1.0'
     //Validation
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.7.3'
 

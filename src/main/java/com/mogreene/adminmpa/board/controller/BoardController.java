@@ -19,7 +19,6 @@ public class BoardController {
     @GetMapping("/")
     public String listPage() {
 
-        return "/board/boardList.html";
+        return "board/boardList";
     }
-
 }
