@@ -1,34 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<a href="/free/write">글쓰기</a>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/basic.html}">
 
-<table>
-    <thead>
-    <tr>
-        <th>제목</th>
-        <th>작성자</th>
-        <th>조회수</th>
-        <th>등록일시</th>
-        <th>수정일시</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="list : ${listDto}">
-        <td>[[ ${list.boardTitle} ]]</td>
-        <td>[[ ${list.boardWriter} ]]</td>
-        <td>[[ ${list.boardView} ]]</td>
-        <td>[[ ${list.boardRegDate} ]]</td>
-        <td>[[ ${list.boardModDate} ]]</td>
-    </tr>
-    </tbody>
+<div layout:fragment="content">
+    <a href="/free/write">글쓰기</a>
+    <table>
+        <thead>
+        <tr>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>조회수</th>
+            <th>등록일시</th>
+            <th>수정일시</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="list : ${listDto}">
+            <td>[[ ${list.boardTitle} ]]</td>
+            <td>[[ ${list.boardWriter} ]]</td>
+            <td>[[ ${list.boardView} ]]</td>
+            <td>[[ ${list.boardRegDate} ]]</td>
+            <td>[[ ${list.boardModDate} ]]</td>
+        </tr>
+        </tbody>
 
 
-</table>
-
-</body>
-</html>
+    </table>
+</div>

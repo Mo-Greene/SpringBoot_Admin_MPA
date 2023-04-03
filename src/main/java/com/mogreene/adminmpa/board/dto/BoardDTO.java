@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 자유게시판 DTO
+ * @author mogreene
  */
 @Data
 @Builder

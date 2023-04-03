@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * 자유게시판 repository
+ * @author mogreene
  */
 @Mapper
 public interface FreeRepository {

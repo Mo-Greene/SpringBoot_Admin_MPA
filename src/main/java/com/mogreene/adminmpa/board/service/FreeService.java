@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * 자유게시판 service
+ * @author mogreene
  */
 @Slf4j
 @Service

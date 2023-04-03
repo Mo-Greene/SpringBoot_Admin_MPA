@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 부모 Board repository
+ * @author mogreene
  */
 @Mapper
 public interface BaseRepository {
