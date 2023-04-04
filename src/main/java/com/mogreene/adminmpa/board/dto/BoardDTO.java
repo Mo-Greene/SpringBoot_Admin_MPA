@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * 자유게시판 DTO
  * @author mogreene
@@ -34,6 +36,16 @@ public class BoardDTO {
      * 게시글 작성자
      */
     private String boardWriter;
+
+    /**
+     * 게시글 비밀번호
+     */
+    private String boardPassword;
+
+    /**
+     * 게시글 비밀번호 확인
+     */
+    private String boardPasswordCheck;
 
     /**
      * 게시글 조회수

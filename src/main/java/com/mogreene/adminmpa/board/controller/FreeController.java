@@ -70,7 +70,8 @@ public class FreeController {
      * @param boardDTO
      */
     @PostMapping("/free/write")
-    public String postFree(HttpSession session, BoardDTO boardDTO) {
+    public String postFree(HttpSession session,
+                           @RequestBody BoardDTO boardDTO) {
 
         String admin = (String) session.getAttribute("admin");
         if (admin == null) {
@@ -114,7 +115,7 @@ public class FreeController {
      */
     @PutMapping("/free/modify/{boardNo}")
     public String modifyArticle(@PathVariable Long boardNo,
-                                BoardDTO boardDTO,
+                                @RequestBody BoardDTO boardDTO,
                                 HttpSession session) {
 
         String admin = (String) session.getAttribute("admin");

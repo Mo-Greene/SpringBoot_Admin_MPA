@@ -72,6 +72,7 @@ public class LoginController {
 
         HttpSession session = request.getSession();
 
+        session.removeAttribute("admin");
         session.invalidate();
 
         // TODO: 2023/04/02 로그아웃 후 보통 전체게시글을 보여주지 않나?
