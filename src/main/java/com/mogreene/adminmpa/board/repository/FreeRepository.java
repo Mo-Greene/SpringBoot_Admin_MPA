@@ -20,6 +20,13 @@ public interface FreeRepository {
     void postFreeArticle(BoardDTO boardDTO);
 
     /**
+     * 게시글 개수
+     * @param pageRequestDTO
+     * @return
+     */
+    int totalFreeCount(PageRequestDTO pageRequestDTO);
+
+    /**
      * 자유 게시판 전체조회 + 페이지네이션
      * @return
      */

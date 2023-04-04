@@ -7,7 +7,7 @@
         <where>
             <if test="keyword != null and keyword.length > 0">
                 bb.board_title LIKE CONCAT('%', #{keyword}, '%')
-                OR fb.board_content LIKE CONCAT('%', #{keyword}, '%')
+                OR fb.free_board_content LIKE CONCAT('%', #{keyword}, '%')
                 OR bb.board_writer LIKE CONCAT('%', #{keyword}, '%')
             </if>
             <if test="categoryBoard != null and categoryBoard.length > 0">
@@ -23,6 +23,16 @@
             AND bb.category_board LIKE 'FREE'
         </where>
     </sql>
+
+    <select id="totalFreeCount" resultType="int">
+        SELECT COUNT(fb.board_no)
+
+        FROM board_free fb
+            LEFT JOIN base_board bb
+                ON bb.board_no = fb.board_no
+
+        <include refid="search"/>
+    </select>
 
     <!-- 자유게시판 전체조회-->
     <select id="getFreeArticle" resultType="BoardDTO">

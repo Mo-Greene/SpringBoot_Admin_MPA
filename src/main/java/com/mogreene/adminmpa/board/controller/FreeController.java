@@ -2,6 +2,7 @@ package com.mogreene.adminmpa.board.controller;
 
 import com.mogreene.adminmpa.board.dto.BoardDTO;
 import com.mogreene.adminmpa.board.dto.page.PageRequestDTO;
+import com.mogreene.adminmpa.board.dto.page.PageResponseDTO;
 import com.mogreene.adminmpa.board.service.FreeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,8 +41,12 @@ public class FreeController {
         }
 
         List<BoardDTO> freeBoardList = freeService.getFreeArticle(pageRequestDTO);
+        // TODO: 2023/04/04 전체 개수만 반환하고 있음 아예 각 게시판에 하드코딩도 생각하자
+        PageResponseDTO pageResponseDTO = freeService.pagination(pageRequestDTO);
+        log.info("pageResponseDTO : " + pageResponseDTO);
 
         model.addAttribute("freeBoardList", freeBoardList);
+        model.addAttribute("pagination", pageResponseDTO);
         return "board/free/freeList";
     }
 

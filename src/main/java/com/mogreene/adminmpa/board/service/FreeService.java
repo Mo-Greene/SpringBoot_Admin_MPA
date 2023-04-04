@@ -2,6 +2,7 @@ package com.mogreene.adminmpa.board.service;
 
 import com.mogreene.adminmpa.board.dto.BoardDTO;
 import com.mogreene.adminmpa.board.dto.page.PageRequestDTO;
+import com.mogreene.adminmpa.board.dto.page.PageResponseDTO;
 import com.mogreene.adminmpa.board.repository.BaseRepository;
 import com.mogreene.adminmpa.board.repository.FreeRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +43,21 @@ public class FreeService {
     public List<BoardDTO> getFreeArticle(PageRequestDTO pageRequestDTO) {
 
         return freeRepository.getFreeArticle(pageRequestDTO);
+    }
+
+    /**
+     * 자유 게시판 페이지네이션
+     * @param pageRequestDTO
+     * @return
+     */
+    public PageResponseDTO pagination(PageRequestDTO pageRequestDTO) {
+
+        int total = freeRepository.totalFreeCount(pageRequestDTO);
+
+        return PageResponseDTO.pagination()
+                .pageRequestDTO(pageRequestDTO)
+                .total(total)
+                .build();
     }
 
     /**

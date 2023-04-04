@@ -34,7 +34,7 @@ public class PageRequestDTO {
     private int size = 10;
 
     /**
-     * 게시글 몇번째 부터 보여줄지
+     * 게시글 몇번째 부터 보여줄리
      */
     public int getSkip() {
         return (page - 1) * 10;
