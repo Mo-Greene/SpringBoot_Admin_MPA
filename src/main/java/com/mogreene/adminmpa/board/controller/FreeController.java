@@ -1,14 +1,17 @@
 package com.mogreene.adminmpa.board.controller;
 
 import com.mogreene.adminmpa.board.dto.BoardDTO;
+import com.mogreene.adminmpa.board.dto.page.PageRequestDTO;
 import com.mogreene.adminmpa.board.service.FreeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -28,9 +31,15 @@ public class FreeController {
      */
     // TODO: 2023/04/03 페이지네이션
     @GetMapping("/free")
-    public String getFree(Model model) {
+    public String getFree(@Valid PageRequestDTO pageRequestDTO,
+                          BindingResult bindingResult,
+                          Model model) {
 
-        List<BoardDTO> freeBoardList = freeService.getFreeArticle();
+        if (bindingResult.hasErrors()) {
+            pageRequestDTO = PageRequestDTO.builder().build();
+        }
+
+        List<BoardDTO> freeBoardList = freeService.getFreeArticle(pageRequestDTO);
 
         model.addAttribute("freeBoardList", freeBoardList);
         return "board/free/freeList";

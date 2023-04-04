@@ -1,6 +1,7 @@
 package com.mogreene.adminmpa.board.service;
 
 import com.mogreene.adminmpa.board.dto.BoardDTO;
+import com.mogreene.adminmpa.board.dto.page.PageRequestDTO;
 import com.mogreene.adminmpa.board.repository.BaseRepository;
 import com.mogreene.adminmpa.board.repository.FreeRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,9 +39,9 @@ public class FreeService {
      * @return
      */
     // TODO: 2023/04/03 페이지네이션 구현해야됨
-    public List<BoardDTO> getFreeArticle() {
+    public List<BoardDTO> getFreeArticle(PageRequestDTO pageRequestDTO) {
 
-        return freeRepository.getFreeArticle();
+        return freeRepository.getFreeArticle(pageRequestDTO);
     }
 
     /**

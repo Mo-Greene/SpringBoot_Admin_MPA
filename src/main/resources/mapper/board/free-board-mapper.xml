@@ -2,6 +2,28 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mogreene.adminmpa.board.repository.FreeRepository">
 
+    <!-- 동적조회쿼리 -->
+    <sql id="search">
+        <where>
+            <if test="keyword != null and keyword.length > 0">
+                bb.board_title LIKE CONCAT('%', #{keyword}, '%')
+                OR fb.board_content LIKE CONCAT('%', #{keyword}, '%')
+                OR bb.board_writer LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="categoryBoard != null and categoryBoard.length > 0">
+                <trim prefix="and">
+                    bb.category_board LIKE #{categoryBoard}
+                </trim>
+            </if>
+            <if test="from != null and to != null">
+                <trim prefix="and">
+                    bb.board_reg_date BETWEEN date(#{from}) AND date(#{to})
+                </trim>
+            </if>
+            AND bb.category_board LIKE 'FREE'
+        </where>
+    </sql>
+
     <!-- 자유게시판 전체조회-->
     <select id="getFreeArticle" resultType="BoardDTO">
         SELECT
@@ -18,11 +40,12 @@
             LEFT JOIN base_board bb
                     ON bb.board_no = fb.board_no
 
-        WHERE bb.category_board
-            LIKE 'FREE'
+        <!--동적 조회쿼리-->
+        <include refid="search"/>
 
-        ORDER BY
-            fb.board_no DESC;
+        ORDER BY fb.board_no DESC
+
+        LIMIT #{skip}, #{size}
     </select>
 
     <!-- 자유게시판 특정게시글 -->

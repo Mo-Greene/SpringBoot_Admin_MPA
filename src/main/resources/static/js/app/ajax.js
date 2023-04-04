@@ -17,6 +17,9 @@ var main = {
             _this.delete();
         });
     },
+    /**
+     * 게시글 등록
+     */
     save : function () {
         const data = {
             categoryBoard: $('#categoryBoard').val(),
@@ -27,12 +30,12 @@ var main = {
             boardContent: $('#boardContent').val()
     };
 
-        // todo window.reload 안됨
         $.ajax({
             type: 'POST',
             url: '/free/write',
-            dataType: 'json',
+            dataType: 'text',
             contentType: 'application/json; charset=utf-8',
+            // todo 서버에서 json으로 파싱한 데이터를 보내든지 그냥 text로 하든지 리펙토링 필수!
             data: JSON.stringify(data),
             success: function (res) {
                 console.log(res)
@@ -42,7 +45,10 @@ var main = {
                 console.log(data)
             },
         })
-    },//save
+    },
+    /**
+     * 게시글 수정
+     */
     modify : function () {
         const data = {
             categoryBoard: $('#categoryBoard').val(),
@@ -56,7 +62,8 @@ var main = {
         $.ajax({
             type: 'PUT',
             url: '/free/modify/' + boardNo,
-            dataType: 'json',
+            // todo 서버에서 json으로 파싱한 데이터를 보내든지 그냥 text로 하든지 리펙토링 필수!
+            dataType: 'text',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function (res) {
@@ -68,14 +75,18 @@ var main = {
                 alert('게시글 수정 실패')
             },
         })
-    },//modify
+    },
+    /**
+     * 게시글 삭제
+     */
     delete: function () {
         const boardNo = $('#boardNo').val();
 
         $.ajax({
             type: 'DELETE',
             url: '/free/delete/' + boardNo,
-            dataType: 'json',
+            // todo 서버에서 json으로 파싱한 데이터를 보내든지 그냥 text로 하든지 리펙토링 필수!
+            dataType: 'text',
             contentType: 'application/json; charset=utf-8',
             success: function () {
                 alert('게시글 삭제');

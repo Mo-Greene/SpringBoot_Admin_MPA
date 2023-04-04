@@ -1,6 +1,7 @@
 package com.mogreene.adminmpa.board.repository;
 
 import com.mogreene.adminmpa.board.dto.BoardDTO;
+import com.mogreene.adminmpa.board.dto.page.PageRequestDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -19,10 +20,10 @@ public interface FreeRepository {
     void postFreeArticle(BoardDTO boardDTO);
 
     /**
-     * 자유 게시판 전체조회
+     * 자유 게시판 전체조회 + 페이지네이션
      * @return
      */
-    List<BoardDTO> getFreeArticle();
+    List<BoardDTO> getFreeArticle(PageRequestDTO pageRequestDTO);
 
     /**
      * 자유 게시판 특정게시글 조회
