@@ -10,23 +10,20 @@
             <form action="/free" method="get">
                 <div class="row">
                     <div class="col">
-                        <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
                         <input type="hidden" name="categoryBoard" value="FREE">
 
                         <div>
-                            <input type="date" class="form-control" name="startDate"
-                                   th:value="${pageRequestDTO.startDate}">
+                            <input type="date" class="form-control" name="startDate">
                         </div>
                         <div>
                             ~
                         </div>
                         <div>
-                            <input type="date" class="form-control" name="endDate"
-                                   th:value="${pageRequestDTO.endDate}">
+                            <input type="date" class="form-control" name="endDate">
                         </div>
 
                         <div>
-                            <input type="text" class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}">
+                            <input type="text" class="form-control" name="keyword">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary searchBtn" type="submit">검색</button>
                             </div>

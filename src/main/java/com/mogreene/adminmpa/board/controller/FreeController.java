@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -66,13 +65,8 @@ public class FreeController {
      * 자유게시판 게시글 등록 화면
      */
     @GetMapping("/free/write")
-    public String getFreeWrite(HttpSession session) {
+    public String getFreeWrite() {
 
-        // TODO: 2023/04/01 예외처리 생각해보자
-        String admin = (String) session.getAttribute("admin");
-        if (admin == null) {
-            return "redirect:/login";
-        }
         return "board/free/freeWrite";
     }
 
@@ -81,13 +75,7 @@ public class FreeController {
      * @param boardDTO
      */
     @PostMapping("/free/write")
-    public String postFree(HttpSession session,
-                           @RequestBody BoardDTO boardDTO) {
-
-        String admin = (String) session.getAttribute("admin");
-        if (admin == null) {
-            return "redirect:/login";
-        }
+    public String postFree(@RequestBody BoardDTO boardDTO) {
 
         freeService.postFree(boardDTO);
 
@@ -96,20 +84,13 @@ public class FreeController {
 
     /**
      * 자유게시판 수정페이지 이동
-     * @param boardNo
-     * @param session
+     * @param boardNo\
      * @param model
      * @return
      */
     @GetMapping("/free/modify/{boardNo}")
     public String getFreeModifyView(@PathVariable Long boardNo,
-                                    HttpSession session,
                                     Model model) {
-
-        String admin = (String) session.getAttribute("admin");
-        if (admin == null) {
-            return "redirect:/login";
-        }
 
         BoardDTO dto = freeService.getFreeModify(boardNo);
 
@@ -121,18 +102,11 @@ public class FreeController {
      * 자유게시판 게시글 수정
      * @param boardNo
      * @param boardDTO
-     * @param session
      * @return
      */
     @PutMapping("/free/modify/{boardNo}")
     public String modifyArticle(@PathVariable Long boardNo,
-                                @RequestBody BoardDTO boardDTO,
-                                HttpSession session) {
-
-        String admin = (String) session.getAttribute("admin");
-        if (admin == null) {
-            return "redirect:/login";
-        }
+                                @RequestBody BoardDTO boardDTO) {
 
         boardDTO.setBoardNo(boardNo);
 

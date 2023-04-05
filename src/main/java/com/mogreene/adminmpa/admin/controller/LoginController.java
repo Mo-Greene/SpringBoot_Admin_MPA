@@ -45,7 +45,6 @@ public class LoginController {
                         HttpSession session,
                         HttpServletResponse response) {
 
-        // TODO: 2023/04/01 예외처리 생각하고 session 공부
         try {
             AdminDTO admin = adminService.loginAdmin(adminDTO);
 
@@ -56,7 +55,7 @@ public class LoginController {
 
             session.setAttribute("admin", admin.getUsername());
 
-            // TODO: 2023/04/04 바로전 파라미터를 받아서 넘겨줘야될듯함 
+            // TODO: 2023/04/04 바로전 파라미터를 받아서 넘겨줘야될듯함
             return "board/boardList";
         } catch (UserPrincipalNotFoundException e) {
             throw new RuntimeException(e);

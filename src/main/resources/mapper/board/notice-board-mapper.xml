@@ -2,6 +2,39 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mogreene.adminmpa.board.repository.NoticeRepository">
 
+    <!-- 동적조회쿼리 -->
+    <sql id="search">
+        <where>
+            <if test="keyword != null and keyword.length > 0">
+                bb.board_title LIKE CONCAT('%', #{keyword}, '%')
+                OR nb.notice_board_content LIKE CONCAT('%', #{keyword}, '%')
+                OR bb.board_writer LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="categoryBoard != null and categoryBoard.length > 0">
+                <trim prefix="and">
+                    bb.category_board LIKE #{categoryBoard}
+                </trim>
+            </if>
+            <if test="startDate != null and endDate != null">
+                <trim prefix="and">
+                    bb.board_reg_date BETWEEN date(#{startDate}) AND date(#{endDate})
+                </trim>
+            </if>
+            AND bb.category_board LIKE 'NOTICE'
+        </where>
+    </sql>
+
+    <!-- 게시글 개수 -->
+    <select id="totalNoticeCount" resultType="int">
+        SELECT COUNT(nb.board_no)
+
+        FROM board_notice nb
+            LEFT JOIN base_board bb
+                ON bb.board_no = nb.board_no
+
+        <include refid="search"/>
+    </select>
+
     <!-- 공지게시판 전체조회 -->
     <select id="getNoticeArticle" resultType="BoardDTO">
         SELECT
@@ -18,16 +51,25 @@
             LEFT JOIN base_board bb
                 ON bb.board_no = nb.board_no
 
-        WHERE bb.category_board
-            LIKE 'NOTICE'
+        <!--동적 조회쿼리-->
+        <include refid="search"/>
 
-        ORDER BY
-            nb.board_no DESC;
+        ORDER BY nb.board_no DESC
+
+        LIMIT #{skip}, #{size}
     </select>
 
     <!-- 공지게시판 특정게시글 -->
     <select id="getNoticeViewArticle" resultType="BoardDTO">
-        SELECT *
+        SELECT
+            nb.board_no AS boardNo,
+            nb.notice_board_content AS boardContent,
+            bb.board_title AS boardTitle,
+            bb.board_writer AS boardWriter,
+            bb.board_view AS boardView,
+            bb.board_reg_date AS boardRegDate,
+            bb.board_mod_date AS boardModDate,
+            bb.category_board AS categoryBoard
 
         FROM board_notice nb
             LEFT JOIN base_board bb

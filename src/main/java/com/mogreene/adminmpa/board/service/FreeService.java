@@ -5,6 +5,7 @@ import com.mogreene.adminmpa.board.dto.page.PageRequestDTO;
 import com.mogreene.adminmpa.board.dto.page.PageResponseDTO;
 import com.mogreene.adminmpa.board.repository.BaseRepository;
 import com.mogreene.adminmpa.board.repository.FreeRepository;
+import com.mogreene.adminmpa.board.util.BoardUtilMethod;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class FreeService {
 
     private final BaseRepository baseRepository;
     private final FreeRepository freeRepository;
+    private final BoardUtilMethod utilMethod;
 
     /**
      * 자유 게시판 등록
@@ -42,22 +44,9 @@ public class FreeService {
     public List<BoardDTO> getFreeArticle(PageRequestDTO pageRequestDTO) {
 
         List<BoardDTO> list = freeRepository.getFreeArticle(pageRequestDTO);
-        skipTitle(list);
+        utilMethod.skipTitle(list);
 
         return list;
-    }
-
-    /**
-     * 제목 40자 이상 요약
-     * @param list
-     */
-    private void skipTitle(List<BoardDTO> list) {
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getBoardTitle().length() > 40) {
-                String title = list.get(i).getBoardTitle().substring(0, 40) + "...";
-                list.get(i).setBoardTitle(title);
-            }
-        }
     }
 
     /**

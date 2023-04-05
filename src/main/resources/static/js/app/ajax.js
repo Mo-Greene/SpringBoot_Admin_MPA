@@ -22,6 +22,7 @@ var main = {
      */
     save : function () {
         const data = {
+            category: $('#urlCategory').val(),
             categoryBoard: $('#categoryBoard').val(),
             boardTitle: $('#boardTitle').val(),
             boardWriter: $('#boardWriter').val(),
@@ -30,16 +31,18 @@ var main = {
             boardContent: $('#boardContent').val()
     };
 
+        console.log(data);
+
         $.ajax({
             type: 'POST',
-            url: '/free/write',
+            url: '/' + data.category + '/write',
             dataType: 'text',
             contentType: 'application/json; charset=utf-8',
             // todo 서버에서 json으로 파싱한 데이터를 보내든지 그냥 text로 하든지 리펙토링 필수!
             data: JSON.stringify(data),
             success: function (res) {
                 console.log(res)
-                window.location.href = '/free'
+                window.location.href = '/' + data.category
             },
             error: function (data) {
                 console.log(data)
@@ -57,18 +60,19 @@ var main = {
             boardContent: $('#boardContent').val()
         };
 
+        const category = $('#urlCategory').val();
         const boardNo = $('#boardNo').val();
 
         $.ajax({
             type: 'PUT',
-            url: '/free/modify/' + boardNo,
+            url: '/' + category + '/modify/' + boardNo,
             // todo 서버에서 json으로 파싱한 데이터를 보내든지 그냥 text로 하든지 리펙토링 필수!
             dataType: 'text',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function (res) {
                 console.log(res)
-                window.location.href = '/free'
+                window.location.href = '/' + category
             },
             error: function (data) {
                 console.log(data)
@@ -81,21 +85,22 @@ var main = {
      */
     delete: function () {
         const boardNo = $('#boardNo').val();
+        const category = $('#urlCategory').val();
+
 
         $.ajax({
             type: 'DELETE',
-            url: '/free/delete/' + boardNo,
-            // todo 서버에서 json으로 파싱한 데이터를 보내든지 그냥 text로 하든지 리펙토링 필수!
+            url: '/' + category + '/delete/' + boardNo,
             dataType: 'text',
             contentType: 'application/json; charset=utf-8',
             success: function () {
                 alert('게시글 삭제');
-                window.location.href = '/free'
+                window.location.href = '/' + category
             },
             //todo ??error 가 정상적으로 실행된다;;
             error: function () {
-                alert('게시글 삭제')
-                window.location.href = '/free'
+                alert('게시글 삭제실패')
+                window.location.href = '/' + category
             }
         })
     },

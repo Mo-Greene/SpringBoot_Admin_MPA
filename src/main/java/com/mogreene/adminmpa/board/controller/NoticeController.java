@@ -1,14 +1,17 @@
 package com.mogreene.adminmpa.board.controller;
 
 import com.mogreene.adminmpa.board.dto.BoardDTO;
+import com.mogreene.adminmpa.board.dto.page.PageRequestDTO;
+import com.mogreene.adminmpa.board.dto.page.PageResponseDTO;
 import com.mogreene.adminmpa.board.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -20,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NoticeController {
 
+    // TODO: 2023/04/05 N+1 문제 해결해야됨! 
     private final NoticeService noticeService;
 
     /**
@@ -28,11 +32,19 @@ public class NoticeController {
      * @return
      */
     @GetMapping("/notice")
-    public String getNotice(Model model) {
+    public String getNotice(@Valid PageRequestDTO pageRequestDTO,
+                            BindingResult bindingResult,
+                            Model model) {
 
-        List<BoardDTO> noticeBoardList = noticeService.getNoticeArticle();
+        if (bindingResult.hasErrors()) {
+            pageRequestDTO = PageRequestDTO.builder().build();
+        }
+
+        List<BoardDTO> noticeBoardList = noticeService.getNoticeArticle(pageRequestDTO);
+        PageResponseDTO pageResponseDTO = noticeService.pagination(pageRequestDTO);
 
         model.addAttribute("noticeBoardList", noticeBoardList);
+        model.addAttribute("pagination", pageResponseDTO);
         return "board/notice/noticeList";
     }
 
@@ -57,20 +69,17 @@ public class NoticeController {
      */
     @GetMapping("/notice/write")
     public String getNoticeWrite() {
-        // TODO: 2023/04/03 세션 처리
 
         return "board/notice/noticeWrite";
     }
 
     /**
      * 공지게시판 게시글 등록
-     * @param session
      * @param boardDTO
      * @return
      */
     @PostMapping("/notice/write")
-    public String postNotice(BoardDTO boardDTO) {
-        // TODO: 2023/04/03 세션처리
+    public String postNotice(@RequestBody BoardDTO boardDTO) {
 
         noticeService.postNotice(boardDTO);
         return "redirect:/notice";
@@ -86,11 +95,9 @@ public class NoticeController {
     public String getNoticeModifyView(@PathVariable Long boardNo,
                                       Model model) {
 
-        // TODO: 2023/04/03 세션 처리
-
         BoardDTO dto = noticeService.getNoticeModify(boardNo);
-        model.addAttribute("dto", dto);
 
+        model.addAttribute("dto", dto);
         return "board/notice/noticeModify";
     }
 
@@ -102,7 +109,7 @@ public class NoticeController {
      */
     @PutMapping("/notice/modify/{boardNo}")
     public String modifyArticle(@PathVariable Long boardNo,
-                                BoardDTO boardDTO) {
+                                @RequestBody BoardDTO boardDTO) {
         // TODO: 2023/04/03 세션 처리
 
         boardDTO.setBoardNo(boardNo);

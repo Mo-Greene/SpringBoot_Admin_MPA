@@ -1,8 +1,11 @@
 package com.mogreene.adminmpa.board.service;
 
 import com.mogreene.adminmpa.board.dto.BoardDTO;
+import com.mogreene.adminmpa.board.dto.page.PageRequestDTO;
+import com.mogreene.adminmpa.board.dto.page.PageResponseDTO;
 import com.mogreene.adminmpa.board.repository.BaseRepository;
 import com.mogreene.adminmpa.board.repository.NoticeRepository;
+import com.mogreene.adminmpa.board.util.BoardUtilMethod;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,7 @@ public class NoticeService {
 
     private final BaseRepository baseRepository;
     private final NoticeRepository noticeRepository;
+    private final BoardUtilMethod utilMethod;
 
     /**
      * 공지게시판 등록
@@ -36,9 +40,27 @@ public class NoticeService {
     /**
      * 공지게시판 전체조회
      */
-    public List<BoardDTO> getNoticeArticle() {
+    public List<BoardDTO> getNoticeArticle(PageRequestDTO pageRequestDTO) {
 
-        return noticeRepository.getNoticeArticle();
+        List<BoardDTO> list = noticeRepository.getNoticeArticle(pageRequestDTO);
+        utilMethod.skipTitle(list);
+
+        return list;
+    }
+
+    /**
+     * 공지게시판 페이지네이션
+     * @param pageRequestDTO
+     * @return
+     */
+    public PageResponseDTO pagination(PageRequestDTO pageRequestDTO) {
+
+        int total = noticeRepository.totalNoticeCount(pageRequestDTO);
+
+        return PageResponseDTO.pagination()
+                .pageRequestDTO(pageRequestDTO)
+                .total(total)
+                .build();
     }
 
     /**

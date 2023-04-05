@@ -1,6 +1,7 @@
 package com.mogreene.adminmpa.board.repository;
 
 import com.mogreene.adminmpa.board.dto.BoardDTO;
+import com.mogreene.adminmpa.board.dto.page.PageRequestDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -19,10 +20,17 @@ public interface NoticeRepository {
     void postNoticeArticle(BoardDTO boardDTO);
 
     /**
+     * 게시글 개수
+     * @param pageRequestDTO
+     * @return
+     */
+    int totalNoticeCount(PageRequestDTO pageRequestDTO);
+
+    /**
      * 공지게시판 전체조회
      * @return
      */
-    List<BoardDTO> getNoticeArticle();
+    List<BoardDTO> getNoticeArticle(PageRequestDTO pageRequestDTO);
 
     /**
      * 공지게시판 특정게시글 조회
