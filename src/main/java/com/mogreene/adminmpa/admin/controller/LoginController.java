@@ -49,7 +49,7 @@ public class LoginController {
             AdminDTO admin = adminService.loginAdmin(adminDTO);
 
             Cookie cookie = new Cookie("admin", admin.getUsername());
-            cookie.setMaxAge(1800); //30분
+            cookie.setMaxAge(60 * 60); //1시간
             cookie.setPath("/");
             response.addCookie(cookie);
 
