@@ -35,8 +35,6 @@ public class FreeController {
                           BindingResult bindingResult,
                           Model model) {
 
-        log.info("pageRequestDTO : " + pageRequestDTO);
-
         if (bindingResult.hasErrors()) {
             pageRequestDTO = PageRequestDTO.builder().build();
         }
