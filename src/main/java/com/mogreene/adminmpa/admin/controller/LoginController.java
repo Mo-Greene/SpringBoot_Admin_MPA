@@ -56,6 +56,7 @@ public class LoginController {
 
             session.setAttribute("admin", admin.getUsername());
 
+            // TODO: 2023/04/04 바로전 파라미터를 받아서 넘겨줘야될듯함 
             return "board/boardList";
         } catch (UserPrincipalNotFoundException e) {
             throw new RuntimeException(e);

@@ -39,10 +39,25 @@ public class FreeService {
      * 자유 게시판 전체조회
      * @return
      */
-    // TODO: 2023/04/03 페이지네이션 구현해야됨
     public List<BoardDTO> getFreeArticle(PageRequestDTO pageRequestDTO) {
 
-        return freeRepository.getFreeArticle(pageRequestDTO);
+        List<BoardDTO> list = freeRepository.getFreeArticle(pageRequestDTO);
+        skipTitle(list);
+
+        return list;
+    }
+
+    /**
+     * 제목 40자 이상 요약
+     * @param list
+     */
+    private void skipTitle(List<BoardDTO> list) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getBoardTitle().length() > 40) {
+                String title = list.get(i).getBoardTitle().substring(0, 40) + "...";
+                list.get(i).setBoardTitle(title);
+            }
+        }
     }
 
     /**

@@ -38,13 +38,11 @@
 
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-<!--                    todo 로그아웃 고치자-->
                     <form action="/logout" method="post">
                         <button type="submit" class="btn btn-primary">로그아웃</button>
                     </form>
                     <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                         <li class="nav-item active"><a class="nav-link" th:href="@{/login}">Login</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Link</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -71,6 +69,7 @@
 <script th:src="@{/js/scripts.js}"></script>
 <script src="/js/app/ajax.js"></script>
 <th:block layout:fragment="script">
+
 </th:block>
 </body>
 </html>

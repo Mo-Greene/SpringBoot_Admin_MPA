@@ -44,12 +44,12 @@ public class PageRequestDTO {
     /**
      * 날짜 시작
      */
-    private String from;
+    private String startDate;
 
     /**
      * 날짜 종료
      */
-    private String to;
+    private String endDate;
 
     /**
      * 카테고리 검색

@@ -15,9 +15,9 @@
                     bb.category_board LIKE #{categoryBoard}
                 </trim>
             </if>
-            <if test="from != null and to != null">
+            <if test="startDate != null and endDate != null">
                 <trim prefix="and">
-                    bb.board_reg_date BETWEEN date(#{from}) AND date(#{to})
+                    bb.board_reg_date BETWEEN date(#{startDate}) AND date(#{endDate})
                 </trim>
             </if>
             AND bb.category_board LIKE 'FREE'

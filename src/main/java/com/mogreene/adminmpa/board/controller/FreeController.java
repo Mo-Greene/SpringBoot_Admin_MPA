@@ -30,20 +30,19 @@ public class FreeController {
      * 자유게시판 화면
      * @return
      */
-    // TODO: 2023/04/03 페이지네이션
     @GetMapping("/free")
     public String getFree(@Valid PageRequestDTO pageRequestDTO,
                           BindingResult bindingResult,
                           Model model) {
+
+        log.info("pageRequestDTO : " + pageRequestDTO);
 
         if (bindingResult.hasErrors()) {
             pageRequestDTO = PageRequestDTO.builder().build();
         }
 
         List<BoardDTO> freeBoardList = freeService.getFreeArticle(pageRequestDTO);
-        // TODO: 2023/04/04 전체 개수만 반환하고 있음 아예 각 게시판에 하드코딩도 생각하자
         PageResponseDTO pageResponseDTO = freeService.pagination(pageRequestDTO);
-        log.info("pageResponseDTO : " + pageResponseDTO);
 
         model.addAttribute("freeBoardList", freeBoardList);
         model.addAttribute("pagination", pageResponseDTO);
