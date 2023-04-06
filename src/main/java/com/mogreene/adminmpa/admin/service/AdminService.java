@@ -24,7 +24,7 @@ public class AdminService {
      * @param adminDTO
      * @return AdminDTO
      */
-    public AdminDTO loginAdmin(AdminDTO adminDTO) throws UserPrincipalNotFoundException {
+    public void loginAdmin(AdminDTO adminDTO) throws UserPrincipalNotFoundException {
 
         AdminDTO admin = adminRepository.loginAdmin(adminDTO);
 
@@ -32,7 +32,5 @@ public class AdminService {
             log.error("관리자 아이디 혹은 비밀번호가 아닙니다.");
             throw new UserPrincipalNotFoundException("관리자 아이디 혹은 비밀번호가 아닙니다.");
         }
-
-        return admin;
     }
 }

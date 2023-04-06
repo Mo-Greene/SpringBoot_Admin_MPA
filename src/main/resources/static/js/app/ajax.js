@@ -25,8 +25,6 @@ var main = {
             category: $('#urlCategory').val(),
             categoryBoard: $('#categoryBoard').val(),
             boardTitle: $('#boardTitle').val(),
-            boardPassword: $('#boardPassword').val(),
-            boardPasswordCheck: $('#boardPasswordCheck').val(),
             boardContent: $('#boardContent').val()
     };
 

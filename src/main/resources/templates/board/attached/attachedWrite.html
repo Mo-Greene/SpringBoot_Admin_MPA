@@ -9,8 +9,8 @@
 
     <div class="container">
         <form>
-            <input type="hidden" id="urlCategory" th:value="free">
-            <input type="hidden" id="categoryBoard" value="FREE">
+            <input type="hidden" id="urlCategory" th:value="attached">
+            <input type="hidden" id="categoryBoard" value="ATTACHED">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="boardTitle">Title</label>
@@ -30,7 +30,18 @@
                 <button type="button" class="btn btn-primary" id="btn-save">등록</button>
             </div>
 
-       </form>
+            <div class="row">
+                <div class="col-md-3">
+                    <input class="form-control form-control" name="formFileSm" type="file">
+                </div>
+                <div class="col-md-3">
+                    <input class="form-control form-control" name="formFileSm" type="file">
+                </div>
+                <div class="col-md-3">
+                    <input class="form-control form-control" name="formFileSm" type="file">
+                </div>
+            </div>
+        </form>
     </div>
 
 </div>

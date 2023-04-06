@@ -1,7 +1,6 @@
 package com.mogreene.adminmpa.board.util;
 
 import com.mogreene.adminmpa.board.dto.BoardDTO;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
@@ -15,7 +14,7 @@ import java.util.List;
 public class BoardUtil {
 
     /**
-     * 게시판 작성자 추가
+     * 게시글 postmapping 작성자 추가
      * @param boardDTO
      * @param session
      */

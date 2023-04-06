@@ -46,9 +46,9 @@ public class LoginController {
                         HttpServletResponse response) {
 
         try {
-            AdminDTO admin = adminService.loginAdmin(adminDTO);
+            adminService.loginAdmin(adminDTO);
 
-            Cookie cookie = new Cookie("admin", admin.getUsername());
+            Cookie cookie = new Cookie("admin", "ADMIN");
             cookie.setMaxAge(60 * 60); //1시간
             cookie.setPath("/");
             response.addCookie(cookie);
