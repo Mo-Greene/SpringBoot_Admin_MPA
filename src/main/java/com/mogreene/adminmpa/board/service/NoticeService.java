@@ -5,7 +5,7 @@ import com.mogreene.adminmpa.board.dto.page.PageRequestDTO;
 import com.mogreene.adminmpa.board.dto.page.PageResponseDTO;
 import com.mogreene.adminmpa.board.repository.BaseRepository;
 import com.mogreene.adminmpa.board.repository.NoticeRepository;
-import com.mogreene.adminmpa.board.util.BoardUtilMethod;
+import com.mogreene.adminmpa.board.util.BoardUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class NoticeService {
 
     private final BaseRepository baseRepository;
     private final NoticeRepository noticeRepository;
-    private final BoardUtilMethod utilMethod;
+    private final BoardUtil utilMethod;
 
     /**
      * 공지게시판 등록

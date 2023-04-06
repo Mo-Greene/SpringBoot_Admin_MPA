@@ -25,7 +25,6 @@ var main = {
             category: $('#urlCategory').val(),
             categoryBoard: $('#categoryBoard').val(),
             boardTitle: $('#boardTitle').val(),
-            boardWriter: $('#boardWriter').val(),
             boardPassword: $('#boardPassword').val(),
             boardPasswordCheck: $('#boardPasswordCheck').val(),
             boardContent: $('#boardContent').val()
@@ -36,12 +35,12 @@ var main = {
         $.ajax({
             type: 'POST',
             url: '/' + data.category + '/write',
-            dataType: 'text',
+            dataType: 'json',
             contentType: 'application/json; charset=utf-8',
-            // todo 서버에서 json으로 파싱한 데이터를 보내든지 그냥 text로 하든지 리펙토링 필수!
             data: JSON.stringify(data),
             success: function (res) {
                 console.log(res)
+                alert('게시글 등록')
                 window.location.href = '/' + data.category
             },
             error: function (data) {
@@ -56,7 +55,6 @@ var main = {
         const data = {
             categoryBoard: $('#categoryBoard').val(),
             boardTitle: $('#boardTitle').val(),
-            boardWriter: $('#boardWriter').val(),
             boardContent: $('#boardContent').val()
         };
 
@@ -66,12 +64,12 @@ var main = {
         $.ajax({
             type: 'PUT',
             url: '/' + category + '/modify/' + boardNo,
-            // todo 서버에서 json으로 파싱한 데이터를 보내든지 그냥 text로 하든지 리펙토링 필수!
-            dataType: 'text',
+            dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function (res) {
                 console.log(res)
+                alert('게시글 수정')
                 window.location.href = '/' + category
             },
             error: function (data) {
@@ -91,9 +89,10 @@ var main = {
         $.ajax({
             type: 'DELETE',
             url: '/' + category + '/delete/' + boardNo,
-            dataType: 'text',
+            dataType: 'json',
             contentType: 'application/json; charset=utf-8',
-            success: function () {
+            success: function (res) {
+                console.log(res)
                 alert('게시글 삭제');
                 window.location.href = '/' + category
             },

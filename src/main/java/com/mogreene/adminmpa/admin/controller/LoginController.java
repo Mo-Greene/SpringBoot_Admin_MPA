@@ -53,7 +53,7 @@ public class LoginController {
             cookie.setPath("/");
             response.addCookie(cookie);
 
-            session.setAttribute("admin", admin.getUsername());
+            session.setAttribute("admin", "관리자");
 
             // TODO: 2023/04/04 바로전 파라미터를 받아서 넘겨줘야될듯함
             return "board/boardList";

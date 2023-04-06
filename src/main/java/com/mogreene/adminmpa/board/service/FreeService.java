@@ -5,7 +5,7 @@ import com.mogreene.adminmpa.board.dto.page.PageRequestDTO;
 import com.mogreene.adminmpa.board.dto.page.PageResponseDTO;
 import com.mogreene.adminmpa.board.repository.BaseRepository;
 import com.mogreene.adminmpa.board.repository.FreeRepository;
-import com.mogreene.adminmpa.board.util.BoardUtilMethod;
+import com.mogreene.adminmpa.board.util.BoardUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class FreeService {
 
     private final BaseRepository baseRepository;
     private final FreeRepository freeRepository;
-    private final BoardUtilMethod utilMethod;
+    private final BoardUtil utilMethod;
 
     /**
      * 자유 게시판 등록
