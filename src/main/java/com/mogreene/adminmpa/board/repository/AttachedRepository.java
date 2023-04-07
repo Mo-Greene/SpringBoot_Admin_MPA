@@ -12,7 +12,6 @@ public interface AttachedRepository {
 
     /**
      * 자료실 게시글 등록
-     * @param boardDTO
      */
     void postAttachedArticle(AttachedDTO attachedDTO);
 }
