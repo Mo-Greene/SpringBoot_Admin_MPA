@@ -45,11 +45,4 @@ public interface NoticeRepository {
      * @return
      */
     int deleteNotice(Long boardNo);
-
-    /**
-     * 공지게시판 게시글 수정
-     * @param boardDTO
-     * @return
-     */
-    int updateNoticeArticle(BoardDTO boardDTO);
 }

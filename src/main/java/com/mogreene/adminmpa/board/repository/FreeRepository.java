@@ -44,11 +44,4 @@ public interface FreeRepository {
      * @param boardNo
      */
     int deleteFree(Long boardNo);
-
-    /**
-     * 자유 게시판 게시글 수정
-     * @param boardDTO
-     * @return
-     */
-    int updateFreeArticle(BoardDTO boardDTO);
 }

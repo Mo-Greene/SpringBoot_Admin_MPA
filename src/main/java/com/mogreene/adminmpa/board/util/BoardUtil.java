@@ -18,7 +18,7 @@ public class BoardUtil {
      * @param boardDTO
      * @param session
      */
-    public void addBoardWriter(BoardDTO boardDTO, HttpSession session) {
+    public void setBoardWriter(BoardDTO boardDTO, HttpSession session) {
 
         String admin = (String) session.getAttribute("admin");
         boardDTO.setBoardWriter(admin);

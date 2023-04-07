@@ -95,9 +95,8 @@ public class FreeService {
 
         // TODO: 2023/04/02 해결 방안있는지 생각
         int baseBoardModifyCheck = baseRepository.updateArticle(boardDTO);
-        int freeBoardModifyCheck = freeRepository.updateFreeArticle(boardDTO);
 
-        if (baseBoardModifyCheck == 0 || freeBoardModifyCheck == 0) {
+        if (baseBoardModifyCheck == 0) {
             throw new IllegalArgumentException("게시글 수정 실패");
         }
     }

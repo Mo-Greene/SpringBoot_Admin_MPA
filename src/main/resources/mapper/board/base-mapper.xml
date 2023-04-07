@@ -6,10 +6,12 @@
     <insert id="postArticle" parameterType="BoardDTO" useGeneratedKeys="true" keyProperty="boardNo">
         INSERT INTO
             base_board (board_title,
+                        board_content,
                         board_writer,
                         category_board)
         VALUES
             (#{boardTitle},
+             #{boardContent},
              #{boardWriter},
              #{categoryBoard});
     </insert>
@@ -23,6 +25,7 @@
         SET
             board_title = #{boardTitle},
             board_writer = #{boardWriter},
+            board_content = #{boardContent},
             category_board = #{categoryBoard},
             board_mod_date = current_timestamp
 

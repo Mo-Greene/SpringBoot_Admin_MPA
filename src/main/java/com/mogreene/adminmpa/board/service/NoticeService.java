@@ -93,9 +93,8 @@ public class NoticeService {
     public void modifyNoticeArticle(BoardDTO boardDTO) throws IllegalArgumentException {
 
         int baseBoardModifyCheck = baseRepository.updateArticle(boardDTO);
-        int noticeBoardModifyCheck = noticeRepository.updateNoticeArticle(boardDTO);
 
-        if (baseBoardModifyCheck == 0 || noticeBoardModifyCheck == 0) {
+        if (baseBoardModifyCheck == 0) {
             throw new IllegalArgumentException("게시글 수정 실패");
         }
     }

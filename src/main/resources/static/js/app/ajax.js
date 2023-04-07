@@ -26,9 +26,7 @@ var main = {
             categoryBoard: $('#categoryBoard').val(),
             boardTitle: $('#boardTitle').val(),
             boardContent: $('#boardContent').val()
-    };
-
-        console.log(data);
+        };
 
         $.ajax({
             type: 'POST',

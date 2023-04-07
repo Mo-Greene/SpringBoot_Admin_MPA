@@ -7,7 +7,7 @@
         <where>
             <if test="keyword != null and keyword.length > 0">
                 bb.board_title LIKE CONCAT('%', #{keyword}, '%')
-                OR nb.notice_board_content LIKE CONCAT('%', #{keyword}, '%')
+                OR bb.board_content LIKE CONCAT('%', #{keyword}, '%')
                 OR bb.board_writer LIKE CONCAT('%', #{keyword}, '%')
             </if>
             <if test="categoryBoard != null and categoryBoard.length > 0">
@@ -39,7 +39,7 @@
     <select id="getNoticeArticle" resultType="BoardDTO">
         SELECT
             nb.board_no AS boardNo,
-            nb.notice_board_content AS boardContent,
+            bb.board_content AS boardContent,
             bb.board_title AS boardTitle,
             bb.board_writer AS boardWriter,
             bb.board_view AS boardView,
@@ -63,7 +63,7 @@
     <select id="getNoticeViewArticle" resultType="BoardDTO">
         SELECT
             nb.board_no AS boardNo,
-            nb.notice_board_content AS boardContent,
+            bb.board_content AS boardContent,
             bb.board_title AS boardTitle,
             bb.board_writer AS boardWriter,
             bb.board_view AS boardView,
@@ -82,25 +82,11 @@
     <!-- 공지게시판 등록 -->
     <insert id="postNoticeArticle" parameterType="BoardDTO">
         INSERT INTO
-            board_notice (board_no,
-                          notice_board_content)
+            board_notice (board_no)
 
         VALUES
-            (#{boardNo},
-             #{boardContent});
+            (#{boardNo});
     </insert>
-
-    <!-- 공지게시판 게시글 수정 -->
-    <update id="updateNoticeArticle" parameterType="BoardDTO">
-        UPDATE
-            board_notice
-
-        SET
-            notice_board_content = #{boardContent}
-
-        WHERE
-            board_no = #{boardNo};
-    </update>
 
     <!-- 공지게시판 게시글 삭제 -->
     <delete id="deleteNotice">

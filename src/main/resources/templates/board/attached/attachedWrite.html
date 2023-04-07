@@ -8,38 +8,39 @@
     <h2>게시글 작성</h2>
 
     <div class="container">
-        <form>
-            <input type="hidden" id="urlCategory" th:value="attached">
-            <input type="hidden" id="categoryBoard" value="ATTACHED">
+        <form action="/attached/write" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="urlCategory" th:value="attached">
+            <input type="hidden" name="categoryBoard" value="ATTACHED">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="boardTitle">Title</label>
-                    <input type="text" class="form-control" id="boardTitle">
+                    <input type="text" class="form-control" name="boardTitle">
                 </div>
             </div>
 
             <div class="row">
                 <div class="mb-3">
                     <label for="boardContent">Content</label>
-                    <textarea class="form-control" id="boardContent"></textarea>
+                    <textarea class="form-control" name="boardContent"></textarea>
                 </div>
-            </div>
-
-            <div class="col text-center">
-                <a href="/free" role="button" class="btn btn-light">취소</a>
-                <button type="button" class="btn btn-primary" id="btn-save">등록</button>
             </div>
 
             <div class="row">
                 <div class="col-md-3">
-                    <input class="form-control form-control" name="formFileSm" type="file">
+                    <input class="form-control" id="file1" name="files" type="file">
                 </div>
                 <div class="col-md-3">
-                    <input class="form-control form-control" name="formFileSm" type="file">
+                    <input class="form-control" id="file2" name="files" type="file">
                 </div>
                 <div class="col-md-3">
-                    <input class="form-control form-control" name="formFileSm" type="file">
+                    <input class="form-control" id="file3" name="files" type="file">
                 </div>
+            </div>
+
+            <div class="col text-center">
+<!--                todo url 임시로 free, attached로 만들면 고치자-->
+                <a href="/free" role="button" class="btn btn-light">취소</a>
+                <button type="submit" class="btn btn-primary" id="btn-file-save">등록</button>
             </div>
         </form>
     </div>

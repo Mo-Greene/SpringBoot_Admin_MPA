@@ -4,6 +4,15 @@ spring:
     url: jdbc:log4jdbc:mariadb://localhost:3306/board_db
     username: root
     password: 1234
+  servlet:
+    multipart:
+      max-request-size: 10MB
+      max-file-size: 20MB
+      enabled: true
+      location: /Users/mogreene/Desktop/files
+mogreene:
+  upload:
+    path: /Users/mogreene/Desktop/files/
 
 mybatis:
   type-aliases-package: com.mogreene.adminmpa.admin.dto, com.mogreene.adminmpa.board.dto

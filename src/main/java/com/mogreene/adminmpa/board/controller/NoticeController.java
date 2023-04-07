@@ -88,7 +88,7 @@ public class NoticeController {
     public ResponseEntity<ApiResponseDTO<?>> postNotice(@RequestBody BoardDTO boardDTO,
                                                         HttpSession session) {
 
-        boardUtil.addBoardWriter(boardDTO, session);
+        boardUtil.setBoardWriter(boardDTO, session);
         noticeService.postNotice(boardDTO);
 
         ApiResponseDTO<?> apiResponseDTO = ApiResponseDTO.builder()
@@ -122,9 +122,10 @@ public class NoticeController {
      */
     @PutMapping("/notice/modify/{boardNo}")
     public ResponseEntity<ApiResponseDTO<?>> modifyArticle(@PathVariable Long boardNo,
-                                @RequestBody BoardDTO boardDTO) {
-        // TODO: 2023/04/03 세션 처리
+                                                           @RequestBody BoardDTO boardDTO,
+                                                           HttpSession session) {
 
+        boardUtil.setBoardWriter(boardDTO, session);
         boardDTO.setBoardNo(boardNo);
 
         try {

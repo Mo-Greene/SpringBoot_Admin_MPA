@@ -84,7 +84,7 @@ public class FreeController {
     public ResponseEntity<ApiResponseDTO<?>> postFree(@RequestBody BoardDTO boardDTO,
                                                       HttpSession session) {
 
-        boardUtil.addBoardWriter(boardDTO, session);
+        boardUtil.setBoardWriter(boardDTO, session);
         freeService.postFree(boardDTO);
 
         ApiResponseDTO<?> apiResponseDTO = ApiResponseDTO.builder()
@@ -118,8 +118,10 @@ public class FreeController {
      */
     @PutMapping("/free/modify/{boardNo}")
     public ResponseEntity<ApiResponseDTO<?>> modifyArticle(@PathVariable Long boardNo,
-                                @RequestBody BoardDTO boardDTO) {
+                                                           @RequestBody BoardDTO boardDTO,
+                                                           HttpSession session) {
 
+        boardUtil.setBoardWriter(boardDTO, session);
         boardDTO.setBoardNo(boardNo);
 
         try {

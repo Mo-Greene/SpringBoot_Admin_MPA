@@ -1,5 +1,6 @@
 package com.mogreene.adminmpa.board.repository;
 
+import com.mogreene.adminmpa.board.dto.AttachedDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -8,4 +9,10 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface AttachedRepository {
+
+    /**
+     * 자료실 게시글 등록
+     * @param boardDTO
+     */
+    void postAttachedArticle(AttachedDTO attachedDTO);
 }
