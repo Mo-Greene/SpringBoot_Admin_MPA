@@ -15,7 +15,9 @@ mogreene:
     path: /Users/mogreene/Desktop/files/
 
 mybatis:
-  type-aliases-package: com.mogreene.adminmpa.admin.dto, com.mogreene.adminmpa.board.dto
+  type-aliases-package: com.mogreene.adminmpa.admin.dto, 
+                        com.mogreene.adminmpa.board.dto, 
+                        com.mogreene.adminmpa.reply.dto
   mapper-locations: classpath:mapper/*/*.xml
   configuration:
     map-underscore-to-camel-case: true

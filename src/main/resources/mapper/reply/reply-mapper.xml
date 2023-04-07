@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mogreene.adminmpa.reply.repository.ReplyRepository">
+
+    <!-- 댓글 등록 -->
+    <insert id="postReply" parameterType="ReplyDTO">
+        INSERT INTO
+            reply (reply_content,
+                   board_no)
+
+        VALUES
+            (#{replyContent},
+             #{boardNo})
+    </insert>
+
+    <!-- 댓글 조회 -->
+    <select id="getReply" resultType="ReplyDTO" parameterType="ReplyDTO">
+        SELECT
+            r.reply_content,
+            r.reply_reg_date
+
+        FROM
+            reply r
+
+        WHERE
+            board_no = #{boardNo}
+
+        ORDER BY
+            reply_reg_date DESC;
+    </select>
+</mapper>

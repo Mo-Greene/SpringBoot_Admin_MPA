@@ -23,7 +23,7 @@ public class FreeService {
 
     private final BaseRepository baseRepository;
     private final FreeRepository freeRepository;
-    private final BoardUtil utilMethod;
+    private final BoardUtil boardUtil;
 
     /**
      * 자유 게시판 등록
@@ -44,7 +44,7 @@ public class FreeService {
     public List<BoardDTO> getFreeArticle(PageRequestDTO pageRequestDTO) {
 
         List<BoardDTO> list = freeRepository.getFreeArticle(pageRequestDTO);
-        utilMethod.skipTitle(list);
+        boardUtil.skipTitle(list);
 
         return list;
     }
@@ -96,6 +96,7 @@ public class FreeService {
         // TODO: 2023/04/02 해결 방안있는지 생각
         int baseBoardModifyCheck = baseRepository.updateArticle(boardDTO);
 
+        // TODO: 2023/04/07 예외처리 필
         if (baseBoardModifyCheck == 0) {
             throw new IllegalArgumentException("게시글 수정 실패");
         }

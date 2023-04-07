@@ -32,7 +32,10 @@ public class FreeController {
     private final BoardUtil boardUtil;
 
     /**
-     * 자유게시판 화면
+     * 자유게시판 전체화면
+     * @param pageRequestDTO
+     * @param bindingResult
+     * @param model
      * @return
      */
     @GetMapping("/free")

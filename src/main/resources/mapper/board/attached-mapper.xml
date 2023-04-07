@@ -2,7 +2,85 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mogreene.adminmpa.board.repository.AttachedRepository">
 
-    <!-- 자료실 등록 -->
+    <!-- 동적조회쿼리 -->
+    <sql id="search">
+        <where>
+            <if test="keyword != null and keyword.length > 0">
+                bb.board_title LIKE CONCAT('%', #{keyword}, '%')
+                OR bb.board_content LIKE CONCAT('%', #{keyword}, '%')
+                OR bb.board_writer LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="categoryBoard != null and categoryBoard.length > 0">
+                <trim prefix="and">
+                    bb.category_board LIKE #{categoryBoard}
+                </trim>
+            </if>
+            <if test="startDate != null and endDate != null">
+                <trim prefix="and">
+                    bb.board_reg_date BETWEEN date(#{startDate}) AND date(#{endDate})
+                </trim>
+            </if>
+            AND bb.category_board LIKE 'FREE'
+        </where>
+    </sql>
+
+    <!-- 게시글 개수 -->
+    <select id="totalAttachedCount" resultType="int">
+        SELECT COUNT(ab.board_no)
+
+        FROM board_attached ab
+            LEFT JOIN base_board bb
+                ON bb.board_no = ab.board_no
+
+        <!-- 동적 조회쿼리 -->
+        <include refid="search"/>
+    </select>
+
+    <!-- 자료실 전체조회 -->
+    <select id="getAttachedArticle" resultType="BoardDTO">
+        SELECT
+            ab.board_no AS boardNo,
+            bb.board_content AS boardContent,
+            bb.board_title AS boardTitle,
+            bb.board_writer AS boardWriter,
+            bb.board_view AS boardView,
+            bb.board_reg_date AS boardRegDate,
+            bb.board_mod_date AS boardModDate,
+            bb.category_board AS categoryBoard
+
+        FROM board_attached ab
+            LEFT JOIN base_board bb
+                ON ab.board_no = bb.board_no
+
+        <!-- 동적 조회쿼리 -->
+        <include refid="search"/>
+
+        ORDER BY ab.board_no DESC
+
+        LIMIT #{skip}, #{size}
+    </select>
+
+    <!-- 자료실 특정게시글 -->
+    <select id="getAttachedViewArticle" resultType="BoardDTO">
+        SELECT
+            ab.board_no AS boardNo,
+            bb.board_content AS boardContent,
+            bb.board_title AS boardTitle,
+            bb.board_writer AS boardWriter,
+            bb.board_view AS boardView,
+            bb.board_reg_date AS boardRegDate,
+            bb.board_mod_date AS boardModDate,
+            bb.category_board AS categoryBoard
+
+        FROM board_attached ab
+            LEFT JOIN base_board bb
+                ON ab.board_no = bb.board_no
+
+        WHERE
+            ab.board_no = #{boardNo}
+    </select>
+
+    <!-- 첨부파일 등록 -->
     <insert id="postAttachedArticle">
         INSERT INTO
             board_attached (board_no,
@@ -16,4 +94,13 @@
              #{attachedOriginalName},
              #{attachedPath})
     </insert>
+
+    <!-- 자료실 삭제 -->
+    <delete id="deleteAttached">
+        DELETE FROM
+            board_attached
+
+        WHERE
+            board_no = #{boardNo};
+    </delete>
 </mapper>
