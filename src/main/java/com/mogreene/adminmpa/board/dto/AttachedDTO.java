@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 파일 DTO
+ * @author mogreene
  */
 @Data
 @Builder

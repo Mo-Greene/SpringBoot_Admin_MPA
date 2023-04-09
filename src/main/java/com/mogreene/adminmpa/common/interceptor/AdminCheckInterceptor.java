@@ -28,10 +28,10 @@ public class AdminCheckInterceptor implements HandlerInterceptor {
 
         HttpSession session = request.getSession();
         String admin = (String) session.getAttribute("admin");
-        String requestURI = request.getRequestURI();
+        String redirectUrl = request.getRequestURI().substring(1);
 
         if (admin == null) {
-            response.sendRedirect("/login?redirectURL=" + requestURI);
+            response.sendRedirect("/login?redirect=" + redirectUrl);
             return false;
         }
 

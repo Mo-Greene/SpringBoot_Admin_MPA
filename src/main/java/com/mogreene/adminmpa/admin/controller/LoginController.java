@@ -5,9 +5,10 @@ import com.mogreene.adminmpa.admin.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +32,10 @@ public class LoginController {
      * @return login.html
      */
     @GetMapping("/login")
-    public String getLogin() {
+    public String getLogin(@RequestParam("redirect") String redirectUrl,
+                           Model model) {
+
+        model.addAttribute("redirect", redirectUrl);
         return "login/login";
     }
 
@@ -43,7 +47,8 @@ public class LoginController {
     @PostMapping("/login")
     public String login(@Valid AdminDTO adminDTO,
                         HttpSession session,
-                        HttpServletResponse response) {
+                        HttpServletResponse response,
+                        @RequestParam String redirect) {
 
         try {
             adminService.loginAdmin(adminDTO);
@@ -55,8 +60,7 @@ public class LoginController {
 
             session.setAttribute("admin", "관리자");
 
-            // TODO: 2023/04/04 바로전 파라미터를 받아서 넘겨줘야될듯함
-            return "board/boardList";
+            return "redirect:/" + redirect;
         } catch (UserPrincipalNotFoundException e) {
             throw new RuntimeException(e);
         }

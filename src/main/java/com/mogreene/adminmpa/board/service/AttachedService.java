@@ -33,6 +33,7 @@ public class AttachedService {
     private final AttachedRepository attachedRepository;
     private final BoardUtil boardUtil;
 
+    //파일 저장 경로
     @Value("${mogreene.upload.path}")
     private String uploadPath;
 
@@ -88,27 +89,17 @@ public class AttachedService {
     }
 
     /**
-     * 자료실 게시글 등록
-     * @param boardDTO
-     * @return
-     */
-    public void postAttached(BoardDTO boardDTO) {
-
-        //base_board 등록
-        baseRepository.postArticle(boardDTO);
-    }
-
-    /**
      * 다중 파일 업로드
      * @param boardDTO
      */
-    public void uploadFile(BoardDTO boardDTO, MultipartFile[] files) throws IOException {
+    public void uploadArticle(BoardDTO boardDTO, MultipartFile[] files) throws IOException {
 
+        //게시글 등록
         baseRepository.postArticle(boardDTO);
 
         for (MultipartFile file : files) {
-            //파일이 존재 하지 않을 경우 넘어감
             // TODO: 2023/04/07 파일 확장자명 구분 추가해야됨
+            //파일이 존재 하지 않을 경우 넘어감
             if (file.isEmpty()) {
                 continue;
             }

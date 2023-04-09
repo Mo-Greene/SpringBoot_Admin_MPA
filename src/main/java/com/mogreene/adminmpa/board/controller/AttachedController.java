@@ -93,9 +93,8 @@ public class AttachedController {
         //boardWriter => 세션에서 "admin" 값으로
         boardUtil.setBoardWriter(boardDTO, session);
 
-        //게시글 등록 (제목 + 내용)
-        attachedService.postAttached(boardDTO);
-        attachedService.uploadFile(boardDTO, files);
+        //게시글 + 첨부파일 등록 (제목 + 내용)
+        attachedService.uploadArticle(boardDTO, files);
 
         return "board/attached/attachedList";
     }
