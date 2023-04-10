@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.core.io.Resource;
 
 /**
  * 파일 DTO
@@ -34,4 +35,19 @@ public class AttachedDTO {
      * 파일 경로
      */
     private String attachedPath;
+
+    /**
+     * 파일 pk
+     */
+    private Long attachedNo;
+
+    /**
+     * 파일 다운로드 리소스
+     */
+    private Resource resource;
+
+    /**
+     * 파일 헤더
+     */
+    private String contentDisposition;
 }

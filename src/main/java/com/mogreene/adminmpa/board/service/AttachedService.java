@@ -10,11 +10,14 @@ import com.mogreene.adminmpa.board.util.BoardUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -45,6 +48,7 @@ public class AttachedService {
     public List<BoardDTO> getAttachedArticle(PageRequestDTO pageRequestDTO) {
 
         List<BoardDTO> list = attachedRepository.getAttachedArticle(pageRequestDTO);
+
         boardUtil.skipTitle(list);
 
         return list;
@@ -76,6 +80,16 @@ public class AttachedService {
         baseRepository.viewUpdate(boardNo);
 
         return attachedRepository.getAttachedViewArticle(boardNo);
+    }
+
+    /**
+     * 첨부파일 리스트
+     * @param boardNo
+     * @return
+     */
+    public List<AttachedDTO> getAttached(Long boardNo) {
+
+        return attachedRepository.getAttached(boardNo);
     }
 
     /**
@@ -146,6 +160,24 @@ public class AttachedService {
             uploadPathFolder.mkdirs();
         }
         return folderPath;
+    }
+
+    /**
+     * 첨부파일 다운로드
+     * @param attachedNo
+     * @return
+     */
+    public AttachedDTO downloadAttached(Long attachedNo) throws IOException {
+
+        AttachedDTO attachedDTO = attachedRepository.downloadAttached(attachedNo);
+        UrlResource resource = new UrlResource("file:" + attachedDTO.getAttachedPath());
+        String encodeName = UriUtils.encode(attachedDTO.getAttachedOriginalName(), StandardCharsets.UTF_8);
+        String contentDisposition = "attachment; filename=\"" + encodeName + "\"";
+
+        attachedDTO.setResource(resource);
+        attachedDTO.setContentDisposition(contentDisposition);
+
+        return attachedDTO;
     }
 
     /**

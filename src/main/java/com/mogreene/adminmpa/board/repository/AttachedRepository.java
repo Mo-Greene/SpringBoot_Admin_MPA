@@ -46,4 +46,18 @@ public interface AttachedRepository {
      * @return
      */
     int deleteAttached(Long boardNo);
+
+    /**
+     * 첨부파일 조회
+     * @param boardNo
+     * @return
+     */
+    List<AttachedDTO> getAttached(Long boardNo);
+
+    /**
+     * 첨부파일 다운로드
+     * @param attachedNo
+     * @return
+     */
+    AttachedDTO downloadAttached(Long attachedNo);
 }

@@ -14,7 +14,7 @@
     </insert>
 
     <!-- 댓글 조회 -->
-    <select id="getReply" resultType="ReplyDTO" parameterType="ReplyDTO">
+    <select id="getReply" resultType="ReplyDTO">
         SELECT
             r.reply_content,
             r.reply_reg_date

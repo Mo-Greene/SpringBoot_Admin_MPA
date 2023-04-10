@@ -6,56 +6,50 @@
     <sql id="search">
         <where>
             <if test="keyword != null and keyword.length > 0">
-                bb.board_title LIKE CONCAT('%', #{keyword}, '%')
-                OR bb.board_content LIKE CONCAT('%', #{keyword}, '%')
-                OR bb.board_writer LIKE CONCAT('%', #{keyword}, '%')
+                board_title LIKE CONCAT('%', #{keyword}, '%')
+                OR board_content LIKE CONCAT('%', #{keyword}, '%')
+                OR board_writer LIKE CONCAT('%', #{keyword}, '%')
             </if>
             <if test="categoryBoard != null and categoryBoard.length > 0">
                 <trim prefix="and">
-                    bb.category_board LIKE #{categoryBoard}
+                    category_board LIKE #{categoryBoard}
                 </trim>
             </if>
             <if test="startDate != null and endDate != null">
                 <trim prefix="and">
-                    bb.board_reg_date BETWEEN date(#{startDate}) AND date(#{endDate})
+                    board_reg_date BETWEEN date(#{startDate}) AND date(#{endDate})
                 </trim>
             </if>
-            AND bb.category_board LIKE 'FREE'
+            AND category_board LIKE 'ATTACHED'
         </where>
     </sql>
 
     <!-- 게시글 개수 -->
     <select id="totalAttachedCount" resultType="int">
-        SELECT COUNT(ab.board_no)
+        SELECT COUNT(board_no)
 
-        FROM board_attached ab
-            LEFT JOIN base_board bb
-                ON bb.board_no = ab.board_no
+        FROM base_board
 
-        <!-- 동적 조회쿼리 -->
         <include refid="search"/>
     </select>
 
-    <!-- 자료실 전체조회 -->
+    <!-- todo 현재 자료만 있는 테이블과 연관관계가 이상하게 묶였다. 내생각엔 attached만 모아놓은 테이블로 바꾸고 새로 만들어서 연관관계를 맺어야될것같다. -->
     <select id="getAttachedArticle" resultType="BoardDTO">
         SELECT
-            ab.board_no AS boardNo,
-            bb.board_content AS boardContent,
-            bb.board_title AS boardTitle,
-            bb.board_writer AS boardWriter,
-            bb.board_view AS boardView,
-            bb.board_reg_date AS boardRegDate,
-            bb.board_mod_date AS boardModDate,
-            bb.category_board AS categoryBoard
+            board_no AS boardNo,
+            board_content AS boardContent,
+            board_title AS boardTitle,
+            board_writer AS boardWriter,
+            board_view AS boardView,
+            board_reg_date AS boardRegDate,
+            board_mod_date AS boardModDate,
+            category_board AS categoryBoard
 
-        FROM board_attached ab
-            LEFT JOIN base_board bb
-                ON ab.board_no = bb.board_no
+        FROM base_board
 
-        <!-- 동적 조회쿼리 -->
         <include refid="search"/>
 
-        ORDER BY ab.board_no DESC
+        ORDER BY board_no DESC
 
         LIMIT #{skip}, #{size}
     </select>
@@ -63,21 +57,18 @@
     <!-- 자료실 특정게시글 -->
     <select id="getAttachedViewArticle" resultType="BoardDTO">
         SELECT
-            ab.board_no AS boardNo,
-            bb.board_content AS boardContent,
-            bb.board_title AS boardTitle,
-            bb.board_writer AS boardWriter,
-            bb.board_view AS boardView,
-            bb.board_reg_date AS boardRegDate,
-            bb.board_mod_date AS boardModDate,
-            bb.category_board AS categoryBoard
+            board_no AS boardNo,
+            board_content AS boardContent,
+            board_title AS boardTitle,
+            board_writer AS boardWriter,
+            board_view AS boardView,
+            board_reg_date AS boardRegDate,
+            board_mod_date AS boardModDate,
+            category_board AS categoryBoard
 
-        FROM board_attached ab
-            LEFT JOIN base_board bb
-                ON ab.board_no = bb.board_no
+        FROM base_board
 
-        WHERE
-            ab.board_no = #{boardNo}
+        WHERE board_no = #{boardNo}
     </select>
 
     <!-- 첨부파일 등록 -->
@@ -94,6 +85,24 @@
              #{attachedOriginalName},
              #{attachedPath})
     </insert>
+
+    <!-- 첨부파일 리스트 -->
+    <select id="getAttached" parameterType="long" resultType="AttachedDTO">
+        SELECT *
+
+        FROM board_attached
+
+        WHERE board_no = #{boardNo};
+    </select>
+
+    <!-- 파일 다운 -->
+    <select id="downloadAttached" parameterType="Long" resultType="AttachedDTO">
+        SELECT *
+
+        FROM board_attached
+
+        WHERE attached_no = #{attachedNo};
+    </select>
 
     <!-- 자료실 삭제 -->
     <delete id="deleteAttached">

@@ -6,6 +6,8 @@ import com.mogreene.adminmpa.board.dto.page.PageResponseDTO;
 import com.mogreene.adminmpa.board.service.FreeService;
 import com.mogreene.adminmpa.board.util.BoardUtil;
 import com.mogreene.adminmpa.common.api.ApiResponseDTO;
+import com.mogreene.adminmpa.reply.dto.ReplyDTO;
+import com.mogreene.adminmpa.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,7 @@ import java.util.List;
 public class FreeController {
 
     private final FreeService freeService;
+    private final ReplyService replyService;
     private final BoardUtil boardUtil;
 
     /**
@@ -65,8 +68,10 @@ public class FreeController {
     public String getFreeView(@PathVariable Long boardNo, Model model) {
 
         BoardDTO dto = freeService.getFreeViewArticle(boardNo);
+        List<ReplyDTO> replyDtoList = replyService.getReply(boardNo);
 
         model.addAttribute("dto", dto);
+        model.addAttribute("replyDto", replyDtoList);
         return "board/free/freeView";
     }
 
@@ -99,7 +104,7 @@ public class FreeController {
 
     /**
      * 자유게시판 수정페이지 이동
-     * @param boardNo\
+     * @param boardNo
      * @param model
      * @return
      */

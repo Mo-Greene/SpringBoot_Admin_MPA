@@ -1,16 +1,26 @@
 package com.mogreene.adminmpa.board.controller;
 
+import com.mogreene.adminmpa.board.dto.AttachedDTO;
 import com.mogreene.adminmpa.board.dto.BoardDTO;
 import com.mogreene.adminmpa.board.dto.page.PageRequestDTO;
 import com.mogreene.adminmpa.board.dto.page.PageResponseDTO;
 import com.mogreene.adminmpa.board.service.AttachedService;
 import com.mogreene.adminmpa.board.util.BoardUtil;
+import com.mogreene.adminmpa.reply.dto.ReplyDTO;
+import com.mogreene.adminmpa.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -28,6 +38,7 @@ import java.util.List;
 public class AttachedController {
 
     private final AttachedService attachedService;
+    private final ReplyService replyService;
     private final BoardUtil boardUtil;
 
     /**
@@ -54,13 +65,40 @@ public class AttachedController {
         return "board/attached/attachedList";
     }
 
+    /**
+     * 자료실 특정게시글 조회
+     * @param boardNo
+     * @param model
+     * @return
+     */
     @GetMapping("/attached/{boardNo}")
     public String getAttachedView(@PathVariable Long boardNo, Model model) {
 
         BoardDTO dto = attachedService.getAttachedViewArticle(boardNo);
+        List<AttachedDTO> attachedDtoList = attachedService.getAttached(boardNo);
+        List<ReplyDTO> replyDtoList = replyService.getReply(boardNo);
 
         model.addAttribute("dto", dto);
+        model.addAttribute("attachedDto", attachedDtoList);
+        model.addAttribute("replyDto", replyDtoList);
         return "board/attached/attachedView";
+    }
+
+    /**
+     * 파일 다운로드
+     * @param attachedNo
+     * @return
+     * @throws IOException
+     */
+    @GetMapping("/download/{attachedNo}")
+    public ResponseEntity<Resource> fileDown(@PathVariable Long attachedNo) throws IOException {
+
+        AttachedDTO attachedDTO = attachedService.downloadAttached(attachedNo);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, attachedDTO.getContentDisposition())
+                .body(attachedDTO.getResource());
     }
 
     /**

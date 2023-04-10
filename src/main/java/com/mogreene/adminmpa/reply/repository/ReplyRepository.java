@@ -20,8 +20,8 @@ public interface ReplyRepository {
 
     /**
      * 댓글 조회
-     * @param replyDTO
+     * @param boardNo
      * @return
      */
-    List<ReplyDTO> getReply(ReplyDTO replyDTO);
+    List<ReplyDTO> getReply(Long boardNo);
 }

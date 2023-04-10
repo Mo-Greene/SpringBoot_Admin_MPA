@@ -6,6 +6,7 @@ import com.mogreene.adminmpa.board.dto.page.PageResponseDTO;
 import com.mogreene.adminmpa.board.repository.BaseRepository;
 import com.mogreene.adminmpa.board.repository.FreeRepository;
 import com.mogreene.adminmpa.board.util.BoardUtil;
+import com.mogreene.adminmpa.reply.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -36,6 +36,26 @@
                         <textarea class="form-control col-sm-5" rows="5" readonly>[[ ${dto.boardContent} ]]</textarea>
                     </div>
 
+                    <div class="replyContent">
+                        <div id="replyList">
+                            <th:block th:if="${replyDto != null}" th:each="reply:${replyDto}">
+                                <div class="row justify-content-start px-2 pt-2"
+                                     th:text="${reply.replyRegDate}">
+                                </div>
+                                <div class="row border-bottom px-2 pb-3 text-break">
+                                    [[ ${reply.replyContent} ]]
+                                </div>
+                            </th:block>
+                        </div>
+                        <form>
+                            <input type="hidden" id="boardNo" th:value="${dto.boardNo}">
+                            <div class="card">
+                                <div class="card-body"><textarea class="form-control" rows="1" id="replyContent"></textarea></div>
+                                <div class="card-footer"><button class="btn btn-primary" id="btn-reply-save">등록</button></div>
+                            </div>
+                        </form>
+                    </div>
+
                     <div class="my-4">
                         <div class="float-end">
                             <a th:href="@{/free}" class="text-decoration-none">

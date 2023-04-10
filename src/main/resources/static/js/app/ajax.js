@@ -16,6 +16,11 @@ var main = {
         $('#btn-delete').on('click', function () {
             _this.delete();
         });
+
+        // 댓글 등록
+        $('#btn-reply-save').on('click', function () {
+            _this.replySave();
+        });
     },
     /**
      * 게시글 등록
@@ -77,7 +82,7 @@ var main = {
     /**
      * 게시글 삭제
      */
-    delete: function () {
+    delete : function () {
         const boardNo = $('#boardNo').val();
         const category = $('#urlCategory').val();
 
@@ -97,6 +102,29 @@ var main = {
                 alert('게시글 삭제실패')
                 window.location.href = '/' + category
             }
+        })
+    },
+    /**
+     * 댓글 등록 todo reload 없이 구현해봅시다.
+     */
+    replySave: function () {
+        const boardNo = $('#boardNo').val();
+        const data = {
+            replyContent: $('#replyContent').val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/reply/' + boardNo,
+            dataType: 'JSON',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data),
+            success: function () {
+                window.alert('등록 성공')
+            },
+            error: function () {
+                alert('등록 실패!');
+            },
         })
     },
 }
