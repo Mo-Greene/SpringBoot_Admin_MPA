@@ -7,6 +7,35 @@
 
     <div class="row mt-3">
         <div class="col">
+            <form action="/attached" method="get">
+                <div class="row">
+                    <div class="col">
+                        <input type="hidden" name="categoryBoard" value="ATTACHED">
+
+                        <div>
+                            <input type="date" class="form-control" name="startDate">
+                        </div>
+                        <div>
+                            ~
+                        </div>
+                        <div>
+                            <input type="date" class="form-control" name="endDate">
+                        </div>
+
+                        <div>
+                            <input type="text" class="form-control" name="keyword">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary searchBtn" type="submit">검색</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
             <div class="card">
                 <div class="card-header">
                     자료실
@@ -42,4 +71,25 @@
         </div>
     </div>
 
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:if="${pagination.prev}">
+                <a class="page-link" th:href="@{/attached(page=${pagination.startPage - 1})}">이전</a>
+            </li>
+
+            <th:block th:each="i : ${#numbers.sequence(pagination.startPage, pagination.endPage)}">
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/attached(page=${i})}">[[ ${i} ]]</a>
+                </li>
+            </th:block>
+
+            <li class="page-item" th:if="${pagination.next}">
+                <a class="page-link" th:href="@{/attached(page=${pagination.endPage + 1})}">다음</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="col text-center">
+        <a href="/attached/write" role="button" class="btn btn-primary">글쓰기</a>
+    </div>
 </div>

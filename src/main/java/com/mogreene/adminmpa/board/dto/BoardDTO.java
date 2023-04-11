@@ -64,4 +64,9 @@ public class BoardDTO {
      * 게시글 분류 카테고리
      */
     private String categoryBoard;
+
+    /**
+     * 파일 존재 유무
+     */
+    public boolean isExistAttached = false;
 }

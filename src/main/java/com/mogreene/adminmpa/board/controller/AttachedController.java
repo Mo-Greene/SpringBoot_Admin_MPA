@@ -134,7 +134,7 @@ public class AttachedController {
         //게시글 + 첨부파일 등록 (제목 + 내용)
         attachedService.uploadArticle(boardDTO, files);
 
-        return "board/attached/attachedList";
+        return "redirect:/attached";
     }
 
     /**
@@ -148,8 +148,10 @@ public class AttachedController {
                                         Model model) {
 
         BoardDTO dto = attachedService.getAttachedModify(boardNo);
+        List<AttachedDTO> attachedDtoList = attachedService.getAttached(boardNo);
 
         model.addAttribute("dto", dto);
+        model.addAttribute("attachedDto", attachedDtoList);
         return "board/attached/attachedModify";
     }
 

@@ -34,6 +34,7 @@
     </select>
 
     <!-- todo 현재 자료만 있는 테이블과 연관관계가 이상하게 묶였다. 내생각엔 attached만 모아놓은 테이블로 바꾸고 새로 만들어서 연관관계를 맺어야될것같다. -->
+    <!-- 자료실 전체조회 -->
     <select id="getAttachedArticle" resultType="BoardDTO">
         SELECT
             board_no AS boardNo,
