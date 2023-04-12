@@ -122,7 +122,6 @@ public class AttachedController {
                                @RequestParam MultipartFile[] files,
                                HttpSession session) throws IOException {
 
-        // TODO: 2023/04/07 예외처리 필요
         //파일이 없을 경우 throw
         if (files[0].isEmpty() && files[1].isEmpty() && files[2].isEmpty()) {
             throw new RuntimeException("파일은 하나라도 존재 해야함");

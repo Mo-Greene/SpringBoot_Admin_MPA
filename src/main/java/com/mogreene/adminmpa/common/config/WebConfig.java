@@ -22,7 +22,5 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new AdminCheckInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/", "/login", "/js/**", "/css/**", "/assets/**");
-
-        // TODO: 2023/04/07 인터셉터로 session값을 보내줘서 화면에서 login, logout 구분하기
     }
 }
