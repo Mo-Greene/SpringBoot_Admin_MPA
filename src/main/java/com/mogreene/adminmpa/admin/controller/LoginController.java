@@ -35,6 +35,7 @@ public class LoginController {
     public String getLogin(@RequestParam("redirect") String redirectUrl,
                            Model model) {
 
+        // TODO: 2023/04/13 세션으로 변경해보자
         model.addAttribute("redirect", redirectUrl);
         return "login/login";
     }
@@ -79,7 +80,6 @@ public class LoginController {
         session.removeAttribute("admin");
         session.invalidate();
 
-        // TODO: 2023/04/02 로그아웃 후 보통 전체게시글을 보여주지 않나?
         return "redirect:/login";
     }
 }

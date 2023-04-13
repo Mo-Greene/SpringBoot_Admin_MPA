@@ -33,6 +33,8 @@ public class AdminCheckInterceptor implements HandlerInterceptor {
         String redirectUrl = request.getRequestURI().substring(1);
 
         if (admin == null) {
+            //세션으로 리다이렉트 보내주기
+            session.setAttribute("redirect", redirectUrl);
             response.sendRedirect("/login?redirect=" + redirectUrl);
             return false;
         }
