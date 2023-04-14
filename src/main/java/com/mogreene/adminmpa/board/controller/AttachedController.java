@@ -6,21 +6,20 @@ import com.mogreene.adminmpa.board.dto.page.PageRequestDTO;
 import com.mogreene.adminmpa.board.dto.page.PageResponseDTO;
 import com.mogreene.adminmpa.board.service.AttachedService;
 import com.mogreene.adminmpa.board.util.BoardUtil;
+import com.mogreene.adminmpa.common.api.ApiResponseDTO;
 import com.mogreene.adminmpa.reply.dto.ReplyDTO;
 import com.mogreene.adminmpa.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -163,5 +162,18 @@ public class AttachedController {
         Long boardNo = attachedService.deleteAttached(attachedNo);
 
         return "redirect:/attached/modify/" + boardNo;
+    }
+
+    /**
+     * 자료실 삭제
+     * @param boardNo
+     * @return
+     */
+    @DeleteMapping("/attached/delete/{boardNo}")
+    public ResponseEntity<?> deleteAttachedArticle(@PathVariable Long boardNo) {
+
+        attachedService.deleteAttachedArticle(boardNo);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

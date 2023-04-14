@@ -86,7 +86,6 @@ var main = {
         const boardNo = $('#boardNo').val();
         const category = $('#urlCategory').val();
 
-
         $.ajax({
             type: 'DELETE',
             url: '/' + category + '/delete/' + boardNo,
