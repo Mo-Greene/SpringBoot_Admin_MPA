@@ -114,10 +114,10 @@
             attached_no = #{attachedNo};
     </delete>
 
-    <!-- 자료실 삭제 -->
+    <!-- 자료실 게시글 삭제 -->
     <delete id="deleteAttachedArticle">
         DELETE FROM
-            board_attached
+            base_board
 
         WHERE
             board_no = #{boardNo};
