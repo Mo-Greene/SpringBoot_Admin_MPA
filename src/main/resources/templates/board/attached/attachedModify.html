@@ -41,14 +41,13 @@
                             <span class="input-group-text">내용</span>
                             <textarea class="form-control col-sm-5" id="boardContent" rows="5">[[ ${dto.boardContent} ]]</textarea>
                         </div>
-
                     </form>
 
                     <div class="row">
-                        <div class="w-100">
+                        <div class="col">
                             <th:block th:if="${attachedDto != null}" th:each="attached: ${attachedDto}">
                                 <div class="card-text" th:text="${attached.attachedOriginalName}"></div>
-                                <button type="button" class="btn btn-danger">삭제</button>
+                                <a th:href="@{/attached/delete/{attachedNo}(attachedNo=${attached.attachedNo})}" class="btn btn-danger">파일삭제</a>
                             </th:block>
                         </div>
                     </div>

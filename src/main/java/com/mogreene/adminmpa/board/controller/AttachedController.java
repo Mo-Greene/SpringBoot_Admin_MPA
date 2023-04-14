@@ -154,5 +154,14 @@ public class AttachedController {
         return "board/attached/attachedModify";
     }
 
-    // TODO: 2023/04/07 수정, 삭제는 생각 후 구현
+    /**
+     * 파일삭제
+     */
+    @GetMapping("/attached/delete/{attachedNo}")
+    public String deleteAttached(@PathVariable Long attachedNo) {
+
+        Long boardNo = attachedService.deleteAttached(attachedNo);
+
+        return "redirect:/attached/modify/" + boardNo;
+    }
 }

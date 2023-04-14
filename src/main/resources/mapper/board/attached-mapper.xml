@@ -96,8 +96,8 @@
         WHERE board_no = #{boardNo};
     </select>
 
-    <!-- 파일 다운 -->
-    <select id="downloadAttached" parameterType="Long" resultType="AttachedDTO">
+    <!-- 단일 파일 조회 -->
+    <select id="getSingleAttached" parameterType="Long" resultType="AttachedDTO">
         SELECT *
 
         FROM board_attached
@@ -105,8 +105,17 @@
         WHERE attached_no = #{attachedNo};
     </select>
 
+    <!-- 파일 삭제 -->
+    <delete id="deleteSingleAttached">
+        DELETE FROM
+            board_attached
+
+        WHERE
+            attached_no = #{attachedNo};
+    </delete>
+
     <!-- 자료실 삭제 -->
-    <delete id="deleteAttached">
+    <delete id="deleteAttachedArticle">
         DELETE FROM
             board_attached
 

@@ -45,7 +45,7 @@ public interface AttachedRepository {
      * @param boardNo
      * @return
      */
-    int deleteAttached(Long boardNo);
+    int deleteAttachedArticle(Long boardNo);
 
     /**
      * 첨부파일 조회
@@ -55,9 +55,16 @@ public interface AttachedRepository {
     List<AttachedDTO> getAttached(Long boardNo);
 
     /**
-     * 첨부파일 다운로드
+     * 단일 첨부파일 조회
      * @param attachedNo
      * @return
      */
-    AttachedDTO downloadAttached(Long attachedNo);
+    AttachedDTO getSingleAttached(Long attachedNo);
+
+    /**
+     * 파일 삭제
+     * @param attachedNo
+     * @return
+     */
+    int deleteSingleAttached(Long attachedNo);
 }

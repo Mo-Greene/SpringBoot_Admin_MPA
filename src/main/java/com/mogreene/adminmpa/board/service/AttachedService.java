@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriUtils;
 
@@ -169,7 +170,7 @@ public class AttachedService {
      */
     public AttachedDTO downloadAttached(Long attachedNo) throws IOException {
 
-        AttachedDTO attachedDTO = attachedRepository.downloadAttached(attachedNo);
+        AttachedDTO attachedDTO = attachedRepository.getSingleAttached(attachedNo);
         UrlResource resource = new UrlResource("file:" + attachedDTO.getAttachedPath());
         String encodeName = UriUtils.encode(attachedDTO.getAttachedOriginalName(), StandardCharsets.UTF_8);
         String contentDisposition = "attachment; filename=\"" + encodeName + "\"";
@@ -201,11 +202,33 @@ public class AttachedService {
      */
     public void deleteAttachedArticle(Long boardNo) throws IllegalArgumentException {
 
-        int deleteCheck = attachedRepository.deleteAttached(boardNo);
+        int deleteCheck = attachedRepository.deleteAttachedArticle(boardNo);
 
         // TODO: 2023/04/07 예외처리 필
         if (deleteCheck == 0) {
             throw new IllegalArgumentException("자료실 게시글 삭제 실패");
         }
+    }
+
+    /**
+     * 첨부파일 삭제
+     * @param attachedNo
+     * @return
+     */
+    @Transactional
+    public Long deleteAttached(Long attachedNo) {
+
+        AttachedDTO attachedDTO = attachedRepository.getSingleAttached(attachedNo);
+        Long boardNo = attachedDTO.getBoardNo();
+
+        File file = new File(attachedDTO.getAttachedPath());
+        attachedRepository.deleteSingleAttached(attachedNo);
+        boolean isFileDeleted = file.delete();
+
+        if (!isFileDeleted) {
+            throw new RuntimeException("파일삭제 오류");
+        }
+
+        return boardNo;
     }
 }
