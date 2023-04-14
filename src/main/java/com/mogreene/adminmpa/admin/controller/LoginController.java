@@ -32,11 +32,12 @@ public class LoginController {
      * @return login.html
      */
     @GetMapping("/login")
-    public String getLogin(@RequestParam("redirect") String redirectUrl,
+    public String getLogin(HttpSession session,
                            Model model) {
 
-        // TODO: 2023/04/13 세션으로 변경해보자
-        model.addAttribute("redirect", redirectUrl);
+        String redirect = (String) session.getAttribute("redirect");
+
+        model.addAttribute("redirect", redirect);
         return "login/login";
     }
 

@@ -35,7 +35,7 @@ public class AdminCheckInterceptor implements HandlerInterceptor {
         if (admin == null) {
             //세션으로 리다이렉트 보내주기
             session.setAttribute("redirect", redirectUrl);
-            response.sendRedirect("/login?redirect=" + redirectUrl);
+            response.sendRedirect("/login");
             return false;
         }
 
