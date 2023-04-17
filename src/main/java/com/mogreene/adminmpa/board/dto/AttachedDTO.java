@@ -50,4 +50,9 @@ public class AttachedDTO {
      * 파일 헤더
      */
     private String contentDisposition;
+
+    /**
+     * 첨부파일 개수
+     */
+    private int attachedCount;
 }

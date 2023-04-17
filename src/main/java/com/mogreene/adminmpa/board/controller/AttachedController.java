@@ -6,7 +6,6 @@ import com.mogreene.adminmpa.board.dto.page.PageRequestDTO;
 import com.mogreene.adminmpa.board.dto.page.PageResponseDTO;
 import com.mogreene.adminmpa.board.service.AttachedService;
 import com.mogreene.adminmpa.board.util.BoardUtil;
-import com.mogreene.adminmpa.common.api.ApiResponseDTO;
 import com.mogreene.adminmpa.reply.dto.ReplyDTO;
 import com.mogreene.adminmpa.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 자료실 게시판
@@ -129,7 +131,10 @@ public class AttachedController {
         //boardWriter => 세션에서 "admin" 값으로
         boardUtil.setBoardWriter(boardDTO, session);
 
-        //게시글 + 첨부파일 등록 (제목 + 내용)
+        //게시글 등록
+        attachedService.postAttachedArticle(boardDTO);
+
+        //첨부파일 등록 (제목 + 내용)
         attachedService.uploadArticle(boardDTO, files);
 
         return "redirect:/attached";
@@ -147,10 +152,37 @@ public class AttachedController {
 
         BoardDTO dto = attachedService.getAttachedModify(boardNo);
         List<AttachedDTO> attachedDtoList = attachedService.getAttached(boardNo);
+        int attachedCount = attachedService.attachedCount(boardNo);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("attachedDto", attachedDtoList);
+        response.put("attachedCount", attachedCount);
 
         model.addAttribute("dto", dto);
-        model.addAttribute("attachedDto", attachedDtoList);
+        model.addAttribute("response", response);
         return "board/attached/attachedModify";
+    }
+
+    /**
+     * 자료실 수정
+     * @param boardDTO
+     * @param files
+     */
+    @PostMapping("/attached/modify")
+    public String modifyAttachedArticle(BoardDTO boardDTO,
+                                        @RequestPart MultipartFile[] files) throws IOException {
+
+        //파일이 없을 경우 throw
+        if (files[0].isEmpty() && files[1].isEmpty() && files[2].isEmpty()) {
+            throw new RuntimeException("파일은 하나라도 존재 해야함");
+        }
+
+        attachedService.modifyAttachedArticle(boardDTO);
+        attachedService.uploadArticle(boardDTO, files);
+
+        Long boardUrl = boardDTO.getBoardNo();
+
+        return "redirect:/attached/" + boardUrl;
     }
 
     /**

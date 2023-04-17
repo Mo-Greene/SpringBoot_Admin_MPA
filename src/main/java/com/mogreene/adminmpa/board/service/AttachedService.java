@@ -94,6 +94,16 @@ public class AttachedService {
     }
 
     /**
+     * 첨부파일 개수
+     * @param boardNo
+     * @return
+     */
+    public int attachedCount(Long boardNo) {
+
+        return attachedRepository.attachedCount(boardNo);
+    }
+
+    /**
      * 자료실 특정게시글 수정조회(조회수 증가x)
      * @param boardNo
      * @return
@@ -104,13 +114,19 @@ public class AttachedService {
     }
 
     /**
+     * 게시글 등록
+     * @param boardDTO
+     */
+    public void postAttachedArticle(BoardDTO boardDTO) {
+
+        baseRepository.postArticle(boardDTO);
+    }
+
+    /**
      * 다중 파일 업로드
      * @param boardDTO
      */
     public void uploadArticle(BoardDTO boardDTO, MultipartFile[] files) throws IOException {
-
-        //게시글 등록
-        baseRepository.postArticle(boardDTO);
 
         for (MultipartFile file : files) {
             // TODO: 2023/04/07 파일 확장자명 구분 추가해야됨
@@ -218,9 +234,11 @@ public class AttachedService {
     @Transactional
     public Long deleteAttached(Long attachedNo) {
 
+        //첨부파일 조회
         AttachedDTO attachedDTO = attachedRepository.getSingleAttached(attachedNo);
         Long boardNo = attachedDTO.getBoardNo();
 
+        //첨부파일 삭제
         File file = new File(attachedDTO.getAttachedPath());
         attachedRepository.deleteSingleAttached(attachedNo);
         boolean isFileDeleted = file.delete();

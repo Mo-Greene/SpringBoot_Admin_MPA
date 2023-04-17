@@ -12,17 +12,17 @@
                 </div>
                 <div class="card-body">
 
-                    <form>
-                        <input type="hidden" id="boardNo" th:value="${dto.boardNo}">
-                        <input type="hidden" id="categoryBoard" th:value="${dto.categoryBoard}">
-                        <input type="hidden" id="urlCategory" th:value="attached">
+                    <form action="/attached/modify" method="post" enctype="multipart/form-data">
+                        <input type="hidden" id="boardNo" name="boardNo" th:value="${dto.boardNo}">
+                        <input type="hidden" id="categoryBoard" name="categoryBoard" th:value="${dto.categoryBoard}">
+                        <input type="hidden" id="urlCategory" name="urlCategory" th:value="attached">
                         <div class="input-group mb-3">
                             <span class="input-group-text">제목</span>
-                            <input type="text" class="form-control" id="boardTitle" th:value="${dto.boardTitle}">
+                            <input type="text" class="form-control" name="boardTitle" th:value="${dto.boardTitle}">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">작성자</span>
-                            <input type="text" class="form-control" id="boardWriter" th:value="${dto.boardWriter}" readonly>
+                            <input type="text" class="form-control" name="boardWriter" th:value="${dto.boardWriter}" readonly>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">조회수</span>
@@ -39,28 +39,61 @@
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">내용</span>
-                            <textarea class="form-control col-sm-5" id="boardContent" rows="5">[[ ${dto.boardContent} ]]</textarea>
+                            <textarea class="form-control col-sm-5" name="boardContent" rows="5">[[ ${dto.boardContent} ]]</textarea>
+                        </div>
+
+                        <div class="col">
+                            <div th:if="${response.attachedCount == 0}">
+                                <div class="col-md-3">
+                                    <input class="form-control" id="file1" name="files" type="file">
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="form-control" id="file2" name="files" type="file">
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="form-control" id="file3" name="files" type="file">
+                                </div>
+                            </div>
+                            <th:block th:switch="${response.attachedCount}" th:each="attached: ${response.attachedDto}">
+                                <th:block th:case="1">
+                                    <div class="card-text" th:text="${attached.attachedOriginalName}"></div>
+                                    <a th:href="@{/attached/delete/{attachedNo}(attachedNo=${attached.attachedNo})}"
+                                       class="btn btn-danger">파일삭제</a>
+                                    <div class="col-md-3">
+                                        <input class="form-control" name="files" type="file">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input class="form-control" name="files" type="file">
+                                    </div>
+                                </th:block>
+                                <th:block th:case="2">
+                                    <div class="card-text" th:text="${attached.attachedOriginalName}"></div>
+                                    <a th:href="@{/attached/delete/{attachedNo}(attachedNo=${attached.attachedNo})}"
+                                       class="btn btn-danger">파일삭제</a>
+                                    <div class="col-md-3">
+                                        <input class="form-control" name="files" type="file">
+                                    </div>
+                                </th:block>
+                                <th:block th:case="3">
+                                    <div class="card-text" th:text="${attached.attachedOriginalName}"></div>
+                                    <a th:href="@{/attached/delete/{attachedNo}(attachedNo=${attached.attachedNo})}"
+                                       class="btn btn-danger">파일삭제</a>
+                                </th:block>
+                            </th:block>
+                        </div>
+
+                        <div class="my-4">
+                            <div class="float-end">
+                                <a th:href="@{/attached}" class="text-decoration-none">
+                                    <button type="button" class="btn btn-secondary">취소</button>
+                                </a>
+                                <button type="submit" class="btn btn-primary" id="btn-file-save">수정</button>
+                                <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
+                            </div>
                         </div>
                     </form>
 
-                    <div class="row">
-                        <div class="col">
-                            <th:block th:if="${attachedDto != null}" th:each="attached: ${attachedDto}">
-                                <div class="card-text" th:text="${attached.attachedOriginalName}"></div>
-                                <a th:href="@{/attached/delete/{attachedNo}(attachedNo=${attached.attachedNo})}" class="btn btn-danger">파일삭제</a>
-                            </th:block>
-                        </div>
-                    </div>
 
-                    <div class="my-4">
-                        <div class="float-end">
-                            <a th:href="@{/attached}" class="text-decoration-none">
-                                <button type="button" class="btn btn-secondary">취소</button>
-                            </a>
-                            <button type="button" class="btn btn-primary" id="btn-modify">수정</button>
-                            <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
-                        </div>
-                    </div>
 
                 </div><!--card body-->
             </div><!--card-->

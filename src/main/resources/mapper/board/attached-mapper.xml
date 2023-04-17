@@ -72,6 +72,15 @@
         WHERE board_no = #{boardNo}
     </select>
 
+    <!-- 첨부파일 개수 -->
+    <select id="attachedCount" resultType="int">
+        SELECT COUNT(*)
+
+        FROM board_attached
+
+        WHERE board_no = #{boardNo};
+    </select>
+
     <!-- 첨부파일 등록 -->
     <insert id="postAttachedArticle">
         INSERT INTO

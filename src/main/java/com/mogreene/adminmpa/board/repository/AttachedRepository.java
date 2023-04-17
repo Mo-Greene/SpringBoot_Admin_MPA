@@ -67,4 +67,11 @@ public interface AttachedRepository {
      * @return
      */
     int deleteSingleAttached(Long attachedNo);
+
+    /**
+     * 첨부파일 개수
+     * @param boardNo
+     * @return
+     */
+    int attachedCount(Long boardNo);
 }
