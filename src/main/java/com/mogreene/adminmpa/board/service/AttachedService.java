@@ -126,7 +126,7 @@ public class AttachedService {
      * 다중 파일 업로드
      * @param boardDTO
      */
-    public void uploadArticle(BoardDTO boardDTO, MultipartFile[] files) throws IOException {
+    public void uploadAttached(BoardDTO boardDTO, MultipartFile[] files) throws IOException {
 
         for (MultipartFile file : files) {
             // TODO: 2023/04/07 파일 확장자명 구분 추가해야됨
@@ -159,7 +159,7 @@ public class AttachedService {
                     .build();
 
             file.transferTo(new File(attachedPath));
-            attachedRepository.postAttachedArticle(attachedDTO);
+            attachedRepository.postAttached(attachedDTO);
         }
     }
 
@@ -167,6 +167,7 @@ public class AttachedService {
      * 파일 저장시 날짜별 폴더 만들어서 보관
      * @return
      */
+    // TODO: 2023/04/19 공통 유틸로 뽑아야됨
     private String makeFolder(String category) {
 
         String categoryFolder = category + "/" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd/"));

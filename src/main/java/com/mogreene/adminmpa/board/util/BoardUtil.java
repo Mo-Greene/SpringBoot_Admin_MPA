@@ -4,6 +4,9 @@ import com.mogreene.adminmpa.board.dto.BoardDTO;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -37,4 +40,20 @@ public class BoardUtil {
         }
     }
 
+    // TODO: 2023/04/19  공통 유틸로 뽑아야됨
+//    /**
+//     * 파일 저장시 날짜별 폴더 만들어서 보관
+//     * @return
+//     */
+//    public String makeFolder(String category) {
+//
+//        String categoryFolder = category + "/" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd/"));
+//        String folderPath = categoryFolder.replace("/", File.separator);
+//        File uploadPathFolder = new File(uploadPath, folderPath);
+//
+//        if (!uploadPathFolder.exists()) {
+//            uploadPathFolder.mkdirs();
+//        }
+//        return folderPath;
+//    }
 }

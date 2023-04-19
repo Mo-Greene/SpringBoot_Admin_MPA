@@ -15,9 +15,9 @@ import java.util.List;
 public interface AttachedRepository {
 
     /**
-     * 자료실 게시글 등록
+     * 자료실 첨부파일 등록
      */
-    void postAttachedArticle(AttachedDTO attachedDTO);
+    void postAttached(AttachedDTO attachedDTO);
 
     /**
      * 게시글 개수
@@ -66,7 +66,7 @@ public interface AttachedRepository {
      * @param attachedNo
      * @return
      */
-    int deleteSingleAttached(Long attachedNo);
+    void deleteSingleAttached(Long attachedNo);
 
     /**
      * 첨부파일 개수

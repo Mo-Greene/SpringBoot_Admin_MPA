@@ -62,6 +62,10 @@ public class LoginController {
 
             session.setAttribute("admin", "관리자");
 
+            // TODO: 2023/04/19 수정 필요
+            if (redirect.equals("logout")) {
+                return "redirect:/";
+            }
             return "redirect:/" + redirect;
         } catch (UserPrincipalNotFoundException e) {
             throw new RuntimeException(e);

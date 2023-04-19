@@ -8,9 +8,9 @@
     <h2>게시글 작성</h2>
 
     <div class="container">
-        <form action="/attached/write" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="urlCategory" th:value="attached">
-            <input type="hidden" name="categoryBoard" value="ATTACHED">
+        <form action="/gallery/write" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="urlCategory" th:value="gallery">
+            <input type="hidden" name="categoryBoard" value="GALLERY">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="boardTitle">Title</label>
@@ -27,18 +27,12 @@
 
             <div class="row">
                 <div class="col-md-3">
-                    <input class="form-control" id="file1" name="files" type="file">
-                </div>
-                <div class="col-md-3">
-                    <input class="form-control" id="file2" name="files" type="file">
-                </div>
-                <div class="col-md-3">
-                    <input class="form-control" id="file3" name="files" type="file">
+                    <input class="form-control" id="file" name="file" type="file">
                 </div>
             </div>
 
             <div class="col text-center">
-                <a href="/attached" role="button" class="btn btn-light">취소</a>
+                <a href="/gallery" role="button" class="btn btn-light">취소</a>
                 <button type="submit" class="btn btn-primary" id="btn-file-save">등록</button>
             </div>
         </form>

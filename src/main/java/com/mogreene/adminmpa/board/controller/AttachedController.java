@@ -134,7 +134,7 @@ public class AttachedController {
         attachedService.postAttachedArticle(boardDTO);
 
         //첨부파일 등록 (제목 + 내용)
-        attachedService.uploadArticle(boardDTO, files);
+        attachedService.uploadAttached(boardDTO, files);
 
         return "redirect:/attached";
     }
@@ -177,7 +177,7 @@ public class AttachedController {
         }
 
         attachedService.modifyAttachedArticle(boardDTO);
-        attachedService.uploadArticle(boardDTO, files);
+        attachedService.uploadAttached(boardDTO, files);
 
         Long boardUrl = boardDTO.getBoardNo();
 
