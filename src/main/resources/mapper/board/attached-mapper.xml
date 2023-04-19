@@ -82,7 +82,7 @@
     </select>
 
     <!-- 첨부파일 등록 -->
-    <insert id="postAttachedArticle">
+    <insert id="postAttached">
         INSERT INTO
             board_attached (board_no,
                             attached_name,

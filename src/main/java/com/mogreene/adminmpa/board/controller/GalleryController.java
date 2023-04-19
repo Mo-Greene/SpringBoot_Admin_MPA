@@ -1,6 +1,7 @@
 package com.mogreene.adminmpa.board.controller;
 
 import com.mogreene.adminmpa.board.dto.BoardDTO;
+import com.mogreene.adminmpa.board.service.GalleryService;
 import com.mogreene.adminmpa.board.util.BoardUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 
 /**
  * 이미지 게시판
@@ -22,6 +24,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class GalleryController {
 
+    private final GalleryService galleryService;
     private final BoardUtil boardUtil;
 
     /**
@@ -54,7 +57,7 @@ public class GalleryController {
     @PostMapping("/gallery/write")
     public String postGallery(@Valid BoardDTO boardDTO,
                               @RequestParam MultipartFile file,
-                              HttpSession session) {
+                              HttpSession session) throws IOException {
 
         if (file.isEmpty()) {
             throw new RuntimeException("파일 존재해야됨");
@@ -62,6 +65,10 @@ public class GalleryController {
 
         //boardWriter => 세션에서 "admin" 값으로
         boardUtil.setBoardWriter(boardDTO, session);
+
+        galleryService.postGalleryArticle(boardDTO);
+
+        galleryService.uploadImage(boardDTO, file);
 
         return "redirect:/gallery";
     }
