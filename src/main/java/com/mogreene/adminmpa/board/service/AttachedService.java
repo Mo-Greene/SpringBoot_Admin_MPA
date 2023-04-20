@@ -37,10 +37,6 @@ public class AttachedService {
     private final AttachedRepository attachedRepository;
     private final BoardUtil boardUtil;
 
-    //파일 저장 경로
-    @Value("${mogreene.upload.path}")
-    private String uploadPath;
-
     /**
      * 자료실 전체조회
      * @param pageRequestDTO
@@ -129,55 +125,16 @@ public class AttachedService {
     public void uploadAttached(BoardDTO boardDTO, MultipartFile[] files) throws IOException {
 
         for (MultipartFile file : files) {
-            // TODO: 2023/04/07 파일 확장자명 구분 추가해야됨
             //파일이 존재 하지 않을 경우 넘어감
             if (file.isEmpty()) {
                 continue;
             }
 
-            //첨부파일 원본 이름
-            String attachedOriginalName = file.getOriginalFilename();
+            AttachedDTO attachedDTO = boardUtil.uploadFile(boardDTO, file);
 
-            String uuid = UUID.randomUUID().toString();
-            assert attachedOriginalName != null;
-            String extension = attachedOriginalName.substring(attachedOriginalName.lastIndexOf("."));
-
-            //첨부파일 수정된 이름
-            String attachedName = uuid + extension;
-
-            String folderCategoryName = boardDTO.getCategoryBoard();
-            String folderPath = makeFolder(folderCategoryName);
-
-            //첨부파일 저장 경로
-            String attachedPath = uploadPath + folderPath + attachedName;
-
-            AttachedDTO attachedDTO = AttachedDTO.builder()
-                    .boardNo(boardDTO.getBoardNo())
-                    .attachedOriginalName(attachedOriginalName)
-                    .attachedName(attachedName)
-                    .attachedPath(attachedPath)
-                    .build();
-
-            file.transferTo(new File(attachedPath));
+            file.transferTo(new File(attachedDTO.getAttachedPath()));
             attachedRepository.postAttached(attachedDTO);
         }
-    }
-
-    /**
-     * 파일 저장시 날짜별 폴더 만들어서 보관
-     * @return
-     */
-    // TODO: 2023/04/19 공통 유틸로 뽑아야됨
-    private String makeFolder(String category) {
-
-        String categoryFolder = category + "/" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd/"));
-        String folderPath = categoryFolder.replace("/", File.separator);
-        File uploadPathFolder = new File(uploadPath, folderPath);
-
-        if (!uploadPathFolder.exists()) {
-            uploadPathFolder.mkdirs();
-        }
-        return folderPath;
     }
 
     /**
@@ -217,6 +174,7 @@ public class AttachedService {
      * @param boardNo
      * @throws IllegalArgumentException
      */
+    // TODO: 2023/04/20 게시글 전체 지우게 할건지 baseBoard에 남겨둘건지 생각
     public void deleteAttachedArticle(Long boardNo) throws IllegalArgumentException {
 
         int deleteCheck = attachedRepository.deleteAttachedArticle(boardNo);

@@ -17,7 +17,6 @@
     </insert>
 
     <!-- 게시글 수정 -->
-<!--    todo 게시글 카테고리 수정 시 어떻게 되는가에 대한 고민-->
     <update id="updateArticle" parameterType="BoardDTO">
         UPDATE
             base_board

@@ -2,20 +2,19 @@ package com.mogreene.adminmpa.board.service;
 
 import com.mogreene.adminmpa.board.dto.AttachedDTO;
 import com.mogreene.adminmpa.board.dto.BoardDTO;
+import com.mogreene.adminmpa.board.dto.page.PageRequestDTO;
+import com.mogreene.adminmpa.board.dto.page.PageResponseDTO;
 import com.mogreene.adminmpa.board.repository.BaseRepository;
 import com.mogreene.adminmpa.board.repository.GalleryRepository;
 import com.mogreene.adminmpa.board.util.BoardUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.UUID;
+import java.util.List;
 
 /**
  * 갤러리 service
@@ -30,9 +29,68 @@ public class GalleryService {
     private final GalleryRepository galleryRepository;
     private final BoardUtil boardUtil;
 
-    //파일 저장 경로
-    @Value("${mogreene.upload.path}")
-    private String uploadPath;
+    /**
+     * 갤러리 전체조회
+     * @param pageRequestDTO
+     * @return
+     */
+    public List<BoardDTO> getGalleryArticle(PageRequestDTO pageRequestDTO) {
+
+        List<BoardDTO> list = galleryRepository.getGalleryArticle(pageRequestDTO);
+
+        boardUtil.skipTitle(list);
+
+        return list;
+    }
+
+    /**
+     * 갤러리 페이지네이션
+     * @param pageRequestDTO
+     * @return
+     */
+    public PageResponseDTO pagination(PageRequestDTO pageRequestDTO) {
+
+        int total = galleryRepository.totalGalleryCount(pageRequestDTO);
+
+        return PageResponseDTO.pagination()
+                .pageRequestDTO(pageRequestDTO)
+                .total(total)
+                .build();
+    }
+
+    /**
+     * 갤러리 특정게시글 조회
+     * @param boardNo
+     * @return
+     */
+    // TODO: 2023/04/20 Transactional 공부하고 사용해야됨
+    public BoardDTO getGalleryViewArticle(Long boardNo) {
+
+        //조회수 증가
+        baseRepository.viewUpdate(boardNo);
+
+        return galleryRepository.getGalleryViewArticle(boardNo);
+    }
+
+    /**
+     * 갤러리 특정게시글 수정페이지 조회(조회수 증가 x)
+     * @param boardNo
+     * @return
+     */
+    public BoardDTO getGalleryModify(Long boardNo) {
+
+        return galleryRepository.getGalleryViewArticle(boardNo);
+    }
+
+    /**
+     * 이미지 파일
+     * @param boardNo
+     * @return
+     */
+    public AttachedDTO getImage(Long boardNo) {
+
+        return galleryRepository.getImage(boardNo);
+    }
 
     /**
      * 게시글 등록
@@ -50,44 +108,35 @@ public class GalleryService {
      */
     public void uploadImage(BoardDTO boardDTO, MultipartFile file) throws IOException {
 
-        String imageOriginalName = file.getOriginalFilename();
+        AttachedDTO attachedDTO = boardUtil.uploadFile(boardDTO, file);
 
-        String uuid = UUID.randomUUID().toString();
-        assert imageOriginalName != null;
-        String extension = imageOriginalName.substring(imageOriginalName.lastIndexOf("."));
-
-        String imageName = uuid + extension;
-
-        String folderCategoryName = boardDTO.getCategoryBoard();
-        String folderPath = makeFolder(folderCategoryName);
-
-        String imagePath = uploadPath + folderPath + imageName;
-
-        AttachedDTO attachedDTO = AttachedDTO.builder()
-                .boardNo(boardDTO.getBoardNo())
-                .attachedOriginalName(imageOriginalName)
-                .attachedName(imageName)
-                .attachedPath(imagePath)
-                .build();
-
-        file.transferTo(new File(imagePath));
+        file.transferTo(new File(attachedDTO.getAttachedPath()));
         galleryRepository.postImage(attachedDTO);
     }
 
     /**
-     * 파일 저장시 날짜별 폴더 만들어서 보관
-     * @return
+     * 갤러리 게시글 수정
+     * @param boardDTO
      */
-    // TODO: 2023/04/19 공통 유틸로 뽑야야됨
-    public String makeFolder(String category) {
+    public void modifyGalleryArticle(BoardDTO boardDTO) {
 
-        String categoryFolder = category + "/" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd/"));
-        String folderPath = categoryFolder.replace("/", File.separator);
-        File uploadPathFolder = new File(uploadPath, folderPath);
+        int baseBoardModifyCheck = baseRepository.updateArticle(boardDTO);
 
-        if (!uploadPathFolder.exists()) {
-            uploadPathFolder.mkdirs();
+        if (baseBoardModifyCheck == 0) {
+            throw new IllegalArgumentException("갤러리 수정 실패");
         }
-        return folderPath;
+    }
+
+    /**
+     * 게시글 삭제
+     * @param boardNo
+     */
+    public void deleteGalleryArticle(Long boardNo) {
+
+        int deleteCheck = galleryRepository.deleteGalleryArticle(boardNo);
+
+        if (deleteCheck == 0) {
+            throw new IllegalArgumentException("갤러리 삭제 실패");
+        }
     }
 }

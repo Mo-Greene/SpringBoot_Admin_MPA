@@ -196,7 +196,7 @@ public class AttachedController {
     }
 
     /**
-     * 자료실 삭제
+     * 자료실 게시글 삭제
      * @param boardNo
      * @return
      */
