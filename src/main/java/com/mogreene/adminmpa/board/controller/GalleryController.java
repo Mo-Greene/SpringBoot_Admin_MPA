@@ -1,19 +1,30 @@
 package com.mogreene.adminmpa.board.controller;
 
+import com.mogreene.adminmpa.board.dto.AttachedDTO;
 import com.mogreene.adminmpa.board.dto.BoardDTO;
+import com.mogreene.adminmpa.board.dto.page.PageRequestDTO;
+import com.mogreene.adminmpa.board.dto.page.PageResponseDTO;
 import com.mogreene.adminmpa.board.service.GalleryService;
 import com.mogreene.adminmpa.board.util.BoardUtil;
+import com.mogreene.adminmpa.reply.dto.ReplyDTO;
+import com.mogreene.adminmpa.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 
 /**
  * 이미지 게시판
@@ -25,6 +36,7 @@ import java.io.IOException;
 public class GalleryController {
 
     private final GalleryService galleryService;
+    private final ReplyService replyService;
     private final BoardUtil boardUtil;
 
     /**
@@ -32,9 +44,39 @@ public class GalleryController {
      * @return
      */
     @GetMapping("/gallery")
-    public String getGallery() {
+    public String getGallery(@Valid PageRequestDTO pageRequestDTO,
+                             BindingResult bindingResult,
+                             Model model) {
 
+        if (bindingResult.hasErrors()) {
+            pageRequestDTO = PageRequestDTO.builder().build();
+        }
+
+        List<BoardDTO> galleryList = galleryService.getGalleryArticle(pageRequestDTO);
+        PageResponseDTO pageResponseDTO = galleryService.pagination(pageRequestDTO);
+
+        model.addAttribute("galleryList", galleryList);
+        model.addAttribute("pagination", pageResponseDTO);
         return "board/gallery/galleryList";
+    }
+
+    /**
+     * 갤러리 특정게시글 조회
+     * @param boardNo
+     * @param model
+     * @return
+     */
+    @GetMapping("/gallery/{boardNo}")
+    public String getGalleryView(@PathVariable Long boardNo, Model model) {
+
+        BoardDTO dto = galleryService.getGalleryViewArticle(boardNo);
+        AttachedDTO attachedDTO = galleryService.getImage(boardNo);
+        List<ReplyDTO> replyDtoList = replyService.getReply(boardNo);
+
+        model.addAttribute("dto", dto);
+        model.addAttribute("attachedDto", attachedDTO);
+        model.addAttribute("replyDto", replyDtoList);
+        return "board/gallery/galleryView";
     }
 
     /**
@@ -71,5 +113,31 @@ public class GalleryController {
         galleryService.uploadImage(boardDTO, file);
 
         return "redirect:/gallery";
+    }
+
+    /**
+     * 갤러리 수정화면
+     * @param boardNo
+     * @param model
+     * @return
+     */
+    @GetMapping("/gallery/modify/{boardNo}")
+    public String getGalleryModifyView(@PathVariable Long boardNo,
+                                       Model model) {
+
+        BoardDTO dto = galleryService.getGalleryModify(boardNo);
+        AttachedDTO attachedDTO = galleryService.getImage(boardNo);
+
+        model.addAttribute("dto", dto);
+        model.addAttribute("attachedDTO", attachedDTO);
+        return "board/gallery/galleryModify";
+    }
+
+    // TODO: 2023/04/20 갤러리 수정, 삭제 구현
+    @ResponseBody
+    @GetMapping("/view/{boardNo}")
+    public Resource showImageFile(@PathVariable Long boardNo) throws IOException {
+
+        return galleryService.getImageFile(boardNo);
     }
 }

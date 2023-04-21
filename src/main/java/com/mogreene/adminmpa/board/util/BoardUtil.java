@@ -2,7 +2,10 @@ package com.mogreene.adminmpa.board.util;
 
 import com.mogreene.adminmpa.board.dto.AttachedDTO;
 import com.mogreene.adminmpa.board.dto.BoardDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +20,7 @@ import java.util.UUID;
  * 게시판 공통 util
  * @author mogreene
  */
+@Slf4j
 @Component
 public class BoardUtil {
 

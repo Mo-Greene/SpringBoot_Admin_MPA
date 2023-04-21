@@ -15,3 +15,4 @@
 #### todo 중요
 - 게시판 동적쿼리 중복이니 뽑아내서 사용가능하게
 - AND category_board LIKE '' 이부분을 #{}이걸로 고치면 될듯
+- AttacheDTO를 ImageDTO를 추가하여 만들어서 분리할지 생각해야됨

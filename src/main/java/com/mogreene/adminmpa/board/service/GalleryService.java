@@ -9,11 +9,16 @@ import com.mogreene.adminmpa.board.repository.GalleryRepository;
 import com.mogreene.adminmpa.board.util.BoardUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
 
 /**
@@ -24,6 +29,11 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class GalleryService {
+
+
+    //파일 저장 경로
+    @Value("${mogreene.upload.path}")
+    private String uploadPath;
 
     private final BaseRepository baseRepository;
     private final GalleryRepository galleryRepository;
@@ -87,9 +97,19 @@ public class GalleryService {
      * @param boardNo
      * @return
      */
+    // TODO: 2023/04/21 다르게 보내야됨
     public AttachedDTO getImage(Long boardNo) {
 
         return galleryRepository.getImage(boardNo);
+    }
+
+    public Resource getImageFile(Long boardNo) throws MalformedURLException {
+
+        AttachedDTO attachedDTO = galleryRepository.getImage(boardNo);
+
+        log.info("attachedDTO : " + attachedDTO);
+
+        return new UrlResource("file:" + attachedDTO.getAttachedPath());
     }
 
     /**

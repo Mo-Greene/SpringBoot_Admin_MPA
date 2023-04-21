@@ -52,6 +52,7 @@ public class LoginController {
                         HttpServletResponse response,
                         @RequestParam String redirect) {
 
+        // TODO: 2023/04/21 자동로그인 만들어놓자
         try {
             adminService.loginAdmin(adminDTO);
 
@@ -62,10 +63,6 @@ public class LoginController {
 
             session.setAttribute("admin", "관리자");
 
-            // TODO: 2023/04/19 수정 필요
-            if (redirect.equals("logout")) {
-                return "redirect:/";
-            }
             return "redirect:/" + redirect;
         } catch (UserPrincipalNotFoundException e) {
             throw new RuntimeException(e);

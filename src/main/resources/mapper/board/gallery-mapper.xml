@@ -88,7 +88,12 @@
 
     <!-- 이미지조회 -->
     <select id="getImage" parameterType="long" resultType="AttachedDTO">
-        SELECT *
+        SELECT
+            board_no AS boardNo,
+            image_name AS attachedName,
+            image_original_name AS attachedOriginalName,
+            image_path AS attachedPath,
+            image_no AS attachedNo
 
         FROM board_gallery
 
