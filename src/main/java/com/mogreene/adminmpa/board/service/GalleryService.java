@@ -9,8 +9,6 @@ import com.mogreene.adminmpa.board.repository.GalleryRepository;
 import com.mogreene.adminmpa.board.util.BoardUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -29,11 +27,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class GalleryService {
-
-
-    //파일 저장 경로
-    @Value("${mogreene.upload.path}")
-    private String uploadPath;
 
     private final BaseRepository baseRepository;
     private final GalleryRepository galleryRepository;
@@ -103,11 +96,15 @@ public class GalleryService {
         return galleryRepository.getImage(boardNo);
     }
 
+    /**
+     * 이미지 파일 반환
+     * @param boardNo
+     * @return
+     * @throws MalformedURLException
+     */
     public Resource getImageFile(Long boardNo) throws MalformedURLException {
 
         AttachedDTO attachedDTO = galleryRepository.getImage(boardNo);
-
-        log.info("attachedDTO : " + attachedDTO);
 
         return new UrlResource("file:" + attachedDTO.getAttachedPath());
     }

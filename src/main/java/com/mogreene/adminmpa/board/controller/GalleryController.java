@@ -6,13 +6,13 @@ import com.mogreene.adminmpa.board.dto.page.PageRequestDTO;
 import com.mogreene.adminmpa.board.dto.page.PageResponseDTO;
 import com.mogreene.adminmpa.board.service.GalleryService;
 import com.mogreene.adminmpa.board.util.BoardUtil;
+import com.mogreene.adminmpa.common.api.ApiResponseDTO;
 import com.mogreene.adminmpa.reply.dto.ReplyDTO;
 import com.mogreene.adminmpa.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
 
 /**
@@ -139,5 +138,57 @@ public class GalleryController {
     public Resource showImageFile(@PathVariable Long boardNo) throws IOException {
 
         return galleryService.getImageFile(boardNo);
+    }
+
+    /**
+     * 갤러리 게시글 수정
+     * @param boardNo
+     * @param boardDTO
+     * @param session
+     * @return
+     */
+    @PutMapping("/gallery/modify/{boardNo}")
+    public ResponseEntity<ApiResponseDTO<?>> modifyGalleryArticle(@PathVariable Long boardNo,
+                                                                  @RequestBody BoardDTO boardDTO,
+                                                                  HttpSession session) {
+        log.info("boardDTO : " + boardDTO);
+
+        boardUtil.setBoardWriter(boardDTO, session);
+        boardDTO.setBoardNo(boardNo);
+
+        try {
+            galleryService.modifyGalleryArticle(boardDTO);
+
+        } catch (IllegalArgumentException e) {
+
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        ApiResponseDTO<?> apiResponseDTO = ApiResponseDTO.builder()
+                .httpStatus(HttpStatus.OK)
+                .data("Modify_OK")
+                .build();
+        return new ResponseEntity<>(apiResponseDTO, HttpStatus.OK);
+    }
+
+    /**
+     * 갤러리 게시글 삭제
+     * @param boardNo
+     * @return
+     */
+    @DeleteMapping("/gallery/delete/{boardNo}")
+    public ResponseEntity<?> deleteGallery(@PathVariable Long boardNo) {
+
+        try {
+
+            galleryService.deleteGalleryArticle(boardNo);
+        } catch (IllegalArgumentException e) {
+
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

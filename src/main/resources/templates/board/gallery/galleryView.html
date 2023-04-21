@@ -35,6 +35,9 @@
                         <span class="input-group-text">내용</span>
                         <textarea class="form-control col-sm-5" rows="5" readonly>[[ ${dto.boardContent} ]]</textarea>
                     </div>
+                    <div>
+                        <img style="width:80%" th:src="@{/view/{boardNo}(boardNo=${dto.boardNo})}">
+                    </div>
 
                     <div class="replyContent">
                         <div id="replyList">
@@ -58,10 +61,10 @@
 
                     <div class="my-4">
                         <div class="float-end">
-                            <a th:href="@{/attached}" class="text-decoration-none">
+                            <a th:href="@{/gallery}" class="text-decoration-none">
                                 <button type="button" class="btn btn-secondary">목록</button>
                             </a>
-                            <a th:href="@{/attached/modify/{boardNo}(boardNo=${dto.boardNo})}" class="text-decoration-none">
+                            <a th:href="@{/gallery/modify/{boardNo}(boardNo=${dto.boardNo})}" class="text-decoration-none">
                                 <button type="button" class="btn btn-primary">수정</button>
                             </a>
                         </div>
