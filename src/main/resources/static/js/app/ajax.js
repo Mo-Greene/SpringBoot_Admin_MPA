@@ -39,8 +39,7 @@ var main = {
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
-            success: function (res) {
-                console.log(res)
+            success: function () {
                 alert('게시글 등록')
                 window.location.href = '/' + data.category
             },
@@ -69,12 +68,10 @@ var main = {
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function (res) {
-                console.log(res)
                 alert('게시글 수정')
                 window.location.href = '/' + category
             },
             error: function (data) {
-                console.log(data)
                 alert('게시글 수정 실패')
             },
         })
@@ -91,12 +88,10 @@ var main = {
             url: '/' + category + '/delete/' + boardNo,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
-            success: function (res) {
-                console.log(res)
+            success: function () {
                 alert('게시글 삭제');
                 window.location.href = '/' + category
             },
-            //todo ??error 가 정상적으로 실행된다;;
             error: function () {
                 alert('게시글 삭제실패')
                 window.location.href = '/' + category
@@ -104,8 +99,9 @@ var main = {
         })
     },
     /**
-     * 댓글 등록 todo reload 없이 구현해봅시다.
+     * 댓글 등록
      */
+    // location.reload 좀 어떻게 해봐라;
     replySave: function () {
         const boardNo = $('#boardNo').val();
         const data = {
@@ -119,7 +115,8 @@ var main = {
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function () {
-                window.alert('등록 성공')
+                alert('등록 성공');
+                location.reload();
             },
             error: function () {
                 alert('등록 실패!');

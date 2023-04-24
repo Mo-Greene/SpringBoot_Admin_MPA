@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.nio.file.attribute.UserPrincipalNotFoundException;
-import java.util.Arrays;
 
 /**
  * 로그인 컨트롤러
@@ -58,9 +57,10 @@ public class LoginController {
         try {
             adminService.loginAdmin(adminDTO);
 
-            Cookie cookie = new Cookie("admin", "ADMIN");
             //자동로그인 여부
             if (rememberMe) {
+                Cookie cookie = new Cookie("admin", "ADMIN");
+
                 cookie.setMaxAge(60 * 60 * 12); //12시간
                 cookie.setPath("/");
                 response.addCookie(cookie);

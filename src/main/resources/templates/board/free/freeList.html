@@ -6,34 +6,28 @@
 <div layout:fragment="content">
 
     <div class="container">
-        <div class="row mt-3">
-            <div class="col">
-                <form action="/free" method="get">
-                    <div class="row">
-                        <div class="col">
-                            <input type="hidden" name="categoryBoard" value="FREE">
+        <form action="/free" method="get">
+            <div class="row g-3" style="margin: auto">
+                <input type="hidden" name="categoryBoard" value="FREE">
 
-                            <div>
-                                <input type="date" class="form-control" name="startDate">
-                            </div>
-                            <div>
-                                ~
-                            </div>
-                            <div>
-                                <input type="date" class="form-control" name="endDate">
-                            </div>
+                <div class="col-auto">
+                    <input type="date" class="form-control" name="startDate">
+                </div>
+                <div class="col-auto">
+                    ~
+                </div>
+                <div class="col-auto">
+                    <input type="date" class="form-control" name="endDate">
+                </div>
 
-                            <div>
-                                <input type="text" class="form-control" name="keyword">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary searchBtn" type="submit">검색</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                <div class="col-auto">
+                    <input type="text" class="form-control" name="keyword">
+                </div>
+                <div class="col-auto input-group-append">
+                    <button class="btn btn-outline-secondary searchBtn" type="submit">검색</button>
+                </div>
             </div>
-        </div>
+        </form>
 
         <div class="row mt-3">
             <div class="col">
