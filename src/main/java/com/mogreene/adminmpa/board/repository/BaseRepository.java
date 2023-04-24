@@ -2,6 +2,7 @@ package com.mogreene.adminmpa.board.repository;
 
 import com.mogreene.adminmpa.board.dto.BoardDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * 부모 Board repository

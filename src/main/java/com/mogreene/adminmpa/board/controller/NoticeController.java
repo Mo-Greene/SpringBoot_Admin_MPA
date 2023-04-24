@@ -156,7 +156,6 @@ public class NoticeController {
     @DeleteMapping("/notice/delete/{boardNo}")
     public ResponseEntity<?> deleteNotice(@PathVariable Long boardNo) {
 
-        // TODO: 2023/04/03 세션처리
         try {
             noticeService.deleteNoticeArticle(boardNo);
 

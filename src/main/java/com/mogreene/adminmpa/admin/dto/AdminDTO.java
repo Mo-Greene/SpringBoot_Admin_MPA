@@ -29,4 +29,8 @@ public class AdminDTO {
     @NotBlank
     private String password;
 
+    /**
+     * 자동로그인
+     */
+    private boolean rememberMe;
 }

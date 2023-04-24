@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.nio.file.attribute.UserPrincipalNotFoundException;
+import java.util.Arrays;
 
 /**
  * 로그인 컨트롤러
@@ -52,14 +53,18 @@ public class LoginController {
                         HttpServletResponse response,
                         @RequestParam String redirect) {
 
-        // TODO: 2023/04/21 자동로그인 만들어놓자
+        boolean rememberMe = adminDTO.isRememberMe();
+
         try {
             adminService.loginAdmin(adminDTO);
 
             Cookie cookie = new Cookie("admin", "ADMIN");
-            cookie.setMaxAge(60 * 60); //1시간
-            cookie.setPath("/");
-            response.addCookie(cookie);
+            //자동로그인 여부
+            if (rememberMe) {
+                cookie.setMaxAge(60 * 60 * 12); //12시간
+                cookie.setPath("/");
+                response.addCookie(cookie);
+            }
 
             session.setAttribute("admin", "관리자");
 
@@ -75,12 +80,24 @@ public class LoginController {
      * @return
      */
     @PostMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    public String logout(HttpServletRequest request,
+                         HttpServletResponse response) {
 
         HttpSession session = request.getSession();
 
         session.removeAttribute("admin");
         session.invalidate();
+
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("admin")) {
+                    cookie.setMaxAge(0);
+                    cookie.setPath("/");
+                    response.addCookie(cookie);
+                }
+            }
+        }
 
         return "redirect:/login";
     }
