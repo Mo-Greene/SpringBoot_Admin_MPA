@@ -69,7 +69,7 @@
                                 </li>
 
                                 <th:block th:each="i : ${#numbers.sequence(pagination.startPage, pagination.endPage)}">
-                                    <li class="page-item">
+                                    <li th:class="${pagination.page == i} ? 'page-item active' : 'page-item'">
                                         <a class="page-link" th:href="@{/attached(page=${i})}">[[ ${i} ]]</a>
                                     </li>
                                 </th:block>
