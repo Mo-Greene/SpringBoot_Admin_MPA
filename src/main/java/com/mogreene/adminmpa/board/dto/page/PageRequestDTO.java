@@ -7,6 +7,10 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 
 /**
  * 페이지네이션 + 검색조건
@@ -34,7 +38,7 @@ public class PageRequestDTO {
     private int size = 10;
 
     /**
-     * 게시글 몇번째 부터 보여줄리
+     * 게시글 몇번째 부터 보여줄지(mybatis에서 사용)
      */
     public int getSkip() {
         return (page - 1) * 10;
@@ -44,12 +48,12 @@ public class PageRequestDTO {
     /**
      * 날짜 시작
      */
-    private String startDate;
+    private LocalDate startDate;
 
     /**
      * 날짜 종료
      */
-    private String endDate;
+    private LocalDate endDate;
 
     /**
      * 카테고리 검색
@@ -60,4 +64,36 @@ public class PageRequestDTO {
      * 검색어
      */
     private String keyword;
+
+    /**
+     * 페이지 이동 link
+     */
+    private String link;
+
+    /**
+     * link 값 파싱 후 전달
+     * @return
+     */
+    public String getLink() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("page=" + this.page);
+
+        if (categoryBoard != null) {
+            builder.append("&categoryBoard=" + URLEncoder.encode(categoryBoard, StandardCharsets.UTF_8));
+        }
+
+        if (startDate != null) {
+            builder.append("&startDate=" + startDate);
+        }
+
+        if (endDate != null) {
+            builder.append("&endDate=" + endDate);
+        }
+
+        if (keyword != null) {
+            builder.append("&keyword=" + URLEncoder.encode(keyword, StandardCharsets.UTF_8));
+        }
+
+        return builder.toString();
+    }
 }

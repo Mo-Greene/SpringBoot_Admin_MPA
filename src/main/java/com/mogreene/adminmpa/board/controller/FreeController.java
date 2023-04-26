@@ -65,7 +65,9 @@ public class FreeController {
      * @return
      */
     @GetMapping("/free/{boardNo}")
-    public String getFreeView(@PathVariable Long boardNo, Model model) {
+    public String getFreeView(@PathVariable Long boardNo,
+                              PageRequestDTO pageRequestDTO,
+                              Model model) {
 
         BoardDTO dto = freeService.getFreeViewArticle(boardNo);
         List<ReplyDTO> replyDtoList = replyService.getReply(boardNo);

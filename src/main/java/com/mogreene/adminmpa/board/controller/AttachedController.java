@@ -72,7 +72,9 @@ public class AttachedController {
      * @return
      */
     @GetMapping("/attached/{boardNo}")
-    public String getAttachedView(@PathVariable Long boardNo, Model model) {
+    public String getAttachedView(@PathVariable Long boardNo,
+                                  PageRequestDTO pageRequestDTO,
+                                  Model model) {
 
         BoardDTO dto = attachedService.getAttachedViewArticle(boardNo);
         List<AttachedDTO> attachedDtoList = attachedService.getAttached(boardNo);

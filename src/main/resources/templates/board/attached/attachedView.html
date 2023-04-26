@@ -66,8 +66,8 @@
                     </div>
 
                     <div class="my-4">
-                        <div class="float-end">
-                            <a th:href="@{/attached}" class="text-decoration-none">
+                        <div class="float-end" th:with="link = ${pageRequestDTO.getLink()}">
+                            <a th:href="|@{/attached}?${link}|" class="text-decoration-none">
                                 <button type="button" class="btn btn-secondary">목록</button>
                             </a>
                             <a th:href="@{/attached/modify/{boardNo}(boardNo=${dto.boardNo})}" class="text-decoration-none">

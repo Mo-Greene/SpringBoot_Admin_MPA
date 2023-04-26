@@ -63,7 +63,9 @@ public class NoticeController {
      * @return
      */
     @GetMapping("/notice/{boardNo}")
-    public String getNoticeView(@PathVariable Long boardNo, Model model) {
+    public String getNoticeView(@PathVariable Long boardNo,
+                                PageRequestDTO pageRequestDTO,
+                                Model model) {
 
         BoardDTO dto = noticeService.getNoticeViewArticle(boardNo);
         List<ReplyDTO> replyDtoList = replyService.getReply(boardNo);

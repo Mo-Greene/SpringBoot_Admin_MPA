@@ -66,7 +66,9 @@ public class GalleryController {
      * @return
      */
     @GetMapping("/gallery/{boardNo}")
-    public String getGalleryView(@PathVariable Long boardNo, Model model) {
+    public String getGalleryView(@PathVariable Long boardNo,
+                                 PageRequestDTO pageRequestDTO,
+                                 Model model) {
 
         BoardDTO dto = galleryService.getGalleryViewArticle(boardNo);
         AttachedDTO attachedDTO = galleryService.getImage(boardNo);

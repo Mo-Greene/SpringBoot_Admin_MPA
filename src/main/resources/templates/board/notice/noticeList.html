@@ -21,7 +21,7 @@
                 </div>
 
                 <div class="col-auto">
-                    <input type="text" class="form-control" name="keyword">
+                    <input type="text" class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}">
                 </div>
                 <div class="col-auto input-group-append">
                     <button class="btn btn-outline-secondary searchBtn" type="submit">검색</button>
@@ -47,9 +47,9 @@
                                 <th>수정일시</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody th:with="link = ${pageRequestDTO.getLink()}">
                             <tr th:each="list : ${noticeBoardList}">
-                                <td><a th:href="@{/notice/{boardNo}(boardNo=${list.boardNo})}">
+                                <td><a th:href="|@{/notice/{boardNo}(boardNo=${list.boardNo})}?${link}|">
                                     [[ ${list.boardTitle} ]]
                                 </a></td>
                                 <td>[[ ${list.boardWriter} ]]</td>
@@ -60,23 +60,23 @@
                             </tbody>
                         </table>
 
-                        <nav>
+                        <div>
                             <ul class="pagination justify-content-center">
                                 <li class="page-item" th:if="${pagination.prev}">
-                                    <a class="page-link" th:href="@{/notice(page=${pagination.startPage - 1})}">이전</a>
+                                    <a class="page-link" th:data-num="${pagination.startPage - 1}">이전</a>
                                 </li>
 
                                 <th:block th:each="i : ${#numbers.sequence(pagination.startPage, pagination.endPage)}">
                                     <li th:class="${pagination.page == i} ? 'page-item active' : 'page-item'">
-                                        <a class="page-link" th:href="@{/notice(page=${i})}">[[ ${i} ]]</a>
+                                        <a class="page-link" th:data-num="${i}">[[ ${i} ]]</a>
                                     </li>
                                 </th:block>
 
                                 <li class="page-item" th:if="${pagination.next}">
-                                    <a class="page-link" th:href="@{/notice(page=${pagination.endPage + 1})}">다음</a>
+                                    <a class="page-link" th:data-num="${pagination.endPage + 1}">다음</a>
                                 </li>
                             </ul>
-                        </nav>
+                        </div>
 
                         <a href="/notice/write" role="button" class="btn btn-primary float-end">글쓰기</a>
                     </div>
@@ -86,3 +86,25 @@
 
     </div>
 </div>
+
+<script layout:fragment="script" th:inline="javascript">
+
+    document.querySelector(".pagination").addEventListener("click", function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+
+        const target = e.target
+
+        if(target.tagName !== 'A') {
+            return
+        }
+
+        const num = target.getAttribute("data-num")
+        const formObj = document.querySelector("form")
+
+        formObj.innerHTML += `<input type='hidden' name='page' value='${num}'>`
+        formObj.submit();
+
+    },false)
+
+</script>
