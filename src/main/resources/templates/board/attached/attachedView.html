@@ -49,7 +49,7 @@
                         <div id="replyList">
                             <th:block th:if="${replyDto != null}" th:each="reply:${replyDto}">
                                 <div class="row justify-content-start px-2 pt-2"
-                                     th:text="${reply.replyRegDate}">
+                                     th:text="${#dates.format(reply.replyRegDate, 'yy.MM.dd HH:mm')}">
                                 </div>
                                 <div class="row border-bottom px-2 pb-3 text-break">
                                     [[ ${reply.replyContent} ]]

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Min;
+import java.sql.Timestamp;
 
 /**
  * 댓글 DTO
@@ -36,5 +37,5 @@ public class ReplyDTO {
     /**
      * 댓글 생성일자
      */
-    private String replyRegDate;
+    private Timestamp replyRegDate;
 }

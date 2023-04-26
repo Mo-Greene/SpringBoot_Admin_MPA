@@ -9,6 +9,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 /**
@@ -47,12 +49,12 @@ public class PageRequestDTO {
     /**
      * 날짜 시작
      */
-    private LocalDate startDate;
+    private String startDate;
 
     /**
      * 날짜 종료
      */
-    private LocalDate endDate;
+    private String endDate;
 
     /**
      * 카테고리 검색

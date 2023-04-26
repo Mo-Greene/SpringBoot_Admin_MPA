@@ -101,7 +101,6 @@ var main = {
     /**
      * 댓글 등록
      */
-    // location.reload 좀 어떻게 해봐라;
     replySave: function () {
         const boardNo = $('#boardNo').val();
         const data = {
@@ -114,9 +113,9 @@ var main = {
             dataType: 'JSON',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
-            success: function () {
+            success: function (res) {
+                console.log(res)
                 alert('등록 성공');
-                location.reload();
             },
             error: function () {
                 alert('등록 실패!');
