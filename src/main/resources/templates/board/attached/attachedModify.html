@@ -30,18 +30,18 @@
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">생성일자</span>
-                            <input type="text" class="form-control" th:value="${dto.boardRegDate}" readonly>
+                            <input type="text" class="form-control" th:value="${#dates.format(dto.boardRegDate, 'yy.MM.dd HH:mm')}" readonly>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">수정일자</span>
-                            <input type="text" class="form-control"
-                                   th:value="${dto.boardModDate == null ? '-' : dto.boardModDate}" readonly>
+                            <input type="text" class="form-control" th:value="${dto.boardModDate == null ? '-' : #dates.format(dto.boardModDate, 'yy.MM.dd HH:mm')}" readonly>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">내용</span>
                             <textarea class="form-control col-sm-5" name="boardContent" rows="5">[[ ${dto.boardContent} ]]</textarea>
                         </div>
 
+<!--                        todo 파일 수정시 index error 나옴-->
                         <div class="col">
                             <div th:if="${response.attachedCount == 0}">
                                 <div class="col-md-3">

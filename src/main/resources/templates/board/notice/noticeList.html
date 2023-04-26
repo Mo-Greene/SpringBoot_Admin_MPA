@@ -54,8 +54,8 @@
                                 </a></td>
                                 <td>[[ ${list.boardWriter} ]]</td>
                                 <td>[[ ${list.boardView} ]]</td>
-                                <td>[[ ${list.boardRegDate} ]]</td>
-                                <td th:text="${list.boardModDate == null ? '-' : list.boardModDate}"></td>
+                                <td>[[ ${#dates.format(list.boardRegDate, 'yy.MM.dd HH:mm')} ]]</td>
+                                <td th:text="${list.boardModDate == null ? '-' : #dates.format(list.boardModDate, 'yy.MM.dd HH:mm')}"></td>
                             </tr>
                             </tbody>
                         </table>

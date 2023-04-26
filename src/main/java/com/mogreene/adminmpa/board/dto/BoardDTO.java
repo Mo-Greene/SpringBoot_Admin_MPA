@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 /**
  * 자유게시판 DTO
  * @author mogreene
@@ -53,12 +55,12 @@ public class BoardDTO {
     /**
      * 게시글 생성일
      */
-    private String boardRegDate;
+    private Timestamp boardRegDate;
 
     /**
      * 게시글 수정일
      */
-    private String boardModDate;
+    private Timestamp boardModDate;
 
     /**
      * 게시글 분류 카테고리

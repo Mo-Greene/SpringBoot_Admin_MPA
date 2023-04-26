@@ -51,6 +51,7 @@ public class FreeController {
         }
 
         List<BoardDTO> freeBoardList = freeService.getFreeArticle(pageRequestDTO);
+        log.info("freeBoard : " + freeBoardList);
         PageResponseDTO pageResponseDTO = freeService.pagination(pageRequestDTO);
 
         model.addAttribute("freeBoardList", freeBoardList);
