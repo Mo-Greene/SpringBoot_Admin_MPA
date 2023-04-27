@@ -113,9 +113,7 @@ var main = {
             dataType: 'JSON',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
-            success: function (res) {
-                console.log(res)
-                alert('등록 성공');
+            success: function () {
             },
             error: function () {
                 alert('등록 실패!');

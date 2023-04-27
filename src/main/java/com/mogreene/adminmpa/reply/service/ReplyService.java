@@ -25,13 +25,11 @@ public class ReplyService {
      * @param replyDTO
      * @return
      */
-    public List<ReplyDTO> postReply(Long boardNo, ReplyDTO replyDTO) {
+    public int postReply(Long boardNo, ReplyDTO replyDTO) {
 
         replyDTO.setBoardNo(boardNo);
-        replyRepository.postReply(replyDTO);
 
-        //댓글저장 후 새로운 댓글목록 return
-        return replyRepository.getReply(boardNo);
+        return replyRepository.postReply(replyDTO);
     }
 
     /**

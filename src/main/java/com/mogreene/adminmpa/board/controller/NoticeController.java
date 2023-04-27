@@ -6,8 +6,6 @@ import com.mogreene.adminmpa.board.dto.page.PageResponseDTO;
 import com.mogreene.adminmpa.board.service.NoticeService;
 import com.mogreene.adminmpa.board.util.BoardUtil;
 import com.mogreene.adminmpa.common.api.ApiResponseDTO;
-import com.mogreene.adminmpa.reply.dto.ReplyDTO;
-import com.mogreene.adminmpa.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -31,7 +29,6 @@ import java.util.List;
 public class NoticeController {
 
     private final NoticeService noticeService;
-    private final ReplyService replyService;
     private final BoardUtil boardUtil;
 
     /**
@@ -68,10 +65,8 @@ public class NoticeController {
                                 Model model) {
 
         BoardDTO dto = noticeService.getNoticeViewArticle(boardNo);
-        List<ReplyDTO> replyDtoList = replyService.getReply(boardNo);
 
         model.addAttribute("dto", dto);
-        model.addAttribute("replyDto", replyDtoList);
         return "board/notice/noticeView";
     }
 

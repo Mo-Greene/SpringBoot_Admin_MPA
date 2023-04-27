@@ -7,8 +7,6 @@ import com.mogreene.adminmpa.board.dto.page.PageResponseDTO;
 import com.mogreene.adminmpa.board.service.GalleryService;
 import com.mogreene.adminmpa.board.util.BoardUtil;
 import com.mogreene.adminmpa.common.api.ApiResponseDTO;
-import com.mogreene.adminmpa.reply.dto.ReplyDTO;
-import com.mogreene.adminmpa.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -35,7 +33,6 @@ import java.util.List;
 public class GalleryController {
 
     private final GalleryService galleryService;
-    private final ReplyService replyService;
     private final BoardUtil boardUtil;
 
     /**
@@ -72,11 +69,9 @@ public class GalleryController {
 
         BoardDTO dto = galleryService.getGalleryViewArticle(boardNo);
         AttachedDTO attachedDTO = galleryService.getImage(boardNo);
-        List<ReplyDTO> replyDtoList = replyService.getReply(boardNo);
 
         model.addAttribute("dto", dto);
         model.addAttribute("attachedDto", attachedDTO);
-        model.addAttribute("replyDto", replyDtoList);
         return "board/gallery/galleryView";
     }
 

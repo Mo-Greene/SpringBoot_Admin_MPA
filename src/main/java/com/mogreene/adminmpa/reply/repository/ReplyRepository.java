@@ -16,7 +16,7 @@ public interface ReplyRepository {
      * 댓글 등록
      * @param replyDTO
      */
-    void postReply(ReplyDTO replyDTO);
+    int postReply(ReplyDTO replyDTO);
 
     /**
      * 댓글 조회

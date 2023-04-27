@@ -6,8 +6,6 @@ import com.mogreene.adminmpa.board.dto.page.PageRequestDTO;
 import com.mogreene.adminmpa.board.dto.page.PageResponseDTO;
 import com.mogreene.adminmpa.board.service.AttachedService;
 import com.mogreene.adminmpa.board.util.BoardUtil;
-import com.mogreene.adminmpa.reply.dto.ReplyDTO;
-import com.mogreene.adminmpa.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -24,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +37,6 @@ import java.util.Map;
 public class AttachedController {
 
     private final AttachedService attachedService;
-    private final ReplyService replyService;
     private final BoardUtil boardUtil;
 
     /**
@@ -78,11 +76,9 @@ public class AttachedController {
 
         BoardDTO dto = attachedService.getAttachedViewArticle(boardNo);
         List<AttachedDTO> attachedDtoList = attachedService.getAttached(boardNo);
-        List<ReplyDTO> replyDtoList = replyService.getReply(boardNo);
 
         model.addAttribute("dto", dto);
         model.addAttribute("attachedDto", attachedDtoList);
-        model.addAttribute("replyDto", replyDtoList);
         return "board/attached/attachedView";
     }
 
@@ -172,6 +168,9 @@ public class AttachedController {
     @PostMapping("/attached/modify")
     public String modifyAttachedArticle(BoardDTO boardDTO,
                                         @RequestPart MultipartFile[] files) throws IOException {
+
+        // TODO: 2023/04/27 체크
+        log.info("files : " + Arrays.toString(files));
 
         //파일이 없을 경우 throw
         if (files[0].isEmpty() && files[1].isEmpty() && files[2].isEmpty()) {

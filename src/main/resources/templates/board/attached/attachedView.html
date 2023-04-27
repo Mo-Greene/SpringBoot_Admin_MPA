@@ -47,18 +47,10 @@
 
                     <div class="replyContent">
                         <div id="replyList">
-                            <th:block th:if="${replyDto != null}" th:each="reply:${replyDto}">
-                                <div class="row justify-content-start px-2 pt-2"
-                                     th:text="${#dates.format(reply.replyRegDate, 'yy.MM.dd HH:mm')}">
-                                </div>
-                                <div class="row border-bottom px-2 pb-3 text-break">
-                                    [[ ${reply.replyContent} ]]
-                                </div>
-                            </th:block>
                         </div>
                         <form>
                             <input type="hidden" id="boardNo" th:value="${dto.boardNo}">
-                            <div class="card">
+                            <div class="card" style="margin-top: 10px;">
                                 <div class="card-body"><textarea class="form-control" rows="1" id="replyContent"></textarea></div>
                                 <div class="card-footer"><button class="btn btn-primary" id="btn-reply-save">등록</button></div>
                             </div>
@@ -80,3 +72,42 @@
         </div>
     </div>
 </div>
+
+<script layout:fragment="script" th:inline="javascript">
+    $(document).ready(function () {
+        getReplyList()
+    })
+
+    function getReplyList() {
+        var boardNo = [[ ${dto.boardNo} ]]
+        const replyList = document.getElementById("replyList");
+
+        $.ajax({
+            type: 'GET',
+            url: '/reply/' + boardNo,
+            success: function (res) {
+                replyList.innerHTML = ``
+
+                for (let i = 0; i < res.data.length; i++) {
+                    const reply = res.data[i];
+                    const date = new Date(reply.replyRegDate);
+                    const formattedDate = date.toISOString().slice(0, 16).replace('T', ' ');
+                    let replyContent = reply.replyContent;
+
+                    const html = `
+                        <th:block>
+                            <div class="row justify-content-start px-2 pt-2">
+                                ${formattedDate}
+                            </div>
+                            <div class="row border-bottom px-2 pb-3 text-break">
+                                ${replyContent}
+                            </div>
+                        </th:block>
+                    `;
+
+                    replyList.innerHTML += html;
+                }
+            },
+        })
+    }
+</script>
