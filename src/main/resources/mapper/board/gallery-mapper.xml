@@ -6,29 +6,30 @@
     <sql id="search">
         <where>
             <if test="keyword != null and keyword.length > 0">
-                board_title LIKE CONCAT('%', #{keyword}, '%')
-                OR board_content LIKE CONCAT('%', #{keyword}, '%')
-                OR board_writer LIKE CONCAT('%', #{keyword}, '%')
+                bb.board_title LIKE CONCAT('%', #{keyword}, '%')
+                OR bb.board_content LIKE CONCAT('%', #{keyword}, '%')
+                OR bb.board_writer LIKE CONCAT('%', #{keyword}, '%')
             </if>
             <if test="categoryBoard != null and categoryBoard.length > 0">
                 <trim prefix="and">
-                    category_board LIKE #{categoryBoard}
+                    bb.category_board LIKE #{categoryBoard}
                 </trim>
             </if>
             <if test="startDate != null and endDate != null">
                 <trim prefix="and">
-                    board_reg_date BETWEEN date(#{startDate}) AND date(#{endDate})
+                    bb.board_reg_date BETWEEN date(#{startDate}) AND date(#{endDate})
                 </trim>
             </if>
-            AND category_board LIKE 'GALLERY'
         </where>
     </sql>
 
     <!-- 게시글 개수 -->
     <select id="totalGalleryCount" resultType="int">
-        SELECT COUNT(board_no)
+        SELECT COUNT(gb.board_no)
 
-        FROM base_board
+        FROM board_gallery gb
+            LEFT JOIN base_board bb
+                ON bb.board_no = gb.board_no
 
         <include refid="search"/>
     </select>
@@ -36,20 +37,22 @@
     <!-- 자료실 전체조회 -->
     <select id="getGalleryArticle" resultType="BoardDTO">
         SELECT
-        board_no AS boardNo,
-        board_content AS boardContent,
-        board_title AS boardTitle,
-        board_writer AS boardWriter,
-        board_view AS boardView,
-        board_reg_date AS boardRegDate,
-        board_mod_date AS boardModDate,
-        category_board AS categoryBoard
+        gb.board_no AS boardNo,
+        bb.board_content AS boardContent,
+        bb.board_title AS boardTitle,
+        bb.board_writer AS boardWriter,
+        bb.board_view AS boardView,
+        bb.board_reg_date AS boardRegDate,
+        bb.board_mod_date AS boardModDate,
+        bb.category_board AS categoryBoard
 
-        FROM base_board
+        FROM board_gallery gb
+            LEFT JOIN base_board bb
+                ON bb.board_no = gb.board_no
 
         <include refid="search"/>
 
-        ORDER BY board_no DESC
+        ORDER BY gb.board_no DESC
 
         LIMIT #{skip}, #{size}
     </select>

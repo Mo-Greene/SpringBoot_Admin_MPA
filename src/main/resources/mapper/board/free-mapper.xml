@@ -20,7 +20,6 @@
                     bb.board_reg_date BETWEEN date(#{startDate}) AND date(#{endDate})
                 </trim>
             </if>
-            AND bb.category_board LIKE 'FREE'
         </where>
     </sql>
 
