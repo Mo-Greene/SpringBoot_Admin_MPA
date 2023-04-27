@@ -10,34 +10,34 @@
                 <div class="card-header">
                     수정
                 </div>
-                <div class="card-body">
+                <div class="card-body view-card-body">
 
                     <form>
                         <input type="hidden" id="boardNo" th:value="${dto.boardNo}">
                         <input type="hidden" id="categoryBoard" th:value="${dto.categoryBoard}">
                         <input type="hidden" id="urlCategory" th:value="notice">
                         <div class="input-group mb-3">
-                            <span class="input-group-text">제목</span>
+                            <span class="input-group-text col-sm-1">제목</span>
                             <input type="text" class="form-control" id="boardTitle" th:value="${dto.boardTitle}">
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">작성자</span>
+                            <span class="input-group-text col-sm-1">작성자</span>
                             <input type="text" class="form-control" id="boardWriter" th:value="${dto.boardWriter}" readonly>
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">조회수</span>
+                            <span class="input-group-text col-sm-1">조회수</span>
                             <input type="text" class="form-control" th:value="${dto.boardView}" readonly>
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">생성일자</span>
+                            <span class="input-group-text col-sm-1">생성일자</span>
                             <input type="text" class="form-control" th:value="${#dates.format(dto.boardRegDate, 'yy.MM.dd HH:mm')}" readonly>
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">수정일자</span>
+                            <span class="input-group-text col-sm-1">수정일자</span>
                             <input type="text" class="form-control" th:value="${dto.boardModDate == null ? '-' : #dates.format(dto.boardModDate, 'yy.MM.dd HH:mm')}" readonly>
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">내용</span>
+                            <span class="input-group-text col-sm-1">내용</span>
                             <textarea class="form-control col-sm-5" id="boardContent" rows="5">[[ ${dto.boardContent} ]]</textarea>
                         </div>
 

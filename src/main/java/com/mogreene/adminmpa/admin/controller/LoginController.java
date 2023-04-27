@@ -70,7 +70,10 @@ public class LoginController {
 
             return "redirect:/" + redirect;
         } catch (UserPrincipalNotFoundException e) {
-            throw new RuntimeException(e);
+
+            log.error(e.getMessage());
+
+            return "login/login";
         }
     }
 

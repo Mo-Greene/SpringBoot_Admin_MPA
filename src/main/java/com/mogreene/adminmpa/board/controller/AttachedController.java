@@ -171,6 +171,10 @@ public class AttachedController {
 
         // TODO: 2023/04/27 체크
         log.info("files : " + Arrays.toString(files));
+        log.info("files length : " + files.length);
+        log.info("files[0] : " + files[0].getOriginalFilename());
+        log.info("files[1] : " + files[1].getOriginalFilename());
+        log.info("files[2] : " + files[2].getOriginalFilename());
 
         //파일이 없을 경우 throw
         if (files[0].isEmpty() && files[1].isEmpty() && files[2].isEmpty()) {

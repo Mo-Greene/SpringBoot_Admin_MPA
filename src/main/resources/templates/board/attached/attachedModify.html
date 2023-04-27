@@ -10,34 +10,34 @@
                 <div class="card-header">
                     수정
                 </div>
-                <div class="card-body">
+                <div class="card-body view-card-body">
 
                     <form action="/attached/modify" method="post" enctype="multipart/form-data">
                         <input type="hidden" id="boardNo" name="boardNo" th:value="${dto.boardNo}">
                         <input type="hidden" id="categoryBoard" name="categoryBoard" th:value="${dto.categoryBoard}">
                         <input type="hidden" id="urlCategory" name="urlCategory" th:value="attached">
                         <div class="input-group mb-3">
-                            <span class="input-group-text">제목</span>
+                            <span class="input-group-text col-sm-1">제목</span>
                             <input type="text" class="form-control" name="boardTitle" th:value="${dto.boardTitle}">
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">작성자</span>
+                            <span class="input-group-text col-sm-1">작성자</span>
                             <input type="text" class="form-control" name="boardWriter" th:value="${dto.boardWriter}" readonly>
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">조회수</span>
+                            <span class="input-group-text col-sm-1">조회수</span>
                             <input type="text" class="form-control" th:value="${dto.boardView}" readonly>
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">생성일자</span>
+                            <span class="input-group-text col-sm-1">생성일자</span>
                             <input type="text" class="form-control" th:value="${#dates.format(dto.boardRegDate, 'yy.MM.dd HH:mm')}" readonly>
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">수정일자</span>
+                            <span class="input-group-text col-sm-1">수정일자</span>
                             <input type="text" class="form-control" th:value="${dto.boardModDate == null ? '-' : #dates.format(dto.boardModDate, 'yy.MM.dd HH:mm')}" readonly>
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">내용</span>
+                            <span class="input-group-text col-sm-1">내용</span>
                             <textarea class="form-control col-sm-5" name="boardContent" rows="5">[[ ${dto.boardContent} ]]</textarea>
                         </div>
 
@@ -72,9 +72,6 @@
                                         <a th:href="@{/attached/delete/{attachedNo}(attachedNo=${attached.attachedNo})}"
                                            class="btn btn-danger">파일삭제</a>
                                     </th:block>
-                                    <div class="col-md-3">
-                                        <input class="form-control" name="files" type="file">
-                                    </div>
                                 </div>
                                 <div th:if="${response.attachedCount == 3}">
                                     <div class="card-text" th:text="${attached.attachedOriginalName}"></div>

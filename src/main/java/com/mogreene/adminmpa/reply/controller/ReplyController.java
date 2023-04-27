@@ -23,7 +23,7 @@ public class ReplyController {
     private final ReplyService replyService;
 
     /**
-     * 댓글 등록 후 댓글 목록 return
+     * 댓글 등록
      * @param boardNo
      * @param replyDTO
      * @return
