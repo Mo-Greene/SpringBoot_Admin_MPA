@@ -49,12 +49,12 @@ public class PageRequestDTO {
     /**
      * 날짜 시작
      */
-    private String startDate;
+    private Timestamp startDate;
 
     /**
      * 날짜 종료
      */
-    private String endDate;
+    private Timestamp endDate;
 
     /**
      * 카테고리 검색
