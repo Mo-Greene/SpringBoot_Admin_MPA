@@ -11,17 +11,17 @@
                 <input type="hidden" name="categoryBoard" value="ATTACHED">
 
                 <div class="col-auto">
-                    <input type="date" class="form-control" name="startDate">
+                    <input type="date" class="form-control" name="startDate" th:value="${pageRequestDTO.startDate}">
                 </div>
                 <div class="col-auto">
                     ~
                 </div>
                 <div class="col-auto">
-                    <input type="date" class="form-control" name="endDate">
+                    <input type="date" class="form-control" name="endDate" th:value="${pageRequestDTO.endDate}">
                 </div>
 
                 <div class="col-auto">
-                    <input type="text" class="form-control" name="keyword">
+                    <input type="text" class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}">
                 </div>
                 <div class="col-auto input-group-append">
                     <button class="btn btn-outline-secondary searchBtn" type="submit">검색</button>
@@ -36,7 +36,7 @@
                         자료실
                     </div>
                     <div class="card-body">
-                        <table class="table text-center">
+                        <table class="table text-center table-hover">
                             <thead class="table-light">
                             <tr>
                                 <th>첨부</th>

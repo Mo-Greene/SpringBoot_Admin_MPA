@@ -4,14 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * 페이지네이션 + 검색조건
@@ -49,12 +50,14 @@ public class PageRequestDTO {
     /**
      * 날짜 시작
      */
-    private Timestamp startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startDate;
 
     /**
      * 날짜 종료
      */
-    private Timestamp endDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endDate;
 
     /**
      * 카테고리 검색

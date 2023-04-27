@@ -11,13 +11,13 @@
                 <input type="hidden" name="categoryBoard" value="NOTICE">
 
                 <div class="col-auto">
-                    <input type="date" class="form-control" name="startDate">
+                    <input type="date" class="form-control" name="startDate" th:value="${pageRequestDTO.startDate}">
                 </div>
                 <div class="col-auto">
                     ~
                 </div>
                 <div class="col-auto">
-                    <input type="date" class="form-control" name="endDate">
+                    <input type="date" class="form-control" name="endDate" th:value="${pageRequestDTO.endDate}">
                 </div>
 
                 <div class="col-auto">
