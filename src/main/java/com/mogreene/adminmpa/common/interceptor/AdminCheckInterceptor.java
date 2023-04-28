@@ -7,6 +7,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 
 /**
  * 로그인 인터셉터
@@ -36,14 +37,18 @@ public class AdminCheckInterceptor implements HandlerInterceptor {
             //세션으로 리다이렉트 보내주기
             session.setAttribute("redirect", redirectUrl);
             response.sendRedirect("/login");
-            return false;
+            return true;
         }
 
+        // TODO: 2023/04/28 자동로그인 수정해야됨 동작 x
         //자동로그인 쿠키검증
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("admin")) {
-                return true;
+        if (cookies.length != 0) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("admin")) {
+                    session.setAttribute("admin", "관리자");
+                    return true;
+                }
             }
         }
 

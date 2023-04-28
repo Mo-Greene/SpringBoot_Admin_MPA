@@ -46,7 +46,6 @@ public class AttachedController {
      * @param model
      * @return
      */
-    // TODO: 2023/04/27 검색할때 다른 게시판의 제목도 나오는 문제 발견
     @GetMapping("/attached")
     public String getAttached(@Valid PageRequestDTO pageRequestDTO,
                               BindingResult bindingResult,
@@ -128,9 +127,6 @@ public class AttachedController {
 
         //boardWriter => 세션에서 "admin" 값으로
         boardUtil.setBoardWriter(boardDTO, session);
-
-        //게시글 등록
-        attachedService.postAttachedArticle(boardDTO);
 
         //첨부파일 등록 (제목 + 내용)
         attachedService.uploadAttached(boardDTO, files);

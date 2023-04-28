@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -90,7 +91,6 @@ public class GalleryService {
      * @param boardNo
      * @return
      */
-    // TODO: 2023/04/21 다르게 보내야됨
     public AttachedDTO getImage(Long boardNo) {
 
         return galleryRepository.getImage(boardNo);
@@ -125,10 +125,21 @@ public class GalleryService {
      */
     public void uploadImage(BoardDTO boardDTO, MultipartFile file) throws IOException {
 
-        AttachedDTO attachedDTO = boardUtil.uploadFile(boardDTO, file);
+        String extension = StringUtils.getFilenameExtension(file.getOriginalFilename());
+        assert extension != null;
 
-        file.transferTo(new File(attachedDTO.getAttachedPath()));
-        galleryRepository.postImage(attachedDTO);
+        //갤러리 확장자 검증
+        if (extension.equalsIgnoreCase("jpg") ||
+                extension.equalsIgnoreCase("jpeg") ||
+                    extension.equalsIgnoreCase("png")) {
+
+            AttachedDTO attachedDTO = boardUtil.uploadFile(boardDTO, file);
+
+            file.transferTo(new File(attachedDTO.getAttachedPath()));
+            galleryRepository.postImage(attachedDTO);
+        } else {
+            throw new IllegalArgumentException("맞지 않는 확장자 입니다. 확인 후 재시도 해주세요.");
+        }
     }
 
     /**

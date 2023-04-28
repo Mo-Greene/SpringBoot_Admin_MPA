@@ -39,7 +39,6 @@ public class GalleryController {
      * 갤러리 전체화면
      * @return
      */
-    // TODO: 2023/04/27 검색할때 다른 게시판의 자료도 같이 나옴
     @GetMapping("/gallery")
     public String getGallery(@Valid PageRequestDTO pageRequestDTO,
                              BindingResult bindingResult,

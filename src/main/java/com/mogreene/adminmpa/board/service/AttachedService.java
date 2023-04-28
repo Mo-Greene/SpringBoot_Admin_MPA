@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriUtils;
 
@@ -106,19 +107,13 @@ public class AttachedService {
     }
 
     /**
-     * 게시글 등록
-     * @param boardDTO
-     */
-    public void postAttachedArticle(BoardDTO boardDTO) {
-
-        baseRepository.postArticle(boardDTO);
-    }
-
-    /**
      * 다중 파일 업로드
      * @param boardDTO
      */
+    @Transactional
     public void uploadAttached(BoardDTO boardDTO, MultipartFile[] files) throws IOException {
+
+        baseRepository.postArticle(boardDTO);
 
         for (MultipartFile file : files) {
             //파일이 존재 하지 않을 경우 넘어감
@@ -126,10 +121,20 @@ public class AttachedService {
                 continue;
             }
 
-            AttachedDTO attachedDTO = boardUtil.uploadFile(boardDTO, file);
+            String extension = StringUtils.getFilenameExtension(file.getOriginalFilename());
 
-            file.transferTo(new File(attachedDTO.getAttachedPath()));
-            attachedRepository.postAttached(attachedDTO);
+            //자료실 파일 확장자 구분
+            assert extension != null;
+            if (extension.equalsIgnoreCase("hwp") ||
+                    extension.equalsIgnoreCase("pdf") ||
+                        extension.equalsIgnoreCase("docs")) {
+
+                AttachedDTO attachedDTO = boardUtil.uploadFile(boardDTO, file);
+                file.transferTo(new File(attachedDTO.getAttachedPath()));
+                attachedRepository.postAttached(attachedDTO);
+            } else {
+                throw new IllegalArgumentException("맞지 않는 확장자 입니다. 확인 후 재시도 해주세요.");
+            }
         }
     }
 

@@ -4,8 +4,6 @@ import com.mogreene.adminmpa.board.dto.AttachedDTO;
 import com.mogreene.adminmpa.board.dto.BoardDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -58,14 +56,14 @@ public class BoardUtil {
      * @param file
      * @return
      */
-    public AttachedDTO uploadFile(BoardDTO boardDTO, MultipartFile file) {
+    public AttachedDTO uploadFile(BoardDTO boardDTO, MultipartFile file) throws IllegalArgumentException {
         String originalFileName = file.getOriginalFilename();
 
         String uuid = UUID.randomUUID().toString();
         assert originalFileName != null;
-        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+        String extension = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
 
-        String saveFileName = uuid + extension;
+        String saveFileName = uuid + "." + extension;
 
         String folderCategoryName = boardDTO.getCategoryBoard();
         String folderPath = makeFolder(folderCategoryName);
