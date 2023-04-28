@@ -21,7 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 이미지 게시판
@@ -54,6 +56,30 @@ public class GalleryController {
         model.addAttribute("galleryList", galleryList);
         model.addAttribute("pagination", pageResponseDTO);
         return "board/gallery/galleryList";
+    }
+
+    /**
+     * ajax 테스트
+     * @param pageRequestDTO
+     * @return
+     */
+    // TODO: 2023/04/28 지워야됨
+    @GetMapping("/gallery/test")
+    @ResponseBody
+    public ResponseEntity<ApiResponseDTO<?>> getGalleryTest(@Valid PageRequestDTO pageRequestDTO) {
+
+        List<BoardDTO> galleryList = galleryService.getGalleryArticle(pageRequestDTO);
+        PageResponseDTO pageResponseDTO = galleryService.pagination(pageRequestDTO);
+
+        Map<String, Object> response= new HashMap<>();
+        response.put("list", galleryList);
+        response.put("pagination", pageResponseDTO);
+
+        ApiResponseDTO<?> apiResponseDTO = ApiResponseDTO.builder()
+                .httpStatus(HttpStatus.OK)
+                .data(response)
+                .build();
+        return new ResponseEntity<>(apiResponseDTO, HttpStatus.OK);
     }
 
     /**

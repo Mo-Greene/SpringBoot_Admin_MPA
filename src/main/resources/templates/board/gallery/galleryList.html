@@ -33,36 +33,50 @@
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        자료실
+                        갤러리
                     </div>
-                    <div class="card-body">
-                        <table class="table text-center table-hover">
-                            <thead class="table-light">
-                            <tr>
-                                <th style="width: 50%">제목</th>
-                                <th>작성자</th>
-                                <th>조회수</th>
-                                <th>등록일시</th>
-                                <th>수정일시</th>
-                            </tr>
-                            </thead>
-                            <tbody th:with="link = ${pageRequestDTO.getLink()}">
-                            <tr th:each="list : ${galleryList}">
-                                <td>
-                                    <a th:href="|@{/gallery/{boardNo}(boardNo=${list.boardNo})}?${link}|">
-                                        [[ ${list.boardTitle} ]]
-                                    </a>
-                                    <div>
-                                        <img style="width:100px" th:src="@{/view/{boardNo}(boardNo=${list.boardNo})}">
-                                    </div>
-                                </td>
-                                <td>[[ ${list.boardWriter} ]]</td>
-                                <td>[[ ${list.boardView} ]]</td>
-                                <td>[[ ${#dates.format(list.boardRegDate, 'yy.MM.dd HH:mm')} ]]</td>
-                                <td th:text="${list.boardModDate == null ? '-' : #dates.format(list.boardModDate, 'yy.MM.dd HH:mm')}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
+
+                    <!-- 스위치 컴포넌트 -->
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="switch1" checked>
+                    </div>
+
+                    <div class="card-body" id="gallery-table">
+
+                        <!-- 리스트 -->
+                        <div id="gallery-table">
+                            <table class="table text-center table-hover">
+                                <thead class="table-light">
+                                <tr>
+                                    <th style="width: 50%">제목</th>
+                                    <th>작성자</th>
+                                    <th>조회수</th>
+                                    <th>등록일시</th>
+                                    <th>수정일시</th>
+                                </tr>
+                                </thead>
+                                <tbody th:with="link = ${pageRequestDTO.getLink()}">
+                                <tr th:each="list : ${galleryList}">
+                                    <td>
+                                        <a th:href="|@{/gallery/{boardNo}(boardNo=${list.boardNo})}?${link}|">
+                                            [[ ${list.boardTitle} ]]
+                                        </a>
+                                        <div>
+                                            <img style="width:100px" th:src="@{/view/{boardNo}(boardNo=${list.boardNo})}">
+                                        </div>
+                                    </td>
+                                    <td>[[ ${list.boardWriter} ]]</td>
+                                    <td>[[ ${list.boardView} ]]</td>
+                                    <td>[[ ${#dates.format(list.boardRegDate, 'yy.MM.dd HH:mm')} ]]</td>
+                                    <td th:text="${list.boardModDate == null ? '-' : #dates.format(list.boardModDate, 'yy.MM.dd HH:mm')}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- 갤러리 -->
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="gallery-card">
+                        </div>
 
                         <div>
                             <ul class="pagination justify-content-center">
@@ -84,7 +98,7 @@
 
                         <a href="/gallery/write" role="button" class="btn btn-primary float-end">글쓰기</a>
                     </div>
-                </div>
+                </div><!--card-->
             </div>
         </div>
 
@@ -111,4 +125,49 @@
 
     },false)
 
+    const switch1 = document.querySelector("#switch1");
+
+    switch1.addEventListener('change', async (ev) => {
+        const galleryCard = document.getElementById("gallery-card");
+        const galleryTable = document.getElementById("gallery-table");
+        if (ev.target.checked) {
+            console.log("갤러리!!");
+            const galleryList = await getGalleryList();
+            galleryTable.innerHTML = ``
+            console.log(galleryList)
+
+            for (let i = 0; i < galleryList.length; i++) {
+                console.log("boardTitle : " + galleryList.boardTitle)
+                console.log("boardContent : " + galleryList.boardContent)
+
+                const html = `
+                                <div class="card" style="width: 18rem;">
+                    <!--                    <img th:src="@{/view/{boardNo}(boardNo=)}" class="card-img-top" alt="...">-->
+                                    <div class="card-body">
+                                        <h5 class="card-title">${galleryList.boardTitle}</h5>
+                                        <p class="card-text">${galleryList.boardContent}</p>
+                                        <a class="btn btn-primary">확인</a>
+                                    </div>
+                                </div>
+                            `
+
+                galleryCard.innerHTML += html;
+            }
+
+        } else {
+            console.log("리스트!!")
+        }
+    });
+
+    async function getGalleryList() {
+        try {
+            const res = await $.ajax({
+                type: 'GET',
+                url: '/gallery/test'
+            });
+            return res.data.list;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 </script>
