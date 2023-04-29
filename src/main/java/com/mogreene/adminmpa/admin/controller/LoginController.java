@@ -59,8 +59,7 @@ public class LoginController {
 
             //자동로그인 여부
             if (rememberMe) {
-                Cookie cookie = new Cookie("admin", "ADMIN");
-
+                Cookie cookie = new Cookie("rememberMe", "true");
                 cookie.setMaxAge(60 * 60 * 12); //12시간
                 cookie.setPath("/");
                 response.addCookie(cookie);
@@ -91,16 +90,9 @@ public class LoginController {
         session.removeAttribute("admin");
         session.invalidate();
 
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("admin")) {
-                    cookie.setMaxAge(0);
-                    cookie.setPath("/");
-                    response.addCookie(cookie);
-                }
-            }
-        }
+        Cookie cookie = new Cookie("rememberMe", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
 
         return "redirect:/login";
     }
