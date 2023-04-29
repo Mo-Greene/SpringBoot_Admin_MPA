@@ -132,42 +132,27 @@
         const galleryTable = document.getElementById("gallery-table");
         if (ev.target.checked) {
             console.log("갤러리!!");
-            const galleryList = await getGalleryList();
-            galleryTable.innerHTML = ``
-            console.log(galleryList)
+            let galleryDto = [[ ${galleryList} ]]
+            for (let i = 0; i < galleryDto.length; i++) {
+                galleryTable.innerHTML = ``;
 
-            for (let i = 0; i < galleryList.length; i++) {
-                console.log("boardTitle : " + galleryList.boardTitle)
-                console.log("boardContent : " + galleryList.boardContent)
+                console.log(galleryDto[i]);
 
                 const html = `
-                                <div class="card" style="width: 18rem;">
-                    <!--                    <img th:src="@{/view/{boardNo}(boardNo=)}" class="card-img-top" alt="...">-->
-                                    <div class="card-body">
-                                        <h5 class="card-title">${galleryList.boardTitle}</h5>
-                                        <p class="card-text">${galleryList.boardContent}</p>
-                                        <a class="btn btn-primary">확인</a>
-                                    </div>
-                                </div>
-                            `
+                    <div class="card" style="width: 18rem;">
+<!--                          <img src="..." class="card-img-top" alt="...">-->
+                          <div class="card-body">
+                            <h5 class="card-title">${galleryDto[i].boardTitle}</h5>
+                            <p class="card-text">${galleryDto[i].boardContent}</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                          </div>
+                    </div>
+                `
 
                 galleryCard.innerHTML += html;
             }
-
         } else {
             console.log("리스트!!")
         }
     });
-
-    async function getGalleryList() {
-        try {
-            const res = await $.ajax({
-                type: 'GET',
-                url: '/gallery/test'
-            });
-            return res.data.list;
-        } catch (error) {
-            console.log(error);
-        }
-    }
 </script>
