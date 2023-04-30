@@ -37,7 +37,7 @@ public class AdminCheckInterceptor implements HandlerInterceptor {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("rememberMe")) {
+                if (cookie.getName().equals("rememberMe") && cookie.getValue().equals("true")) {
                     session.setAttribute("admin", "관리자");
                     return true;
                 }

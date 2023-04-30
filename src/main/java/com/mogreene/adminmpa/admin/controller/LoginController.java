@@ -81,7 +81,7 @@ public class LoginController {
      * @param request
      * @return
      */
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public String logout(HttpServletRequest request,
                          HttpServletResponse response) {
 

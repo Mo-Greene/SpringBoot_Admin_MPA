@@ -155,7 +155,12 @@ public class GalleryController {
         return "board/gallery/galleryModify";
     }
 
-    // TODO: 2023/04/20 갤러리 수정, 삭제 구현
+    /**
+     * 이미지 파일
+     * @param boardNo
+     * @return
+     * @throws IOException
+     */
     @ResponseBody
     @GetMapping("/view/{boardNo}")
     public Resource showImageFile(@PathVariable Long boardNo) throws IOException {
@@ -174,7 +179,6 @@ public class GalleryController {
     public ResponseEntity<ApiResponseDTO<?>> modifyGalleryArticle(@PathVariable Long boardNo,
                                                                   @RequestBody BoardDTO boardDTO,
                                                                   HttpSession session) {
-        log.info("boardDTO : " + boardDTO);
 
         boardUtil.setBoardWriter(boardDTO, session);
         boardDTO.setBoardNo(boardNo);

@@ -38,13 +38,9 @@
 
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-<!--                    todo 로그아웃 처리해야됨-->
-<!--                    <form action="/logout" method="post">-->
-<!--                        <button type="submit" class="btn btn-primary">로그아웃</button>-->
-<!--                    </form>-->
                     <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                         <li class="nav-item active"><a class="nav-link" th:if="${session.admin == null}" th:href="@{/login}">Login</a></li>
-                        <li class="nav-item active"><a class="nav-link" th:if="${session.admin == '관리자'}" th:href="@{/login}">Logout</a></li>
+                        <li class="nav-item active"><a class="nav-link" th:if="${session.admin == '관리자'}" th:href="@{/logout}">Logout</a></li>
 
 <!--                        <li class="nav-item dropdown">-->
 <!--                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>-->
