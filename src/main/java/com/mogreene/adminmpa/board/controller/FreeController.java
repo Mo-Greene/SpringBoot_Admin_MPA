@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -86,8 +87,15 @@ public class FreeController {
      * @param boardDTO
      */
     @PostMapping("/free/write")
-    public ResponseEntity<ApiResponseDTO<?>> postFree(@RequestBody BoardDTO boardDTO,
+    public ResponseEntity<ApiResponseDTO<?>> postFree(@Valid @RequestBody BoardDTO boardDTO,
+                                                      BindingResult bindingResult,
                                                       HttpSession session) {
+
+        if (bindingResult.hasErrors()) {
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                log.error("error : " + error);
+            }
+        }
 
         boardUtil.setBoardWriter(boardDTO, session);
         freeService.postFree(boardDTO);

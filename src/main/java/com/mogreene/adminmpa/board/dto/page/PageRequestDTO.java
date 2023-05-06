@@ -10,9 +10,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Date;
 
 /**
  * 페이지네이션 + 검색조건

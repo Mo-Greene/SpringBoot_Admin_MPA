@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
 /**
@@ -25,11 +27,15 @@ public class BoardDTO {
     /**
      * 게시글 제목
      */
+    @NotBlank(message = "제목을 적어주세요.")
+    @Size(min = 3, max = 100, message = "제목은 3자 이상 100자 이하입니다.")
     private String boardTitle;
 
     /**
      * 게시글 내용
      */
+    @NotBlank(message = "내용을 적어주세요.")
+    @Size(min = 3, max = 2000, message = "내용은 3자 이상 2000자 이하입니다.")
     private String boardContent;
 
     /**
