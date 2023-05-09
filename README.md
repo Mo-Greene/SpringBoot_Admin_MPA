@@ -28,3 +28,38 @@
 - 게시판 동적쿼리 중복이니 뽑아내서 사용가능하게
 - AND category_board LIKE '' 이부분을 #{}이걸로 고치면 될듯
 - AttacheDTO를 ImageDTO를 추가하여 만들어서 분리할지 생각해야됨
+
+### html 저장용
+```
+
+                        <!-- 리스트 -->
+                        <div id="gallery-table">
+                            <table class="table text-center table-hover">
+                                <thead class="table-light">
+                                <tr>
+                                    <th style="width: 50%">제목</th>
+                                    <th>작성자</th>
+                                    <th>조회수</th>
+                                    <th>등록일시</th>
+                                    <th>수정일시</th>
+                                </tr>
+                                </thead>
+                                <tbody th:with="link = ${pageRequestDTO.getLink()}">
+                                <tr th:each="list : ${galleryList}">
+                                    <td>
+                                        <a th:href="|@{/gallery/{boardNo}(boardNo=${list.boardNo})}?${link}|">
+                                            [[ ${list.boardTitle} ]]
+                                        </a>
+                                        <div>
+                                            <img style="width:100px" th:src="@{/view/{boardNo}(boardNo=${list.boardNo})}">
+                                        </div>
+                                    </td>
+                                    <td>[[ ${list.boardWriter} ]]</td>
+                                    <td>[[ ${list.boardView} ]]</td>
+                                    <td>[[ ${#dates.format(list.boardRegDate, 'yy.MM.dd HH:mm')} ]]</td>
+                                    <td th:text="${list.boardModDate == null ? '-' : #dates.format(list.boardModDate, 'yy.MM.dd HH:mm')}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+```
