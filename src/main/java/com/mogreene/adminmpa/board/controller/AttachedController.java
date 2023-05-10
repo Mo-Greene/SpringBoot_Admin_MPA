@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -117,8 +118,15 @@ public class AttachedController {
      */
     @PostMapping("/attached/write")
     public String postAttached(@Valid BoardDTO boardDTO,
+                               BindingResult bindingResult,
                                @RequestParam MultipartFile[] files,
                                HttpSession session) throws IOException {
+
+        if (bindingResult.hasErrors()) {
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                throw new RuntimeException(error.getDefaultMessage());
+            }
+        }
 
         //파일이 없을 경우 throw
         if (files[0].isEmpty() && files[1].isEmpty() && files[2].isEmpty()) {
@@ -164,7 +172,7 @@ public class AttachedController {
      */
     @PostMapping("/attached/modify")
     public String modifyAttachedArticle(BoardDTO boardDTO,
-                                        @RequestPart MultipartFile[] files) throws IOException {
+                                        @RequestParam MultipartFile[] files) throws IOException {
 
         // TODO: 2023/04/27 체크
         log.info("files : " + Arrays.toString(files));

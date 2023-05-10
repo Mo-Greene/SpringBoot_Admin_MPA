@@ -68,9 +68,12 @@
                                 </div>
                                 <div th:if="${response.attachedCount == 2}">
                                     <th:block>
-                                        <div class="card-text" th:text="${attached.attachedOriginalName}"></div>
-                                        <a th:href="@{/attached/delete/{attachedNo}(attachedNo=${attached.attachedNo})}"
-                                           class="btn btn-danger">파일삭제</a>
+                                        <div>
+                                            <div class="card-text" th:text="${attached.attachedOriginalName}"></div>
+                                            <a th:href="@{/attached/delete/{attachedNo}(attachedNo=${attached.attachedNo})}"
+                                               class="btn btn-danger">파일삭제</a>
+                                        </div>
+                                        <input class="form-control" name="files" type="file">
                                     </th:block>
                                 </div>
                                 <div th:if="${response.attachedCount == 3}">
@@ -91,8 +94,6 @@
                             </div>
                         </div>
                     </form>
-
-
 
                 </div><!--card body-->
             </div><!--card-->

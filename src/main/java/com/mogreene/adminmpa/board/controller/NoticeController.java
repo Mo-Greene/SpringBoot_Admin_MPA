@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -86,8 +87,15 @@ public class NoticeController {
      * @return
      */
     @PostMapping("/notice/write")
-    public ResponseEntity<ApiResponseDTO<?>> postNotice(@RequestBody BoardDTO boardDTO,
+    public ResponseEntity<ApiResponseDTO<?>> postNotice(@Valid @RequestBody BoardDTO boardDTO,
+                                                        BindingResult bindingResult,
                                                         HttpSession session) {
+
+        if (bindingResult.hasErrors()) {
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                throw new RuntimeException(error.getDefaultMessage());
+            }
+        }
 
         boardUtil.setBoardWriter(boardDTO, session);
         noticeService.postNotice(boardDTO);
@@ -123,8 +131,15 @@ public class NoticeController {
      */
     @PutMapping("/notice/modify/{boardNo}")
     public ResponseEntity<ApiResponseDTO<?>> modifyArticle(@PathVariable Long boardNo,
-                                                           @RequestBody BoardDTO boardDTO,
+                                                           @Valid @RequestBody BoardDTO boardDTO,
+                                                           BindingResult bindingResult,
                                                            HttpSession session) {
+
+        if (bindingResult.hasErrors()) {
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                throw new RuntimeException(error.getDefaultMessage());
+            }
+        }
 
         boardUtil.setBoardWriter(boardDTO, session);
         boardDTO.setBoardNo(boardNo);

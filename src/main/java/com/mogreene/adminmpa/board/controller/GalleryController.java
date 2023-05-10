@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -120,8 +121,15 @@ public class GalleryController {
      */
     @PostMapping("/gallery/write")
     public String postGallery(@Valid BoardDTO boardDTO,
+                              BindingResult bindingResult,
                               @RequestParam MultipartFile file,
                               HttpSession session) throws IOException {
+
+        if (bindingResult.hasErrors()) {
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                throw new RuntimeException(error.getDefaultMessage());
+            }
+        }
 
         if (file.isEmpty()) {
             throw new RuntimeException("파일 존재해야됨");
@@ -177,8 +185,15 @@ public class GalleryController {
      */
     @PutMapping("/gallery/modify/{boardNo}")
     public ResponseEntity<ApiResponseDTO<?>> modifyGalleryArticle(@PathVariable Long boardNo,
-                                                                  @RequestBody BoardDTO boardDTO,
+                                                                  @Valid @RequestBody BoardDTO boardDTO,
+                                                                  BindingResult bindingResult,
                                                                   HttpSession session) {
+
+        if (bindingResult.hasErrors()) {
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                throw new RuntimeException(error.getDefaultMessage());
+            }
+        }
 
         boardUtil.setBoardWriter(boardDTO, session);
         boardDTO.setBoardNo(boardNo);

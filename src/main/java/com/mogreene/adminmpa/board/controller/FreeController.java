@@ -132,8 +132,15 @@ public class FreeController {
      */
     @PutMapping("/free/modify/{boardNo}")
     public ResponseEntity<ApiResponseDTO<?>> modifyArticle(@PathVariable Long boardNo,
-                                                           @RequestBody BoardDTO boardDTO,
+                                                           @Valid @RequestBody BoardDTO boardDTO,
+                                                           BindingResult bindingResult,
                                                            HttpSession session) {
+
+        if (bindingResult.hasErrors()) {
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                throw new RuntimeException(error.getDefaultMessage());
+            }
+        }
 
         boardUtil.setBoardWriter(boardDTO, session);
         boardDTO.setBoardNo(boardNo);
@@ -163,7 +170,6 @@ public class FreeController {
     @DeleteMapping("/free/delete/{boardNo}")
     public ResponseEntity<?> deleteFree(@PathVariable Long boardNo) {
 
-        // TODO: 2023/04/03 세션 처리
         try {
             freeService.deleteFreeArticle(boardNo);
 
