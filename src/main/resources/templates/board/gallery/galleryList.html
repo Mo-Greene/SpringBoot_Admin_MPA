@@ -39,13 +39,16 @@
                     <div class="card-body" id="gallery-table">
 
                         <!-- 갤러리 -->
-                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="gallery-card" th:each="list: ${galleryList}">
-                            <div class="card" style="width: 18rem;">
-                                <img style="width:100px" th:src="@{/view/{boardNo}(boardNo=${list.boardNo})}">
-                                <div class="card-body">
-                                    <h5 class="card-title">[[ ${list.boardTitle} ]]</h5>
-                                    <p class="card-text">[[ ${list.boardContent} ]]</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <div class="row" th:with="link = ${pageRequestDTO.getLink()}">
+                            <div class="col-md-4" th:each="list: ${galleryList}">
+                                <div class="card" style="margin: 1rem">
+                                    <a th:href="|@{/gallery/{boardNo}(boardNo=${list.boardNo})}?${link}|">
+                                        <img style="object-fit: cover" th:src="@{/view/{boardNo}(boardNo=${list.boardNo})}" class="card-img-top">
+                                    </a>
+                                    <div class="card-body">
+                                        <h5 class="card-title"><a th:href="|@{/gallery/{boardNo}(boardNo=${list.boardNo})}?${link}|" style="color: black; text-decoration: none;">[[ ${list.boardTitle} ]]</a></h5>
+                                        <p class="card-text"><a th:href="|@{/gallery/{boardNo}(boardNo=${list.boardNo})}?${link}|" style="color: black; text-decoration: none;">[[ ${list.boardContent} ]]</a></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

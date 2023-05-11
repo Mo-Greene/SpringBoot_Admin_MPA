@@ -174,24 +174,10 @@ public class AttachedController {
     public String modifyAttachedArticle(BoardDTO boardDTO,
                                         @RequestParam MultipartFile[] files) throws IOException {
 
-        // TODO: 2023/04/27 체크
-        log.info("files : " + Arrays.toString(files));
-        log.info("files length : " + files.length);
-        log.info("files[0] : " + files[0].getOriginalFilename());
-        log.info("files[1] : " + files[1].getOriginalFilename());
-        log.info("files[2] : " + files[2].getOriginalFilename());
-
-        //파일이 없을 경우 throw
-        if (files[0].isEmpty() && files[1].isEmpty() && files[2].isEmpty()) {
-            throw new RuntimeException("파일은 하나라도 존재 해야함");
-        }
-
         attachedService.modifyAttachedArticle(boardDTO);
         attachedService.uploadAttached(boardDTO, files);
 
-        Long boardUrl = boardDTO.getBoardNo();
-
-        return "redirect:/attached/" + boardUrl;
+        return "redirect:/attached";
     }
 
     /**
