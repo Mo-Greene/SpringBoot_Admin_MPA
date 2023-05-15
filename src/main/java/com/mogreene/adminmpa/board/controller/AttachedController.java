@@ -172,10 +172,15 @@ public class AttachedController {
      */
     @PostMapping("/attached/modify")
     public String modifyAttachedArticle(BoardDTO boardDTO,
-                                        @RequestParam MultipartFile[] files) throws IOException {
+                                        @RequestParam(required = false) MultipartFile[] files) throws IOException {
 
-        attachedService.modifyAttachedArticle(boardDTO);
-        attachedService.uploadAttached(boardDTO, files);
+        if (files == null) {
+
+            attachedService.modifyAttachedArticle(boardDTO);
+        } else {
+
+            attachedService.uploadAttached(boardDTO, files);
+        }
 
         return "redirect:/attached";
     }

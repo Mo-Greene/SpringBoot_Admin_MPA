@@ -55,30 +55,31 @@
                                         <input class="form-control" id="file3" name="files" type="file">
                                     </div>
                                 </div>
-                                <th:block th:each="attached: ${response.attachedDto}">
-                                    <div th:if="${response.attachedCount == 1}">
+                                <div th:if="${response.attachedCount == 1}" th:each="attached: ${response.attachedDto}">
+                                    <div class="card-text" th:text="${attached.attachedOriginalName}"></div>
+                                    <a th:href="@{/attached/delete/{attachedNo}(attachedNo=${attached.attachedNo})}"
+                                       class="btn btn-danger">파일삭제</a>
+                                    <div>
+                                        <input class="form-control" name="files" type="file">
+                                        <input class="form-control" name="files" type="file">
+                                    </div>
+                                </div>
+                                <div>
+                                    <div th:if="${response.attachedCount == 2}" th:each="attached: ${response.attachedDto}">
                                         <div class="card-text" th:text="${attached.attachedOriginalName}"></div>
                                         <a th:href="@{/attached/delete/{attachedNo}(attachedNo=${attached.attachedNo})}"
                                            class="btn btn-danger">파일삭제</a>
-                                        <div class="col-md-3">
-                                            <input class="form-control" name="files" type="file">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input class="form-control" name="files" type="file">
-                                        </div>
                                     </div>
                                     <div th:if="${response.attachedCount == 2}">
-                                        <div class="card-text" th:text="${attached.attachedOriginalName}"></div>
-                                        <a th:href="@{/attached/delete/{attachedNo}(attachedNo=${attached.attachedNo})}"
-                                           class="btn btn-danger">파일삭제</a>
-                                        <input class="form-control" name="files" type="file" th:if="${attachedCount > 0}">
+                                        <input class="form-control" name="files" type="file">
                                     </div>
-                                    <div th:if="${response.attachedCount == 3}">
-                                        <div class="card-text" th:text="${attached.attachedOriginalName}"></div>
-                                        <a th:href="@{/attached/delete/{attachedNo}(attachedNo=${attached.attachedNo})}"
-                                           class="btn btn-danger">파일삭제</a>
-                                    </div>
-                                </th:block>
+                                </div>
+
+                                <div th:if="${response.attachedCount == 3}" th:each="attached: ${response.attachedDto}">
+                                    <div class="card-text" th:text="${attached.attachedOriginalName}"></div>
+                                    <a th:href="@{/attached/delete/{attachedNo}(attachedNo=${attached.attachedNo})}"
+                                       class="btn btn-danger">파일삭제</a>
+                                </div>
                             </div>
                         </div>
 

@@ -113,7 +113,10 @@ public class AttachedService {
     @Transactional
     public void uploadAttached(BoardDTO boardDTO, MultipartFile[] files) throws IOException {
 
-        baseRepository.postArticle(boardDTO);
+        int baseBoardModifyCheck = baseRepository.updateArticle(boardDTO);
+        if (baseBoardModifyCheck == 0) {
+            throw new IllegalArgumentException("자료실 수정 실패");
+        }
 
         for (MultipartFile file : files) {
             //파일이 존재 하지 않을 경우 넘어감
@@ -164,7 +167,6 @@ public class AttachedService {
 
         int baseBoardModifyCheck = baseRepository.updateArticle(boardDTO);
 
-        // TODO: 2023/04/07 예외처리
         if (baseBoardModifyCheck == 0) {
             throw new IllegalArgumentException("자료실 수정 실패");
         }
