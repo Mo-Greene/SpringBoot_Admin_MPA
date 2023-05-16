@@ -16,7 +16,7 @@ public interface BaseRepository {
      * @param boardDTO
      * @return boardNo
      */
-    void postArticle(BoardDTO boardDTO);
+    int postArticle(BoardDTO boardDTO);
 
     /**
      * 조회수 증가

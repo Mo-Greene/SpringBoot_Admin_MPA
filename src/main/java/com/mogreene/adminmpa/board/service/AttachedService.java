@@ -107,16 +107,24 @@ public class AttachedService {
     }
 
     /**
+     * 자료실 게시글 등록
+     * @param boardDTO
+     */
+    public void postAttachedArticle(BoardDTO boardDTO) {
+
+        int baseBoardPostCheck = baseRepository.postArticle(boardDTO);
+
+        if (baseBoardPostCheck == 0) {
+            throw new IllegalArgumentException("자료실 등록 실패");
+        }
+    }
+
+    /**
      * 다중 파일 업로드
      * @param boardDTO
      */
     @Transactional
     public void uploadAttached(BoardDTO boardDTO, MultipartFile[] files) throws IOException {
-
-        int baseBoardModifyCheck = baseRepository.updateArticle(boardDTO);
-        if (baseBoardModifyCheck == 0) {
-            throw new IllegalArgumentException("자료실 수정 실패");
-        }
 
         for (MultipartFile file : files) {
             //파일이 존재 하지 않을 경우 넘어감
@@ -182,7 +190,6 @@ public class AttachedService {
 
         int deleteCheck = attachedRepository.deleteAttachedArticle(boardNo);
 
-        // TODO: 2023/04/07 예외처리 필
         if (deleteCheck == 0) {
             throw new IllegalArgumentException("자료실 게시글 삭제 실패");
         }

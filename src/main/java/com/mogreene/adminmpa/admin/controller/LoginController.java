@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.nio.file.attribute.UserPrincipalNotFoundException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * 로그인 컨트롤러
@@ -68,7 +69,7 @@ public class LoginController {
             session.setAttribute("admin", "관리자");
 
             return "redirect:/" + redirect;
-        } catch (UserPrincipalNotFoundException e) {
+        } catch (UserPrincipalNotFoundException | NoSuchAlgorithmException e) {
 
             log.error(e.getMessage());
 

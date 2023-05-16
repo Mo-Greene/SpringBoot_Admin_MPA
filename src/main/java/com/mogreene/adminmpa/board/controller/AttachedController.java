@@ -137,6 +137,7 @@ public class AttachedController {
         boardUtil.setBoardWriter(boardDTO, session);
 
         //첨부파일 등록 (제목 + 내용)
+        attachedService.postAttachedArticle(boardDTO);
         attachedService.uploadAttached(boardDTO, files);
 
         return "redirect:/attached";
@@ -179,6 +180,7 @@ public class AttachedController {
             attachedService.modifyAttachedArticle(boardDTO);
         } else {
 
+            attachedService.modifyAttachedArticle(boardDTO);
             attachedService.uploadAttached(boardDTO, files);
         }
 
