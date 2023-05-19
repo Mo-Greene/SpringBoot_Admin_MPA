@@ -172,8 +172,15 @@ public class AttachedController {
      * @param files
      */
     @PostMapping("/attached/modify")
-    public String modifyAttachedArticle(BoardDTO boardDTO,
+    public String modifyAttachedArticle(@Valid BoardDTO boardDTO,
+                                        BindingResult bindingResult,
                                         @RequestParam(required = false) MultipartFile[] files) throws IOException {
+
+        if (bindingResult.hasErrors()) {
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                throw new RuntimeException(error.getDefaultMessage());
+            }
+        }
 
         if (files == null) {
 

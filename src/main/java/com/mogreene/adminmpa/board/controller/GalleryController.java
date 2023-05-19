@@ -60,30 +60,6 @@ public class GalleryController {
     }
 
     /**
-     * ajax 테스트
-     * @param pageRequestDTO
-     * @return
-     */
-    // TODO: 2023/04/28 지워야됨
-    @GetMapping("/gallery/test")
-    @ResponseBody
-    public ResponseEntity<ApiResponseDTO<?>> getGalleryTest(@Valid PageRequestDTO pageRequestDTO) {
-
-        List<BoardDTO> galleryList = galleryService.getGalleryArticle(pageRequestDTO);
-        PageResponseDTO pageResponseDTO = galleryService.pagination(pageRequestDTO);
-
-        Map<String, Object> response= new HashMap<>();
-        response.put("list", galleryList);
-        response.put("pagination", pageResponseDTO);
-
-        ApiResponseDTO<?> apiResponseDTO = ApiResponseDTO.builder()
-                .httpStatus(HttpStatus.OK)
-                .data(response)
-                .build();
-        return new ResponseEntity<>(apiResponseDTO, HttpStatus.OK);
-    }
-
-    /**
      * 갤러리 특정게시글 조회
      * @param boardNo
      * @param model

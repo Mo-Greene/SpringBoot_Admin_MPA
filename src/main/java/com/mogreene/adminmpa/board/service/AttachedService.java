@@ -185,7 +185,6 @@ public class AttachedService {
      * @param boardNo
      * @throws IllegalArgumentException
      */
-    // TODO: 2023/04/20 게시글 전체 지우게 할건지 baseBoard에 남겨둘건지 생각
     public void deleteAttachedArticle(Long boardNo) throws IllegalArgumentException {
 
         int deleteCheck = attachedRepository.deleteAttachedArticle(boardNo);

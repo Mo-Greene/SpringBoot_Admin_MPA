@@ -18,20 +18,20 @@
             <div class="row mb-3 justify-content-md-center">
                 <label for="boardTitle" class="col-sm-2 col-lg-1 col-form-label text-sm-end">Title : </label>
                 <div class="col-sm-8 col-lg-9">
-                    <input type="text" class="form-control" id="boardTitle" required>
+                    <input type="text" class="form-control" id="boardTitle" name="boardTitle" required>
                 </div>
             </div>
 
             <div class="row mb-3 justify-content-md-center">
                 <label for="boardContent" class="col-sm-2 col-lg-1 col-form-label text-sm-end">Content : </label>
                 <div class="col-sm-8 col-lg-9">
-                    <textarea class="form-control" id="boardContent" rows="10" required></textarea>
+                    <textarea class="form-control" id="boardContent" rows="10" name="boardContent" required></textarea>
                 </div>
             </div>
 
             <div class="row mb-5 justify-content-md-center">
                 <div class="col-sm-10 d-grid gap-2 d-sm-flex justify-content-sm-end">
-                    <button type="button" class="btn btn-primary" id="btn-save">등록</button>
+                    <button type="button" class="btn btn-primary" onclick="validateArticleForm()">등록</button>
                     <a href="/free" role="button" class="btn btn-secondary">취소</a>
                 </div>
             </div>

@@ -67,7 +67,6 @@ public class GalleryService {
      * @param boardNo
      * @return
      */
-    // TODO: 2023/04/20 Transactional 공부하고 사용해야됨
     public BoardDTO getGalleryViewArticle(Long boardNo) {
 
         //조회수 증가
