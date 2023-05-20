@@ -24,7 +24,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<ApiResponseDTO<?>> handleRuntimeException(RuntimeException e) {
 
         log.error(e.getMessage());
-        e.getStackTrace();
 
         ApiResponseDTO<?> apiResponseDTO = ApiResponseDTO.builder()
                 .httpStatus(HttpStatus.BAD_REQUEST)
