@@ -46,36 +46,3 @@
     </div>
 
 </div>
-
-<script>
-    $(document).ready(function () {
-        $('#uploadForm').submit(function(event) {
-            event.preventDefault();
-
-            let formData = new FormData(this);
-            let file = $('#file')[0].files;
-
-            if (file.length === 0) {
-                alert('파일을 선택해주세요.');
-                return false;
-            }
-
-            $.ajax({
-                type: 'POST',
-                url: '/gallery/write',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    // 업로드 성공 시 처리
-                    alert('파일 업로드가 완료되었습니다.');
-                    // 추가로 필요한 로직 구현
-                },
-                error: function(error) {
-                    // 에러 발생 시 처리
-                    alert('파일 업로드에 실패하였습니다.');
-                }
-            });
-        })
-    })
-</script>

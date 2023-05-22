@@ -41,7 +41,3 @@ function validateArticleForm() {
     }
     postArticle(boardTitle, boardContent);
 }
-
-function validatedAttachedForm() {
-
-}
