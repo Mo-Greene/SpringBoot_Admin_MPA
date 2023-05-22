@@ -108,7 +108,7 @@ public class GalleryController {
         }
 
         if (file.isEmpty()) {
-            throw new RuntimeException("파일 존재해야됨");
+            throw new RuntimeException("파일이 존재해야합니다.");
         }
 
         //boardWriter => 세션에서 "admin" 값으로

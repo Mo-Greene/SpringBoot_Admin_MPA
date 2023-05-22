@@ -130,7 +130,7 @@ public class AttachedController {
 
         //파일이 없을 경우 throw
         if (files[0].isEmpty() && files[1].isEmpty() && files[2].isEmpty()) {
-            throw new RuntimeException("파일은 하나라도 존재 해야함");
+            throw new RuntimeException("파일은 하나라도 존재 해야합니다.");
         }
 
         //boardWriter => 세션에서 "admin" 값으로

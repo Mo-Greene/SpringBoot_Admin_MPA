@@ -54,7 +54,7 @@
 
         ORDER BY gb.board_no DESC
 
-        LIMIT #{skip}, #{size}
+        LIMIT #{skip}, 9
     </select>
 
     <!-- 자료실 특정게시글 -->

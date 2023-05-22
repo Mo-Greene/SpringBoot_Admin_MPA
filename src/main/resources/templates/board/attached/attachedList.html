@@ -39,9 +39,9 @@
                         <table class="table text-center table-hover">
                             <thead class="table-light">
                             <tr>
-                                <th>첨부</th>
                                 <th style="width: 50%">제목</th>
                                 <th>작성자</th>
+                                <th>첨부</th>
                                 <th>조회수</th>
                                 <th>등록일시</th>
                                 <th>수정일시</th>
@@ -49,12 +49,11 @@
                             </thead>
                             <tbody th:with="link = ${pageRequestDTO.getLink()}">
                             <tr th:each="list : ${attachedList}">
-                                <!--                            todo 파일 유무 어떻게 보낼거여-->
-                                <td></td>
                                 <td><a th:href="|@{/attached/{boardNo}(boardNo=${list.boardNo})}?${link}|">
                                     [[ ${list.boardTitle} ]]
                                 </a></td>
                                 <td>[[ ${list.boardWriter} ]]</td>
+                                <td>💾</td>
                                 <td>[[ ${list.boardView} ]]</td>
                                 <td>[[ ${#dates.format(list.boardRegDate, 'yy.MM.dd HH:mm')} ]]</td>
                                 <td th:text="${list.boardModDate == null ? '-' : #dates.format(list.boardModDate, 'yy.MM.dd HH:mm')}"></td>
