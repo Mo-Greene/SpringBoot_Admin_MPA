@@ -30,7 +30,6 @@ public class BoardController {
     @GetMapping("/")
     public String listPage(Model model) {
         Map<LocalDate, Long> articleCountByDate = boardService.newArticleByDate();
-        log.info("count list : " + articleCountByDate);
         model.addAttribute("articleCountByDate", articleCountByDate);
 
         List<BoardDTO> freeList = boardService.getMainFreeArticle();
