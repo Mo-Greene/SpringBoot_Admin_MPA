@@ -4,7 +4,9 @@ import com.mogreene.adminmpa.board.dto.BoardDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 부모 Board repository
@@ -30,6 +32,8 @@ public interface BaseRepository {
      * @param boardDTO
      */
     int updateArticle(BoardDTO boardDTO);
+
+    List<Map<String, Object>> newArticleByDate();
 
     List<BoardDTO> getMainFreeArticle();
     List<BoardDTO> getMainNoticeArticle();

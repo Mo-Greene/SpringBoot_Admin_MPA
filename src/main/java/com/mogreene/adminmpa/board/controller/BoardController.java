@@ -8,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 /**
  * DashBoard
@@ -27,6 +29,9 @@ public class BoardController {
      */
     @GetMapping("/")
     public String listPage(Model model) {
+        Map<LocalDate, Long> articleCountByDate = boardService.newArticleByDate();
+        log.info("count list : " + articleCountByDate);
+        model.addAttribute("articleCountByDate", articleCountByDate);
 
         List<BoardDTO> freeList = boardService.getMainFreeArticle();
         List<BoardDTO> noticeList = boardService.getMainNoticeArticle();

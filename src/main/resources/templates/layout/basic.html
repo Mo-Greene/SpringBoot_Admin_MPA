@@ -14,6 +14,8 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <link th:href="@{/css/common.css}" rel="stylesheet" />
+    <!-- chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 <body>
 <div class="d-flex" id="wrapper">
@@ -68,8 +70,6 @@
 <script th:src="@{/js/scripts.js}"></script>
 <script src="/js/app/ajax.js"></script>
 <script src="/js/app/common.js"></script>
-<!-- chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <th:block layout:fragment="script">
 
 </th:block>
