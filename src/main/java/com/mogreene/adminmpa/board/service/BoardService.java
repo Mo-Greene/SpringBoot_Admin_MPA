@@ -23,6 +23,7 @@ public class BoardService {
 
     private final BaseRepository baseRepository;
 
+    // TODO: 2023/05/24 주석 체크!!! 
     public Map<LocalDate, Long> newArticleByDate() {
         List<Map<String, Object>> articleCounts = baseRepository.newArticleByDate();
 
