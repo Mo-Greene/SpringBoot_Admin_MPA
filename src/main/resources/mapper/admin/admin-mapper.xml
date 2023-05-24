@@ -6,7 +6,7 @@
     <select id="loginAdmin" resultType="AdminDTO" parameterType="AdminDTO">
         SELECT *
 
-        FROM user
+        FROM admin
 
         WHERE username = #{username}
 

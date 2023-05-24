@@ -4,6 +4,8 @@ import com.mogreene.adminmpa.board.dto.BoardDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * 부모 Board repository
  * @author mogreene
@@ -28,4 +30,9 @@ public interface BaseRepository {
      * @param boardDTO
      */
     int updateArticle(BoardDTO boardDTO);
+
+    List<BoardDTO> getMainFreeArticle();
+    List<BoardDTO> getMainNoticeArticle();
+    List<BoardDTO> getMainGalleryArticle();
+    List<BoardDTO> getMainAttachedArticle();
 }

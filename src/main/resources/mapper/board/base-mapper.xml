@@ -43,4 +43,50 @@
         WHERE
             board_no = #{boardNo}
     </update>
+
+    <!-- 메인페이지 게시판 별 게시글 -->
+    <select id="getMainFreeArticle" resultType="BoardDTO">
+        SELECT *
+
+        FROM base_board
+
+        WHERE category_board LIKE 'FREE'
+
+        ORDER BY board_no DESC
+
+        LIMIT 5;
+    </select>
+    <select id="getMainNoticeArticle" resultType="BoardDTO">
+        SELECT *
+
+        FROM base_board
+
+        WHERE category_board LIKE 'NOTICE'
+
+        ORDER BY board_no DESC
+
+        LIMIT 5;
+    </select>
+    <select id="getMainGalleryArticle" resultType="BoardDTO">
+        SELECT *
+
+        FROM base_board
+
+        WHERE category_board LIKE 'GALLERY'
+
+        ORDER BY board_no DESC
+
+        LIMIT 5;
+    </select>
+    <select id="getMainAttachedArticle" resultType="BoardDTO">
+        SELECT *
+
+        FROM base_board
+
+        WHERE category_board LIKE 'ATTACHED'
+
+        ORDER BY board_no DESC
+
+        LIMIT 5;
+    </select>
 </mapper>
