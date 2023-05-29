@@ -136,9 +136,8 @@ public class AttachedController {
         //boardWriter => 세션에서 "admin" 값으로
         boardUtil.setBoardWriter(boardDTO, session);
 
-        //첨부파일 등록 (제목 + 내용)
-        attachedService.postAttachedArticle(boardDTO);
-        attachedService.uploadAttached(boardDTO, files);
+        //게시글 등록(+ 첨부파일)
+        attachedService.postAttachedArticle(boardDTO, files);
 
         return "redirect:/attached";
     }
@@ -184,11 +183,10 @@ public class AttachedController {
 
         if (files == null) {
 
-            attachedService.modifyAttachedArticle(boardDTO);
+            attachedService.modifyAttachedArticle(boardDTO, null);
         } else {
 
-            attachedService.modifyAttachedArticle(boardDTO);
-            attachedService.uploadAttached(boardDTO, files);
+            attachedService.modifyAttachedArticle(boardDTO, files);
         }
 
         return "redirect:/attached";

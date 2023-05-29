@@ -110,12 +110,35 @@ public class AttachedService {
      * 자료실 게시글 등록
      * @param boardDTO
      */
-    public void postAttachedArticle(BoardDTO boardDTO) {
+    @Transactional
+    public void postAttachedArticle(BoardDTO boardDTO, MultipartFile[] files) throws IOException {
 
         int baseBoardPostCheck = baseRepository.postArticle(boardDTO);
 
         if (baseBoardPostCheck == 0) {
             throw new IllegalArgumentException("자료실 등록 실패");
+        }
+
+        //첨부파일 핸들러
+        handleAttached(boardDTO, files);
+    }
+
+    /**
+     * 자료실 게시글 수정
+     * @param boardDTO
+     */
+    @Transactional
+    public void modifyAttachedArticle(BoardDTO boardDTO, MultipartFile[] files) throws IOException {
+
+        int baseBoardModifyCheck = baseRepository.updateArticle(boardDTO);
+
+        if (baseBoardModifyCheck == 0) {
+            throw new IllegalArgumentException("자료실 수정 실패");
+        }
+
+        if (files != null) {
+            //첨부파일 핸들러
+            handleAttached(boardDTO, files);
         }
     }
 
@@ -123,8 +146,7 @@ public class AttachedService {
      * 다중 파일 업로드
      * @param boardDTO
      */
-    @Transactional
-    public void uploadAttached(BoardDTO boardDTO, MultipartFile[] files) throws IOException {
+    private void handleAttached(BoardDTO boardDTO, MultipartFile[] files) throws IOException {
 
         for (MultipartFile file : files) {
             //파일이 존재 하지 않을 경우 넘어감
@@ -165,19 +187,6 @@ public class AttachedService {
         attachedDTO.setContentDisposition(contentDisposition);
 
         return attachedDTO;
-    }
-
-    /**
-     * 자료실 게시글 수정
-     * @param boardDTO
-     */
-    public void modifyAttachedArticle(BoardDTO boardDTO) {
-
-        int baseBoardModifyCheck = baseRepository.updateArticle(boardDTO);
-
-        if (baseBoardModifyCheck == 0) {
-            throw new IllegalArgumentException("자료실 수정 실패");
-        }
     }
 
     /**
