@@ -23,7 +23,10 @@ public class BoardService {
 
     private final BaseRepository baseRepository;
 
-    // TODO: 2023/05/24 주석 체크!!! 
+    /**
+     * 최근 일주일 게시글 개수
+     * @return
+     */
     public Map<LocalDate, Long> newArticleByDate() {
         List<Map<String, Object>> articleCounts = baseRepository.newArticleByDate();
 
