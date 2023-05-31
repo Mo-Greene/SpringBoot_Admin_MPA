@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -150,7 +149,6 @@ public class FreeController {
 
         } catch (IllegalArgumentException e) {
 
-            // TODO: 2023/04/02 글로벌 예외처리 봅아내기
             log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -176,7 +174,7 @@ public class FreeController {
         } catch (IllegalArgumentException e) {
 
             log.error(e.getMessage());
-            // TODO: 2023/04/01 에러페이지가 아닌 메세지를 담고 프론트로 보내자
+
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

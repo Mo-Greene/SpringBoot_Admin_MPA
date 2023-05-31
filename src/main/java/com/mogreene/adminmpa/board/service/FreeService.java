@@ -95,7 +95,6 @@ public class FreeService {
 
         int baseBoardModifyCheck = baseRepository.updateArticle(boardDTO);
 
-        // TODO: 2023/04/07 예외처리 필
         if (baseBoardModifyCheck == 0) {
             throw new IllegalArgumentException("게시글 수정 실패");
         }
@@ -105,7 +104,6 @@ public class FreeService {
      * 자유 게시판 게시글 삭제
      * @param boardNo
      */
-    // TODO: 2023/04/01 free_board에서만 삭제가 되고 base_board에선 삭제가 안되었음, 결과적으론 성공?
     public void deleteFreeArticle(Long boardNo) throws IllegalArgumentException {
 
         int deleteCheck = freeRepository.deleteFree(boardNo);

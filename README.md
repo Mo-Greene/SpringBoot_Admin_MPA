@@ -3,7 +3,9 @@
 ## 🛠 개발환경
 - Java 11
 - SpringBoot 2.7.10
-- 
+- MariaDB
+- MyBatis
+- IntelliJ IDEA Ultimate Edition
 
 ## 🗺 ERD
 ![board_db](https://github.com/Mo-Greene/Algorithms/assets/97177357/6bb8b246-82c4-4ede-bf93-b8de78ac8cee)
