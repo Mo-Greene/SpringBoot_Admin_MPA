@@ -10,6 +10,9 @@
 ## 🗺 ERD
 ![board_db](https://github.com/Mo-Greene/Algorithms/assets/97177357/6bb8b246-82c4-4ede-bf93-b8de78ac8cee)
 
+## 💿 Diagram
+![Admin MPA 벤다이어그램](https://github.com/Mo-Greene/Mo-Greene/assets/97177357/6aa13676-c648-4490-8bce-c3e82a821c4d)
+
 ## 💬 commit 컨벤션
 - feat : 새로운 기능 추가
 - fix : 버그 수정
